@@ -7,6 +7,14 @@ class InitialState extends Equatable {
     this.status = InitialStatus.loading,
   });
 
+  InitialState copyWith({
+    InitialStatus? status,
+  }) {
+    return InitialState(
+      status: status ?? this.status,
+    );
+  }
+
   final InitialStatus status;
 
   @override
