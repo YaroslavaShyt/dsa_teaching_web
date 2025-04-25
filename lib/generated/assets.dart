@@ -10,8 +10,24 @@ class Assets {
   static const String animationsStar = 'assets/animations/star.json';
   static const String authAuthFactory =
       'lib/presentation/initial/auth/auth_factory.dart';
+  static const String authAuthRepository = 'lib/data/auth/auth_repository.dart';
+  static const String authAuthResponse = 'lib/data/auth/auth_response.dart';
   static const String authAuthScreen =
       'lib/presentation/initial/auth/auth_screen.dart';
+  static const String authAuthService =
+      'lib/data/services/auth/auth_service.dart';
+  static const String authAuthState = 'lib/data/services/auth/auth_state.dart';
+  static const String authIauthRepository =
+      'lib/domain/auth/iauth_repository.dart';
+  static const String authIauthResponse = 'lib/domain/auth/iauth_response.dart';
+  static const String authIauthService =
+      'lib/domain/services/auth/iauth_service.dart';
+  static const String authIsignInModel = 'lib/domain/auth/isign_in_model.dart';
+  static const String authIsignUpModel = 'lib/domain/auth/isign_up_model.dart';
+  static const String authItokenService =
+      'lib/domain/services/auth/itoken_service.dart';
+  static const String authSignInModel = 'lib/data/auth/sign_in_model.dart';
+  static const String authSignUpModel = 'lib/data/auth/sign_up_model.dart';
   static const String avatarsAvatar1 =
       'assets/animations/avatars/avatar_1.json';
   static const String avatarsAvatar2 =
@@ -59,6 +75,7 @@ class Assets {
       'lib/presentation/initial/widgets/placeholders/loaders/loader_factory.dart';
   static const String loadersLoaderScreen =
       'lib/presentation/initial/widgets/placeholders/loaders/loader_screen.dart';
+  static const String loggerLogger = 'lib/core/utils/logger/logger.dart';
   static const String lottieAnimationsMainAnimationWidget =
       'lib/presentation/initial/widgets/lottie_animations/main_animation_widget.dart';
   static const String lottieAnimationsRobotAnimation =
@@ -95,6 +112,10 @@ class Assets {
       'lib/presentation/initial/widgets/scroll/main_scroll_bar.dart';
   static const String serviceLocatorServiceLocator =
       'lib/core/utils/service_locator/service_locator.dart';
+  static const String storageIlocalStorage =
+      'lib/domain/storage/ilocal_storage.dart';
+  static const String storageLocalStorage =
+      'lib/data/storage/local_storage.dart';
   static const String tabBarMainTabBar =
       'lib/presentation/initial/widgets/tab_bar/main_tab_bar.dart';
   static const String themeAppColorTheme =
@@ -104,6 +125,8 @@ class Assets {
   static const String themeScrollBarTheme =
       'lib/core/utils/theme/scroll_bar_theme.dart';
   static const String themeTextTheme = 'lib/core/utils/theme/text_theme.dart';
+  static const String tokenTokenService =
+      'lib/data/services/auth/token/token_service.dart';
   static const String widgetsMainBackground =
       'lib/presentation/initial/widgets/main_background.dart';
   static const String widgetsMainContainer =
