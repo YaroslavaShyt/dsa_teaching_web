@@ -2,135 +2,88 @@
 class Assets {
   Assets._();
 
-  static const String animatedGesturesTapAnimatedWidget =
-      'lib/presentation/initial/widgets/animated_gestures/tap_animated_widget.dart';
+  static const String animatedGesturesTapAnimatedWidget = 'lib/presentation/initial/widgets/animated_gestures/tap_animated_widget.dart';
   static const String animationsError = 'assets/animations/error.json';
   static const String animationsRobot = 'assets/animations/robot.json';
   static const String animationsSadRobot = 'assets/animations/sad_robot.json';
   static const String animationsStar = 'assets/animations/star.json';
-  static const String authAuthFactory =
-      'lib/presentation/initial/auth/auth_factory.dart';
+  static const String authAuthFactory = 'lib/presentation/initial/auth/auth_factory.dart';
   static const String authAuthRepository = 'lib/data/auth/auth_repository.dart';
   static const String authAuthResponse = 'lib/data/auth/auth_response.dart';
-  static const String authAuthScreen =
-      'lib/presentation/initial/auth/auth_screen.dart';
-  static const String authAuthService =
-      'lib/data/services/auth/auth_service.dart';
+  static const String authAuthScreen = 'lib/presentation/initial/auth/auth_screen.dart';
+  static const String authAuthService = 'lib/data/services/auth/auth_service.dart';
   static const String authAuthState = 'lib/data/services/auth/auth_state.dart';
-  static const String authIauthRepository =
-      'lib/domain/auth/iauth_repository.dart';
+  static const String authIauthRepository = 'lib/domain/auth/iauth_repository.dart';
   static const String authIauthResponse = 'lib/domain/auth/iauth_response.dart';
-  static const String authIauthService =
-      'lib/domain/services/auth/iauth_service.dart';
+  static const String authIauthService = 'lib/domain/services/auth/iauth_service.dart';
   static const String authIsignInModel = 'lib/domain/auth/isign_in_model.dart';
   static const String authIsignUpModel = 'lib/domain/auth/isign_up_model.dart';
-  static const String authItokenService =
-      'lib/domain/services/auth/itoken_service.dart';
+  static const String authItokenService = 'lib/domain/services/auth/itoken_service.dart';
   static const String authSignInModel = 'lib/data/auth/sign_in_model.dart';
   static const String authSignUpModel = 'lib/data/auth/sign_up_model.dart';
-  static const String avatarsAvatar1 =
-      'assets/animations/avatars/avatar_1.json';
-  static const String avatarsAvatar2 =
-      'assets/animations/avatars/avatar_2.json';
-  static const String avatarsAvatar3 =
-      'assets/animations/avatars/avatar_3.json';
-  static const String avatarsAvatar4 =
-      'assets/animations/avatars/avatar_4.json';
-  static const String blocInitialCubit =
-      'lib/presentation/initial/bloc/initial_cubit.dart';
-  static const String blocInitialState =
-      'lib/presentation/initial/bloc/initial_state.dart';
-  static const String buttonsMainOutlinedButton =
-      'lib/presentation/initial/widgets/buttons/main_outlined_button.dart';
+  static const String avatarsAvatar1 = 'assets/animations/avatars/avatar_1.json';
+  static const String avatarsAvatar2 = 'assets/animations/avatars/avatar_2.json';
+  static const String avatarsAvatar3 = 'assets/animations/avatars/avatar_3.json';
+  static const String avatarsAvatar4 = 'assets/animations/avatars/avatar_4.json';
+  static const String blocInitialCubit = 'lib/presentation/initial/bloc/initial_cubit.dart';
+  static const String blocInitialState = 'lib/presentation/initial/bloc/initial_state.dart';
+  static const String buttonsMainOutlinedButton = 'lib/presentation/initial/widgets/buttons/main_outlined_button.dart';
   static const String constantsAnimation = 'lib/core/constants/animation.dart';
-  static const String constantsAnimationAssets =
-      'lib/core/constants/animation_assets.dart';
-  static const String constantsAudioAssets =
-      'lib/core/constants/audio_assets.dart';
+  static const String constantsAnimationAssets = 'lib/core/constants/animation_assets.dart';
+  static const String constantsAudioAssets = 'lib/core/constants/audio_assets.dart';
   static const String constantsDuration = 'lib/core/constants/duration.dart';
-  static const String constantsImageAssets =
-      'lib/core/constants/image_assets.dart';
+  static const String constantsImageAssets = 'lib/core/constants/image_assets.dart';
   static const String constantsSystem = 'lib/core/constants/system.dart';
-  static const String errorErrorFactory =
-      'lib/presentation/initial/widgets/placeholders/error/error_factory.dart';
-  static const String errorErrorScreen =
-      'lib/presentation/initial/widgets/placeholders/error/error_screen.dart';
+  static const String errorErrorFactory = 'lib/presentation/initial/widgets/placeholders/error/error_factory.dart';
+  static const String errorErrorScreen = 'lib/presentation/initial/widgets/placeholders/error/error_screen.dart';
   static const String generatedAssets = 'lib/generated/assets.dart';
-  static const String homeHomeFactory =
-      'lib/presentation/initial/home/home_factory.dart';
-  static const String homeHomeScreen =
-      'lib/presentation/initial/home/home_screen.dart';
-  static const String initialInitialFactory =
-      'lib/presentation/initial/initial_factory.dart';
-  static const String initialInitialScreen =
-      'lib/presentation/initial/initial_screen.dart';
-  static const String inputMainTextField =
-      'lib/presentation/initial/widgets/input/main_text_field.dart';
-  static const String interceptorsAuthInterceptor =
-      'lib/data/networking/interceptors/auth_interceptor.dart';
-  static const String interceptorsLoggerInterceptor =
-      'lib/data/networking/interceptors/logger_interceptor.dart';
+  static const String homeHomeFactory = 'lib/presentation/initial/home/home_factory.dart';
+  static const String homeHomeScreen = 'lib/presentation/initial/home/home_screen.dart';
+  static const String initialInitialFactory = 'lib/presentation/initial/initial_factory.dart';
+  static const String initialInitialScreen = 'lib/presentation/initial/initial_screen.dart';
+  static const String inputMainTextField = 'lib/presentation/initial/widgets/input/main_text_field.dart';
+  static const String interceptorsAuthInterceptor = 'lib/data/networking/interceptors/auth_interceptor.dart';
+  static const String interceptorsLoggerInterceptor = 'lib/data/networking/interceptors/logger_interceptor.dart';
   static const String libMain = 'lib/main.dart';
-  static const String loadersLoaderFactory =
-      'lib/presentation/initial/widgets/placeholders/loaders/loader_factory.dart';
-  static const String loadersLoaderScreen =
-      'lib/presentation/initial/widgets/placeholders/loaders/loader_screen.dart';
+  static const String loadersLoaderFactory = 'lib/presentation/initial/widgets/placeholders/loaders/loader_factory.dart';
+  static const String loadersLoaderScreen = 'lib/presentation/initial/widgets/placeholders/loaders/loader_screen.dart';
   static const String loggerLogger = 'lib/core/utils/logger/logger.dart';
-  static const String lottieAnimationsMainAnimationWidget =
-      'lib/presentation/initial/widgets/lottie_animations/main_animation_widget.dart';
-  static const String lottieAnimationsRobotAnimation =
-      'lib/presentation/initial/widgets/lottie_animations/robot_animation.dart';
-  static const String lottieAnimationsStarAnimation =
-      'lib/presentation/initial/widgets/lottie_animations/star_animation.dart';
-  static const String navigationInavigationUtil =
-      'lib/core/utils/navigation/inavigation_util.dart';
-  static const String navigationNavigationUtil =
-      'lib/core/utils/navigation/navigation_util.dart';
-  static const String navigationRouteObserver =
-      'lib/core/utils/navigation/route_observer.dart';
-  static const String navigationRoutes =
-      'lib/core/utils/navigation/routes.dart';
-  static const String networkingEndpoints =
-      'lib/data/networking/endpoints.dart';
-  static const String networkingInetworkingClient =
-      'lib/domain/networking/inetworking_client.dart';
-  static const String networkingNetworkingClient =
-      'lib/data/networking/networking_client.dart';
-  static const String nunitoNunitoBlack =
-      'assets/fonts/nunito/Nunito-Black.ttf';
+  static const String lottieAnimationsMainAnimationWidget = 'lib/presentation/initial/widgets/lottie_animations/main_animation_widget.dart';
+  static const String lottieAnimationsRobotAnimation = 'lib/presentation/initial/widgets/lottie_animations/robot_animation.dart';
+  static const String lottieAnimationsStarAnimation = 'lib/presentation/initial/widgets/lottie_animations/star_animation.dart';
+  static const String navigationInavigationUtil = 'lib/core/utils/navigation/inavigation_util.dart';
+  static const String navigationNavigationUtil = 'lib/core/utils/navigation/navigation_util.dart';
+  static const String navigationRouteObserver = 'lib/core/utils/navigation/route_observer.dart';
+  static const String navigationRoutes = 'lib/core/utils/navigation/routes.dart';
+  static const String networkingEndpoints = 'lib/data/networking/endpoints.dart';
+  static const String networkingInetworkingClient = 'lib/domain/networking/inetworking_client.dart';
+  static const String networkingNetworkingClient = 'lib/data/networking/networking_client.dart';
+  static const String nunitoNunitoBlack = 'assets/fonts/nunito/Nunito-Black.ttf';
   static const String nunitoNunitoBold = 'assets/fonts/nunito/Nunito-Bold.ttf';
-  static const String nunitoNunitoRegular =
-      'assets/fonts/nunito/Nunito-Regular.ttf';
-  static const String popupPopup =
-      'lib/presentation/initial/widgets/popup/popup.dart';
-  static const String popupPopupMixin =
-      'lib/presentation/initial/widgets/popup/popup_mixin.dart';
+  static const String nunitoNunitoRegular = 'assets/fonts/nunito/Nunito-Regular.ttf';
+  static const String popupPopup = 'lib/presentation/initial/widgets/popup/popup.dart';
+  static const String popupPopupMixin = 'lib/presentation/initial/widgets/popup/popup_mixin.dart';
   static const String presentationApp = 'lib/presentation/app.dart';
-  static const String routerRouter =
-      'lib/core/utils/navigation/router/router.dart';
-  static const String scrollMainScrollBar =
-      'lib/presentation/initial/widgets/scroll/main_scroll_bar.dart';
-  static const String serviceLocatorServiceLocator =
-      'lib/core/utils/service_locator/service_locator.dart';
-  static const String storageIlocalStorage =
-      'lib/domain/storage/ilocal_storage.dart';
-  static const String storageLocalStorage =
-      'lib/data/storage/local_storage.dart';
-  static const String tabBarMainTabBar =
-      'lib/presentation/initial/widgets/tab_bar/main_tab_bar.dart';
-  static const String themeAppColorTheme =
-      'lib/core/utils/theme/app_color_theme.dart';
-  static const String themeColorPalette =
-      'lib/core/utils/theme/color_palette.dart';
-  static const String themeScrollBarTheme =
-      'lib/core/utils/theme/scroll_bar_theme.dart';
+  static const String routerRouter = 'lib/core/utils/navigation/router/router.dart';
+  static const String scrollMainScrollBar = 'lib/presentation/initial/widgets/scroll/main_scroll_bar.dart';
+  static const String serviceLocatorServiceLocator = 'lib/core/utils/service_locator/service_locator.dart';
+  static const String storageIlocalStorage = 'lib/domain/storage/ilocal_storage.dart';
+  static const String storageLocalStorage = 'lib/data/storage/local_storage.dart';
+  static const String tabBarMainTabBar = 'lib/presentation/initial/widgets/tab_bar/main_tab_bar.dart';
+  static const String themeAppColorTheme = 'lib/core/utils/theme/app_color_theme.dart';
+  static const String themeColorPalette = 'lib/core/utils/theme/color_palette.dart';
+  static const String themeScrollBarTheme = 'lib/core/utils/theme/scroll_bar_theme.dart';
   static const String themeTextTheme = 'lib/core/utils/theme/text_theme.dart';
-  static const String tokenTokenService =
-      'lib/data/services/auth/token/token_service.dart';
-  static const String widgetsMainBackground =
-      'lib/presentation/initial/widgets/main_background.dart';
-  static const String widgetsMainContainer =
-      'lib/presentation/initial/widgets/main_container.dart';
-  static const String widgetsMainShadow =
-      'lib/presentation/initial/widgets/main_shadow.dart';
+  static const String tokenTokenService = 'lib/data/services/auth/token/token_service.dart';
+  static const String userIuser = 'lib/domain/user/iuser.dart';
+  static const String userIuserRepository = 'lib/domain/user/iuser_repository.dart';
+  static const String userIuserService = 'lib/domain/services/user/iuser_service.dart';
+  static const String userUser = 'lib/data/user/user.dart';
+  static const String userUserRepository = 'lib/data/user/user_repository.dart';
+  static const String userUserService = 'lib/data/services/user/user_service.dart';
+  static const String userUserState = 'lib/data/services/user/user_state.dart';
+  static const String widgetsMainBackground = 'lib/presentation/initial/widgets/main_background.dart';
+  static const String widgetsMainContainer = 'lib/presentation/initial/widgets/main_container.dart';
+  static const String widgetsMainShadow = 'lib/presentation/initial/widgets/main_shadow.dart';
+
 }

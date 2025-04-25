@@ -1,0 +1,61 @@
+import 'package:dio/dio.dart';
+import 'package:dsa_teaching_web/data/user/user.dart';
+
+import '../../core/utils/logger/logger.dart';
+import '../../domain/networking/inetworking_client.dart';
+import '../../domain/user/iuser.dart';
+import '../../domain/user/iuser_repository.dart';
+import '../networking/endpoints.dart';
+
+class UserRepository implements IUserRepository {
+  UserRepository({
+    required INetworkingClient networkingClient,
+  }) : _networkingClient = networkingClient;
+
+  final INetworkingClient _networkingClient;
+
+  @override
+  Future<IUser?> getUser() async {
+    try {
+      final Response? response = await _networkingClient.get(
+        Endpoints.userEndpoint,
+      );
+
+      if (response == null) return null;
+
+      if (response.statusCode == 200) {
+        return User.fromJson(response.data);
+      }
+    } catch (error) {
+      logger.e(error);
+      rethrow;
+    }
+    return null;
+  }
+
+  @override
+  Future<void> updateUser(Map<String, String> data) async {
+    try {
+      await _networkingClient.put(
+        Endpoints.userEndpoint,
+        body: data,
+      );
+    } catch (error) {
+      logger.e(error);
+    }
+  }
+
+  @override
+  Future<bool> deleteUser() async {
+    try {
+      final Response? response =
+          await _networkingClient.delete(Endpoints.userEndpoint);
+      if (response == null) return false;
+
+      if (response.statusCode == 200) return true;
+    } catch (error) {
+      logger.e(error);
+    }
+    return false;
+  }
+}
