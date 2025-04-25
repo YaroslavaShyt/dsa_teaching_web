@@ -2,6 +2,7 @@ import 'package:dsa_teaching_web/core/utils/navigation/inavigation_util.dart';
 import 'package:dsa_teaching_web/core/utils/navigation/navigation_util.dart';
 import 'package:dsa_teaching_web/data/auth/auth_repository.dart';
 import 'package:dsa_teaching_web/data/networking/networking_client.dart';
+import 'package:dsa_teaching_web/data/services/auth/token/token_service.dart';
 import 'package:dsa_teaching_web/data/user/user_repository.dart';
 import 'package:dsa_teaching_web/domain/networking/inetworking_client.dart';
 import 'package:dsa_teaching_web/domain/storage/ilocal_storage.dart';
@@ -46,7 +47,11 @@ class ServiceLocator {
     );
   }
 
-  static void _initServices() {}
+  static void _initServices() {
+    sl.registerFactory<ITokenService>(
+      () => TokenService(storage: sl.get<ILocalStorage>()),
+    );
+  }
 
   static Future<void> _initLocalStorage() async {
     final SharedPreferences sharedPref = await SharedPreferences.getInstance();
