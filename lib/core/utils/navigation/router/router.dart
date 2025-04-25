@@ -1,6 +1,6 @@
 import 'package:dsa_teaching_web/core/utils/navigation/routes.dart';
-import 'package:dsa_teaching_web/presenation/initial/auth/auth_factory.dart';
-import 'package:dsa_teaching_web/presenation/initial/initial_factory.dart';
+import 'package:dsa_teaching_web/presentation/initial/auth/auth_factory.dart';
+import 'package:dsa_teaching_web/presentation/initial/initial_factory.dart';
 import 'package:flutter/material.dart';
 
 class AppRouter {
