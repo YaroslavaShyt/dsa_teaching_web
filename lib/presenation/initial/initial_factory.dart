@@ -1,8 +1,19 @@
+import 'package:dsa_teaching_web/presenation/initial/bloc/initial_cubit.dart';
 import 'package:dsa_teaching_web/presenation/initial/initial_screen.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class InitialFactory {
   static Widget build() {
-    return InitialScreen();
+    return BlocProvider<InitialCubit>(
+      create: (context) => InitialCubit(),
+      child: Builder(
+        builder: (context) {
+          return InitialScreen(
+            cubit: BlocProvider.of<InitialCubit>(context),
+          );
+        },
+      ),
+    );
   }
 }
