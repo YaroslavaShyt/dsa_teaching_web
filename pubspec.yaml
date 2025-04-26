@@ -82,3 +82,12 @@ flutter:
     - assets/localization/
     - assets/animations/
     - lib/core/localization/
+
+  fonts:
+    - family: Nunito
+      fonts:
+        - asset: assets/fonts/nunito/Nunito-Regular.ttf
+          style: normal
+        - asset: assets/fonts/nunito/Nunito-Black.ttf
+          style: normal
+          weight: 700

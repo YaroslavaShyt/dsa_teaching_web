@@ -74,7 +74,11 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
       final ILessonTheory? theory = data.last as ILessonTheory?;
       final IGame? game = data.first as IGame?;
 
-      emit(state.copyWith(selectedTheory: theory, selectedGame: game));
+      emit(state.copyWith(
+        selectedTheory: theory,
+        selectedGame: game,
+        selectedLessonId: lessonId,
+      ));
     } catch (error) {
       logger.e(error);
     }

@@ -9,7 +9,7 @@ class TopicDetailsState extends Equatable {
   const TopicDetailsState({
     this.topic,
     this.status = TopicDetailsStatus.loading,
-    this.selectedLessonId = '',
+    this.selectedLessonId,
     this.selectedGame,
     this.selectedTheory,
   });
@@ -17,7 +17,7 @@ class TopicDetailsState extends Equatable {
   TopicDetailsState copyWith({
     ITopic? topic,
     TopicDetailsStatus? status,
-    String? selectedLessonId,
+    int? selectedLessonId,
     ILessonTheory? selectedTheory,
     IGame? selectedGame,
   }) {
@@ -30,7 +30,7 @@ class TopicDetailsState extends Equatable {
     );
   }
 
-  final String selectedLessonId;
+  final int? selectedLessonId;
   final TopicDetailsStatus status;
   final ITopic? topic;
   final ILessonTheory? selectedTheory;
