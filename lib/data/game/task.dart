@@ -42,7 +42,7 @@ class Task implements ITask {
   final List<String> answerOptions;
 
   @override
-  final String correctAnswer;
+  String correctAnswer;
 
   @override
   final GameAnswersType type;

@@ -51,6 +51,11 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
     }
   }
 
+  void changeMode() {
+    final Mode newMode = state.mode == Mode.read ? Mode.edit : Mode.read;
+    emit(state.copyWith(mode: newMode));
+  }
+
   ITopic? _fetchTopic() {
     for (var category in _lessonService.summary) {
       if (category.title == _categoryName) {

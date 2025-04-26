@@ -5,6 +5,8 @@ import 'package:equatable/equatable.dart';
 
 enum TopicDetailsStatus { loading, success, nothingFound }
 
+enum Mode { read, edit }
+
 class TopicDetailsState extends Equatable {
   const TopicDetailsState({
     this.topic,
@@ -12,6 +14,7 @@ class TopicDetailsState extends Equatable {
     this.selectedLessonId,
     this.selectedGame,
     this.selectedTheory,
+    this.mode = Mode.read,
   });
 
   TopicDetailsState copyWith({
@@ -20,6 +23,7 @@ class TopicDetailsState extends Equatable {
     int? selectedLessonId,
     ILessonTheory? selectedTheory,
     IGame? selectedGame,
+    Mode? mode,
   }) {
     return TopicDetailsState(
       topic: topic ?? this.topic,
@@ -27,6 +31,7 @@ class TopicDetailsState extends Equatable {
       selectedLessonId: selectedLessonId ?? this.selectedLessonId,
       selectedGame: selectedGame ?? this.selectedGame,
       selectedTheory: selectedTheory ?? this.selectedTheory,
+      mode: mode ?? this.mode,
     );
   }
 
@@ -35,6 +40,7 @@ class TopicDetailsState extends Equatable {
   final ITopic? topic;
   final ILessonTheory? selectedTheory;
   final IGame? selectedGame;
+  final Mode mode;
 
   @override
   List<Object?> get props => [
@@ -43,5 +49,6 @@ class TopicDetailsState extends Equatable {
         selectedLessonId,
         selectedTheory,
         selectedGame,
+        mode,
       ];
 }

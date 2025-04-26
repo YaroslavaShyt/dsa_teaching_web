@@ -1,4 +1,5 @@
 import 'package:dsa_teaching_web/presentation/initial/topic_details/bloc/topic_details_cubit.dart';
+import 'package:dsa_teaching_web/presentation/initial/topic_details/widgets/editable_info_widget.dart';
 import 'package:dsa_teaching_web/presentation/initial/topic_details/widgets/info_widget.dart';
 import 'package:dsa_teaching_web/presentation/initial/topic_details/widgets/lesson_list.dart';
 import 'package:dsa_teaching_web/presentation/initial/topic_details/widgets/select_lesson_placeholder.dart';
@@ -48,16 +49,25 @@ class TopicDetailsScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         LessonList(
+                          onTap: cubit.changeMode,
+                          mode: state.mode,
                           selectedLesson: state.selectedLessonId ?? 0,
                           lessons: state.topic!,
                           onLessonSelected: cubit.onLessonSelected,
                         ),
                         if (state.selectedGame != null &&
-                            state.selectedTheory != null)
-                          InfoWidget(
-                            theory: state.selectedTheory!,
-                            game: state.selectedGame!,
-                          ),
+                            state.selectedTheory != null) ...[
+                          if (state.mode == Mode.read)
+                            InfoWidget(
+                              theory: state.selectedTheory!,
+                              game: state.selectedGame!,
+                            ),
+                          if (state.mode == Mode.edit)
+                            EditableInfoWidget(
+                              theory: state.selectedTheory!,
+                              game: state.selectedGame!,
+                            ),
+                        ],
                         if (state.selectedGame == null &&
                             state.selectedTheory == null)
                           const SelectLessonPlaceholder(),

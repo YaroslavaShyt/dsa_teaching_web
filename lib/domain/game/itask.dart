@@ -15,6 +15,6 @@ abstract interface class ITask {
   final int questionNumber;
   final String question;
   final List<String> answerOptions;
-  final String correctAnswer;
+  String correctAnswer;
   final GameAnswersType type;
 }
