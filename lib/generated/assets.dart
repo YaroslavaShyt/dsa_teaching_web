@@ -188,6 +188,8 @@ class Assets {
       'lib/presentation/initial/topic_details/widgets/form_widget.dart';
   static const String widgetsInfoWidget =
       'lib/presentation/initial/topic_details/widgets/info_widget.dart';
+  static const String widgetsLessonList =
+      'lib/presentation/initial/topic_details/widgets/lesson_list.dart';
   static const String widgetsLessonNameWidget =
       'lib/presentation/initial/topic_details/widgets/lesson_name_widget.dart';
   static const String widgetsMainBackground =
@@ -196,6 +198,8 @@ class Assets {
       'lib/presentation/initial/widgets/main_container.dart';
   static const String widgetsMainShadow =
       'lib/presentation/initial/widgets/main_shadow.dart';
+  static const String widgetsSelectLessonPlaceholder =
+      'lib/presentation/initial/topic_details/widgets/select_lesson_placeholder.dart';
   static const String widgetsTopicsList =
       'lib/presentation/initial/home/widgets/topics_list.dart';
 }
