@@ -40,12 +40,22 @@ class Assets {
       'lib/presentation/initial/auth/bloc/auth_cubit.dart';
   static const String blocAuthState =
       'lib/presentation/initial/auth/bloc/auth_state.dart';
+  static const String blocHomeCubit =
+      'lib/presentation/initial/home/bloc/home_cubit.dart';
+  static const String blocHomeState =
+      'lib/presentation/initial/home/bloc/home_state.dart';
   static const String blocInitialCubit =
       'lib/presentation/initial/bloc/initial_cubit.dart';
   static const String blocInitialState =
       'lib/presentation/initial/bloc/initial_state.dart';
+  static const String blocTopicDetailsCubit =
+      'lib/presentation/initial/topic_details/bloc/topic_details_cubit.dart';
+  static const String blocTopicDetailsState =
+      'lib/presentation/initial/topic_details/bloc/topic_details_state.dart';
   static const String buttonsMainOutlinedButton =
       'lib/presentation/initial/widgets/buttons/main_outlined_button.dart';
+  static const String categoryCategory = 'lib/data/category/category.dart';
+  static const String categoryIcategory = 'lib/domain/category/icategory.dart';
   static const String constantsAnimation = 'lib/core/constants/animation.dart';
   static const String constantsAnimationAssets =
       'lib/core/constants/animation_assets.dart';
@@ -59,6 +69,12 @@ class Assets {
       'lib/presentation/initial/widgets/placeholders/error/error_factory.dart';
   static const String errorErrorScreen =
       'lib/presentation/initial/widgets/placeholders/error/error_screen.dart';
+  static const String gameGame = 'lib/data/game/game.dart';
+  static const String gameGameAnswersType =
+      'lib/domain/game/game_answers_type.dart';
+  static const String gameIgame = 'lib/domain/game/igame.dart';
+  static const String gameItask = 'lib/domain/game/itask.dart';
+  static const String gameTask = 'lib/data/game/task.dart';
   static const String generatedAssets = 'lib/generated/assets.dart';
   static const String homeHomeFactory =
       'lib/presentation/initial/home/home_factory.dart';
@@ -74,6 +90,20 @@ class Assets {
       'lib/data/networking/interceptors/auth_interceptor.dart';
   static const String interceptorsLoggerInterceptor =
       'lib/data/networking/interceptors/logger_interceptor.dart';
+  static const String lessonIlesson = 'lib/domain/lesson/ilesson.dart';
+  static const String lessonIlessonPlan = 'lib/domain/lesson/ilesson_plan.dart';
+  static const String lessonIlessonRepository =
+      'lib/domain/lesson/ilesson_repository.dart';
+  static const String lessonIlessonService =
+      'lib/domain/services/lesson/ilesson_service.dart';
+  static const String lessonLesson = 'lib/data/lesson/lesson.dart';
+  static const String lessonLessonPlan = 'lib/data/lesson/lesson_plan.dart';
+  static const String lessonLessonRepoParser =
+      'lib/data/lesson/lesson_repo_parser.dart';
+  static const String lessonLessonRepository =
+      'lib/data/lesson/lesson_repository.dart';
+  static const String lessonLessonService =
+      'lib/data/services/lesson/lesson_service.dart';
   static const String libMain = 'lib/main.dart';
   static const String loadersLoaderFactory =
       'lib/presentation/initial/widgets/placeholders/loaders/loader_factory.dart';
@@ -129,8 +159,19 @@ class Assets {
   static const String themeScrollBarTheme =
       'lib/core/utils/theme/scroll_bar_theme.dart';
   static const String themeTextTheme = 'lib/core/utils/theme/text_theme.dart';
+  static const String theoryIlessonTheory =
+      'lib/domain/theory/ilesson_theory.dart';
+  static const String theoryItheory = 'lib/domain/theory/itheory.dart';
+  static const String theoryLessonTheory = 'lib/data/theory/lesson_theory.dart';
+  static const String theoryTheory = 'lib/data/theory/theory.dart';
   static const String tokenTokenService =
       'lib/data/services/auth/token/token_service.dart';
+  static const String topicDetailsTopicDetailsFactory =
+      'lib/presentation/initial/topic_details/topic_details_factory.dart';
+  static const String topicDetailsTopicDetailsScreen =
+      'lib/presentation/initial/topic_details/topic_details_screen.dart';
+  static const String topicItopic = 'lib/domain/topic/itopic.dart';
+  static const String topicTopic = 'lib/data/topic/topic.dart';
   static const String userIuser = 'lib/domain/user/iuser.dart';
   static const String userIuserRepository =
       'lib/domain/user/iuser_repository.dart';
@@ -141,10 +182,20 @@ class Assets {
   static const String userUserService =
       'lib/data/services/user/user_service.dart';
   static const String userUserState = 'lib/data/services/user/user_state.dart';
+  static const String widgetsCourseList =
+      'lib/presentation/initial/home/widgets/course_list.dart';
+  static const String widgetsFormWidget =
+      'lib/presentation/initial/topic_details/widgets/form_widget.dart';
+  static const String widgetsInfoWidget =
+      'lib/presentation/initial/topic_details/widgets/info_widget.dart';
+  static const String widgetsLessonNameWidget =
+      'lib/presentation/initial/topic_details/widgets/lesson_name_widget.dart';
   static const String widgetsMainBackground =
       'lib/presentation/initial/widgets/main_background.dart';
   static const String widgetsMainContainer =
       'lib/presentation/initial/widgets/main_container.dart';
   static const String widgetsMainShadow =
       'lib/presentation/initial/widgets/main_shadow.dart';
+  static const String widgetsTopicsList =
+      'lib/presentation/initial/home/widgets/topics_list.dart';
 }

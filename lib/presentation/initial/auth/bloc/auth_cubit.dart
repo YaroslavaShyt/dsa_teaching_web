@@ -10,7 +10,11 @@ class AuthCubit extends Cubit<AuthState> {
   AuthCubit({
     required IAuthService authService,
   })  : _authService = authService,
-        super(AuthState());
+        super(AuthState(
+          login: 'slavka112015@ukr.net',
+          password: 'slavka',
+          isButtonActive: true,
+        ));
 
   final IAuthService _authService;
 

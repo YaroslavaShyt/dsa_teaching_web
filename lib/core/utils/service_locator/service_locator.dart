@@ -3,14 +3,18 @@ import 'package:dsa_teaching_web/core/utils/navigation/navigation_util.dart';
 import 'package:dsa_teaching_web/data/auth/auth_repository.dart';
 import 'package:dsa_teaching_web/data/networking/networking_client.dart';
 import 'package:dsa_teaching_web/data/services/auth/token/token_service.dart';
+import 'package:dsa_teaching_web/data/services/lesson/lesson_service.dart';
 import 'package:dsa_teaching_web/data/user/user_repository.dart';
+import 'package:dsa_teaching_web/domain/lesson/ilesson_repository.dart';
 import 'package:dsa_teaching_web/domain/networking/inetworking_client.dart';
+import 'package:dsa_teaching_web/domain/services/lesson/ilesson_service.dart';
 import 'package:dsa_teaching_web/domain/storage/ilocal_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../data/lesson/lesson_repository.dart';
 import '../../../data/services/auth/auth_service.dart';
 import '../../../data/services/user/user_service.dart';
 import '../../../data/storage/local_storage.dart';
@@ -21,9 +25,9 @@ import '../../../domain/user/iuser_repository.dart';
 final GetIt sl = GetIt.instance;
 
 class ServiceLocator {
-  static void init() {
+  static Future<void> init() async {
     _initNavigation();
-    _initLocalStorage();
+    await _initLocalStorage();
     _initNetworking();
     _initRepos();
     _initServices();
@@ -34,7 +38,9 @@ class ServiceLocator {
   }
 
   static void _initNetworking() {
-    sl.registerFactory<INetworkingClient>(() => NetworkingClient());
+    sl.registerFactory<INetworkingClient>(() => NetworkingClient(
+          localStorage: sl<ILocalStorage>(),
+        ));
   }
 
   static void _initRepos() {
@@ -45,11 +51,19 @@ class ServiceLocator {
     sl.registerFactory<IUserRepository>(
       () => UserRepository(networkingClient: networkingClient),
     );
+    sl.registerFactory<ILessonRepository>(
+      () => LessonRepository(networkingClient: networkingClient),
+    );
   }
 
   static void _initServices() {
     sl.registerFactory<ITokenService>(
       () => TokenService(storage: sl.get<ILocalStorage>()),
+    );
+    sl.registerSingleton<ILessonService>(
+      LessonService(
+        lessonRepository: sl<ILessonRepository>(),
+      ),
     );
   }
 

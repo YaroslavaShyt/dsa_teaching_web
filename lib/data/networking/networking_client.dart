@@ -1,10 +1,15 @@
 import 'package:dio/dio.dart';
-
 import 'package:dsa_teaching_web/data/networking/endpoints.dart';
 import 'package:dsa_teaching_web/domain/networking/inetworking_client.dart';
+import 'package:dsa_teaching_web/domain/storage/ilocal_storage.dart';
+
+import 'interceptors/auth_interceptor.dart';
+import 'interceptors/logger_interceptor.dart';
 
 class NetworkingClient implements INetworkingClient {
-  NetworkingClient() {
+  NetworkingClient({
+    required ILocalStorage localStorage,
+  }) {
     _dio = Dio(
       BaseOptions(
         baseUrl: Endpoints.baseEndpoint,
@@ -13,12 +18,12 @@ class NetworkingClient implements INetworkingClient {
         },
         responseType: ResponseType.json,
       ),
-    );
-    // ..interceptors.addAll([
-    //   LoggerInterceptor(),
-    //   AuthInterceptor(storage: secureStorage),
-    // ])
-    // ..transformer = BackgroundTransformer();
+    )
+      ..interceptors.addAll([
+        LoggerInterceptor(),
+        AuthInterceptor(storage: localStorage),
+      ])
+      ..transformer = BackgroundTransformer();
   }
 
   late final Dio _dio;

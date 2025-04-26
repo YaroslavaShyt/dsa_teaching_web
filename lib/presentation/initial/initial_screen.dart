@@ -2,6 +2,7 @@ import 'package:dsa_teaching_web/presentation/initial/auth/auth_factory.dart';
 import 'package:dsa_teaching_web/presentation/initial/bloc/initial_cubit.dart';
 import 'package:dsa_teaching_web/presentation/initial/bloc/initial_state.dart';
 import 'package:dsa_teaching_web/presentation/initial/home/home_factory.dart';
+import 'package:dsa_teaching_web/presentation/initial/widgets/placeholders/loaders/loader_factory.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,7 +21,7 @@ class InitialScreen extends StatelessWidget {
         return switch (state.status) {
           InitialStatus.auth => AuthFactory.build(),
           InitialStatus.main => HomeFactory.build(),
-          InitialStatus.loading => AuthFactory.build(),
+          InitialStatus.loading => LoaderFactory.build(),
         };
       },
     );
