@@ -49,8 +49,29 @@ class TeachingRepository implements ITeachingRepository {
   }
 
   @override
-  Future<bool> updateLesson(ILesson lesson, IGame game) {
-    // TODO: implement updateLesson
-    throw UnimplementedError();
+  Future<bool> updateLesson(
+    ITopic topic,
+    ILesson lesson,
+    ITheory theory,
+    IGame game,
+  ) async {
+    try {
+      final Response? response = await _networkingClient.put(
+        Endpoints.updateLessonEndpoint(lesson.id!.toString()),
+        body: {
+          'topicId': topic.id.toString(),
+          ...lesson.toJson(),
+          ...theory.toJson(),
+          ...game.toJson(),
+        },
+      );
+
+      if (response?.statusCode == 201 || response?.statusCode == 200) {
+        return true;
+      }
+    } catch (error) {
+      logger.e(error);
+    }
+    return false;
   }
 }

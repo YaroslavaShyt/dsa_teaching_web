@@ -6,9 +6,18 @@ import '../theory/itheory.dart';
 
 abstract interface class ITeachingRepository {
   Future<bool> addLesson(
-      ITopic topic, ILesson lesson, ITheory theory, IGame game);
+    ITopic topic,
+    ILesson lesson,
+    ITheory theory,
+    IGame game,
+  );
 
-  Future<bool> updateLesson(ILesson lesson, IGame game);
+  Future<bool> updateLesson(
+    ITopic topic,
+    ILesson lesson,
+    ITheory theory,
+    IGame game,
+  );
 
   Future<bool> deleteLesson(String lessonId);
 }

@@ -1,6 +1,7 @@
 import 'package:dsa_teaching_web/core/utils/logger/logger.dart';
 import 'package:dsa_teaching_web/core/utils/navigation/inavigation_util.dart';
 import 'package:dsa_teaching_web/data/game/game.dart';
+import 'package:dsa_teaching_web/data/game/task.dart';
 import 'package:dsa_teaching_web/data/lesson/lesson.dart';
 import 'package:dsa_teaching_web/data/lesson/lesson_plan.dart';
 import 'package:dsa_teaching_web/data/theory/theory.dart';
@@ -115,28 +116,131 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
     required String theoryStep4,
     required int timeLimit,
     required List<ITask> tasks,
+    bool isNewLesson = false,
   }) async {
     try {
-      final bool isAdded = await _teachingRepository.addLesson(
-        _fetchTopic()!,
-        Lesson(
+      if (isNewLesson) {
+        await _addNew(
           title: title,
-          plan: LessonPlan(
-              step1: step1, step2: step2, step3: step3, step4: step4),
-        ),
-        Theory(
+          step1: step1,
+          step2: step2,
+          step3: step3,
+          step4: step4,
           theoryStep1: theoryStep1,
           theoryStep2: theoryStep2,
           theoryStep3: theoryStep3,
           theoryStep4: theoryStep4,
-        ),
-        Game(title: title, timeLimit: timeLimit, tasks: tasks),
-      );
-      if (isAdded) {
-        await init();
+          timeLimit: timeLimit,
+          tasks: tasks,
+        );
+        return;
       }
+      await _updateLesson(
+        title: title,
+        step1: step1,
+        step2: step2,
+        step3: step3,
+        step4: step4,
+        theoryStep1: theoryStep1,
+        theoryStep2: theoryStep2,
+        theoryStep3: theoryStep3,
+        theoryStep4: theoryStep4,
+        timeLimit: timeLimit,
+        tasks: tasks,
+      );
     } catch (error) {
       logger.e(error);
+    }
+  }
+
+  Future<void> _addNew({
+    required String title,
+    required String step1,
+    required String step2,
+    required String step3,
+    required String step4,
+    required String theoryStep1,
+    required String theoryStep2,
+    required String theoryStep3,
+    required String theoryStep4,
+    required int timeLimit,
+    required List<ITask> tasks,
+  }) async {
+    final bool isAdded = await _teachingRepository.addLesson(
+      _fetchTopic()!,
+      Lesson(
+        title: title,
+        plan: LessonPlan(
+          step1: step1,
+          step2: step2,
+          step3: step3,
+          step4: step4,
+        ),
+      ),
+      Theory(
+        theoryStep1: theoryStep1,
+        theoryStep2: theoryStep2,
+        theoryStep3: theoryStep3,
+        theoryStep4: theoryStep4,
+      ),
+      Game(title: title, timeLimit: timeLimit, tasks: tasks),
+    );
+    if (isAdded) {
+      await init();
+    }
+  }
+
+  Future<void> _updateLesson({
+    required String title,
+    required String step1,
+    required String step2,
+    required String step3,
+    required String step4,
+    required String theoryStep1,
+    required String theoryStep2,
+    required String theoryStep3,
+    required String theoryStep4,
+    required int timeLimit,
+    required List<ITask> tasks,
+  }) async {
+    final bool isUpdated = await _teachingRepository.updateLesson(
+      _fetchTopic()!,
+      Lesson(
+        id: state.selectedLessonId,
+        title: title,
+        plan: LessonPlan(
+          step1: step1,
+          step2: step2,
+          step3: step3,
+          step4: step4,
+        ),
+      ),
+      Theory(
+        theoryStep1: theoryStep1,
+        theoryStep2: theoryStep2,
+        theoryStep3: theoryStep3,
+        theoryStep4: theoryStep4,
+      ),
+      Game(
+        id: state.selectedGame!.id,
+        title: title,
+        timeLimit: timeLimit,
+        tasks: tasks
+            .map(
+              (task) => Task(
+                id: state.selectedGame!.tasks[tasks.indexOf(task)].id,
+                questionNumber: task.questionNumber,
+                question: task.question,
+                answerOptions: task.answerOptions,
+                correctAnswer: task.correctAnswer,
+                type: task.type,
+              ),
+            )
+            .toList(),
+      ),
+    );
+    if (isUpdated) {
+      await init();
     }
   }
 }

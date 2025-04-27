@@ -44,6 +44,7 @@ class Game implements IGame {
   @override
   Map<String, dynamic> toJson() {
     return {
+      'gameId': id,
       'gameName': title,
       'timeLimit': timeLimit,
       'gameTasks': tasks.map((task) => task.toJson()).toList(),

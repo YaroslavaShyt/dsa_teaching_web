@@ -16,12 +16,21 @@ class AddTasksForm extends StatefulWidget {
 }
 
 class _AddTasksFormState extends State<AddTasksForm> {
-  late List<int?> correctAnswers;
+  late List<String?> correctAnswers;
 
   @override
   void initState() {
     super.initState();
-    correctAnswers = List.filled(4, null);
+
+    correctAnswers = List.generate(4, (index) {
+      final text = widget.gameControllers[index][5].text;
+      for (int i = 1; i <= 4; i++) {
+        if (widget.gameControllers[index][i].text == text) {
+          return ['a', 'b', 'c', 'd'][i - 1];
+        }
+      }
+      return null;
+    });
   }
 
   @override
@@ -29,10 +38,11 @@ class _AddTasksFormState extends State<AddTasksForm> {
     return Column(
       children: List.generate(
         4,
-        (int index) => _buildForm(
+        (index) => _buildForm(
           context,
           number: index + 1,
           controllers: widget.gameControllers[index],
+          index: index,
         ),
       ),
     );
@@ -41,6 +51,7 @@ class _AddTasksFormState extends State<AddTasksForm> {
   Widget _buildForm(
     BuildContext context, {
     required int number,
+    required int index,
     required List<TextEditingController> controllers,
   }) {
     return MainContainer(
@@ -51,39 +62,25 @@ class _AddTasksFormState extends State<AddTasksForm> {
         spacing: 6,
         children: [
           MainTextField(
-            labelText: 'Питання $number',
-            controller: controllers[0],
-          ),
-          MainTextField(
-            labelText: 'a)',
-            controller: controllers[1],
-          ),
-          MainTextField(
-            labelText: 'b)',
-            controller: controllers[2],
-          ),
-          MainTextField(
-            labelText: 'c)',
-            controller: controllers[3],
-          ),
-          MainTextField(
-            labelText: 'd)',
-            controller: controllers[4],
-          ),
+              labelText: 'Питання $number', controller: controllers[0]),
+          MainTextField(labelText: 'a)', controller: controllers[1]),
+          MainTextField(labelText: 'b)', controller: controllers[2]),
+          MainTextField(labelText: 'c)', controller: controllers[3]),
+          MainTextField(labelText: 'd)', controller: controllers[4]),
           Row(
             spacing: 10,
             children: [
-              Text("Правильна відповідь:"),
-              DropdownButton(
+              const Text("Правильна відповідь:"),
+              DropdownButton<String>(
+                value: correctAnswers[index],
                 iconEnabledColor: Colors.white,
-                value: correctAnswers[number - 1],
-                items: [
-                  DropdownMenuItem(value: 1, child: Text('a)')),
-                  DropdownMenuItem(value: 2, child: Text('b)')),
-                  DropdownMenuItem(value: 3, child: Text('c)')),
-                  DropdownMenuItem(value: 4, child: Text('d)')),
+                items: const [
+                  DropdownMenuItem(value: 'a', child: Text('a)')),
+                  DropdownMenuItem(value: 'b', child: Text('b)')),
+                  DropdownMenuItem(value: 'c', child: Text('c)')),
+                  DropdownMenuItem(value: 'd', child: Text('d)')),
                 ],
-                onChanged: (value) => _onChanged(number - 1, value as int ?? 0),
+                onChanged: (value) => _onChanged(index, value),
               ),
             ],
           )
@@ -92,12 +89,20 @@ class _AddTasksFormState extends State<AddTasksForm> {
     );
   }
 
-  void _onChanged(int number, int value) {
+  void _onChanged(int questionIndex, String? selectedKey) {
     setState(() {
-      correctAnswers[number] = value;
+      correctAnswers[questionIndex] = selectedKey;
+
+      final index = switch (selectedKey) {
+        'a' => 1,
+        'b' => 2,
+        'c' => 3,
+        'd' => 4,
+        _ => 1,
+      };
+
+      widget.gameControllers[questionIndex][5].text =
+          widget.gameControllers[questionIndex][index].text;
     });
-    widget.gameControllers[number][5] =
-        TextEditingController(text: widget.gameControllers[number][value].text);
-    print(widget.gameControllers[number][5].text);
   }
 }

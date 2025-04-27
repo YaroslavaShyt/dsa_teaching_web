@@ -5,7 +5,6 @@ import 'package:dsa_teaching_web/domain/game/igame.dart';
 import 'package:dsa_teaching_web/domain/game/itask.dart';
 import 'package:dsa_teaching_web/domain/theory/ilesson_theory.dart';
 import 'package:dsa_teaching_web/presentation/initial/topic_details/widgets/editable_info/add_tasks_form.dart';
-import 'package:dsa_teaching_web/presentation/initial/topic_details/widgets/editable_info/game_tasks_list.dart';
 import 'package:dsa_teaching_web/presentation/initial/topic_details/widgets/editable_info/save_button.dart';
 import 'package:dsa_teaching_web/presentation/initial/widgets/main_container.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +31,7 @@ class EditableInfoWidget extends StatefulWidget {
     required String theoryStep4,
     required int timeLimit,
     required List<ITask> tasks,
+    required bool isNewLesson,
   }) saveInfo;
 
   @override
@@ -49,7 +49,7 @@ class _EditableInfoWidgetState extends State<EditableInfoWidget> {
   late TextEditingController theory3Controller;
   late TextEditingController theory4Controller;
 
-  final List<List<TextEditingController>> gameControllers = List.generate(
+  List<List<TextEditingController>> gameControllers = List.generate(
     4,
     (int index) => List.generate(6, (int index) => TextEditingController()),
   );
@@ -147,15 +147,10 @@ class _EditableInfoWidgetState extends State<EditableInfoWidget> {
                           fontWeight: FontWeight.w700,
                         ),
                       ),
-                      if (widget.game != null)
-                        ...widget.game!.tasks.map(
-                          (task) => GameTasksList(task: task),
-                        ),
                       const SizedBox(height: 30),
-                      if (widget.game == null)
-                        AddTasksForm(
-                          gameControllers: gameControllers,
-                        ),
+                      AddTasksForm(
+                        gameControllers: gameControllers,
+                      ),
                       SaveButton(
                         onPressed: _onSaveButtonPressed,
                       ),
@@ -183,6 +178,7 @@ class _EditableInfoWidgetState extends State<EditableInfoWidget> {
       theoryStep4: theory4Controller.text,
       timeLimit: 3600,
       tasks: _fetchTasks(),
+      isNewLesson: widget.theory == null,
     );
   }
 
@@ -223,6 +219,33 @@ class _EditableInfoWidgetState extends State<EditableInfoWidget> {
         TextEditingController(text: widget.theory?.lessonTheory.theoryStep3);
     theory4Controller =
         TextEditingController(text: widget.theory?.lessonTheory.theoryStep4);
+
+    if (widget.theory != null && widget.game != null) {
+      gameControllers = List.generate(
+        4,
+        (int indexG) => List.generate(
+          6,
+          (int index) {
+            if (index == 0) {
+              return TextEditingController(
+                text: widget.game!.tasks[indexG].question,
+              );
+            }
+            if (index == 5) {
+              return TextEditingController(
+                text: widget.game!.tasks[indexG].correctAnswer,
+              );
+            }
+            if (index >= 1 && index <= 4) {
+              return TextEditingController(
+                text: widget.game!.tasks[indexG].answerOptions[index - 1],
+              );
+            }
+            return TextEditingController();
+          },
+        ),
+      );
+    }
   }
 
   void _disposeControllers() {
