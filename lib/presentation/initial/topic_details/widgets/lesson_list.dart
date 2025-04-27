@@ -10,6 +10,7 @@ class LessonList extends StatelessWidget {
     required this.onLessonSelected,
     required this.onTap,
     required this.mode,
+    required this.onDelete,
     super.key,
   });
 
@@ -18,6 +19,7 @@ class LessonList extends StatelessWidget {
   final void Function(int, int, Mode) onLessonSelected;
   final Mode mode;
   final VoidCallback onTap;
+  final void Function(String) onDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +35,11 @@ class LessonList extends StatelessWidget {
                 onEditPressed: () {
                   onTap();
                   onLessonSelected(lesson.id!, lesson.gameId!, Mode.edit);
+                },
+                onDeletePressed: () {
+                  onTap();
+                  onLessonSelected(lesson.id!, lesson.gameId!, Mode.edit);
+                  onDelete(lesson.id!.toString());
                 },
                 isSelected: selectedLesson == lesson.id,
                 lesson: lesson,

@@ -1,3 +1,4 @@
+import 'package:dsa_teaching_web/data/services/auth/auth_service.dart';
 import 'package:dsa_teaching_web/presentation/initial/bloc/initial_cubit.dart';
 import 'package:dsa_teaching_web/presentation/initial/initial_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,7 +10,10 @@ import '../../data/services/user/user_state.dart';
 class InitialFactory {
   static Widget build() {
     return BlocProvider<InitialCubit>(
-      create: (context) => InitialCubit(),
+      create: (context) => InitialCubit(
+        userService: BlocProvider.of<UserService>(context),
+        authService: BlocProvider.of<AuthService>(context),
+      )..init(),
       child: BlocListener<UserService, UserState>(
         listenWhen: (prev, curr) => prev.status != curr.status,
         listener: (BuildContext context, UserState state) {

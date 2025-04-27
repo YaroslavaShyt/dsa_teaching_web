@@ -43,9 +43,19 @@ class TeachingRepository implements ITeachingRepository {
   }
 
   @override
-  Future<bool> deleteLesson(String lessonId) {
-    // TODO: implement deleteLesson
-    throw UnimplementedError();
+  Future<bool> deleteLesson(String lessonId) async {
+    try {
+      final Response? response = await _networkingClient.delete(
+        Endpoints.deleteLessonEndpoint(lessonId),
+      );
+
+      if (response?.statusCode == 201 || response?.statusCode == 200) {
+        return true;
+      }
+    } catch (error) {
+      logger.e(error);
+    }
+    return false;
   }
 
   @override

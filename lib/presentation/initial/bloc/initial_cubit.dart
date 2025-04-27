@@ -1,10 +1,29 @@
+import 'package:dsa_teaching_web/domain/services/auth/iauth_service.dart';
+import 'package:dsa_teaching_web/domain/services/user/iuser_service.dart';
 import 'package:dsa_teaching_web/presentation/initial/bloc/initial_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../data/services/user/user_state.dart';
 
 class InitialCubit extends Cubit<InitialState> {
-  InitialCubit() : super(const InitialState());
+  InitialCubit({
+    required IUserService userService,
+    required IAuthService authService,
+  })  : _authService = authService,
+        _userService = userService,
+        super(const InitialState());
+
+  final IAuthService _authService;
+  final IUserService _userService;
+
+  Future<void> init() async {
+    await _userService.init();
+    if (_userService.user == null) {
+      emit(state.copyWith(status: InitialStatus.auth));
+    } else {
+      emit(state.copyWith(status: InitialStatus.main));
+    }
+  }
 
   Future<void> onUserStateChanged(UserStatus status) async {
     return switch (status) {

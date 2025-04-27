@@ -180,6 +180,7 @@ class _EditableInfoWidgetState extends State<EditableInfoWidget> {
       tasks: _fetchTasks(),
       isNewLesson: widget.theory == null,
     );
+    _initControllers();
   }
 
   List<ITask> _fetchTasks() {

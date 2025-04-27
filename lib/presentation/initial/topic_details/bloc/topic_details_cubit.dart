@@ -1,5 +1,6 @@
 import 'package:dsa_teaching_web/core/utils/logger/logger.dart';
 import 'package:dsa_teaching_web/core/utils/navigation/inavigation_util.dart';
+import 'package:dsa_teaching_web/core/utils/navigation/routes.dart';
 import 'package:dsa_teaching_web/data/game/game.dart';
 import 'package:dsa_teaching_web/data/game/task.dart';
 import 'package:dsa_teaching_web/data/lesson/lesson.dart';
@@ -39,6 +40,10 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
   final ILessonRepository _lessonRepository;
   final ILessonService _lessonService;
   final ITeachingRepository _teachingRepository;
+
+  void onBackPressed() {
+    _navigationUtil.navigateToAndReplace(AppRoutes.routeInitial);
+  }
 
   Future<void> init() async {
     try {
@@ -241,6 +246,22 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
     );
     if (isUpdated) {
       await init();
+    }
+  }
+
+  Future<void> deleteLesson(String id) async {
+    try {
+      emit(state.copyWith(status: TopicDetailsStatus.loading));
+
+      final bool isDeleted = await _teachingRepository.deleteLesson(id);
+
+      if (isDeleted) {
+        await init();
+      } else {
+        emit(state.copyWith(status: TopicDetailsStatus.success));
+      }
+    } catch (error) {
+      logger.e(error);
     }
   }
 }

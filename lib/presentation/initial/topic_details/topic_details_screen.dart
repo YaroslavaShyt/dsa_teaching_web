@@ -39,6 +39,7 @@ class TopicDetailsScreen extends StatelessWidget {
                   TopicRowWidget(
                     title: state.topic!.title,
                     onAddPressed: cubit.addLesson,
+                    onBackPressed: cubit.onBackPressed,
                   ),
                   Container(
                     height: MediaQuery.sizeOf(context).height - 105,
@@ -47,6 +48,7 @@ class TopicDetailsScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         LessonList(
+                          onDelete: cubit.deleteLesson,
                           onTap: cubit.changeMode,
                           mode: state.mode,
                           selectedLesson: state.selectedLessonId ?? 0,

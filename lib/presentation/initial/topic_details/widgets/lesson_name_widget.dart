@@ -10,6 +10,7 @@ class LessonNameWidget extends StatefulWidget {
     required this.onTap,
     required this.isSelected,
     required this.onEditPressed,
+    required this.onDeletePressed,
     required this.mode,
     super.key,
   });
@@ -18,6 +19,7 @@ class LessonNameWidget extends StatefulWidget {
   final VoidCallback onTap;
   final bool isSelected;
   final VoidCallback onEditPressed;
+  final VoidCallback onDeletePressed;
   final Mode mode;
 
   @override
@@ -59,15 +61,29 @@ class _LessonNameWidgetState extends State<LessonNameWidget> {
             ),
           ),
           if (_isHovered || widget.isSelected)
-            MainContainer(
-              padding: const EdgeInsetsDirectional.all(4),
-              content: IconButton(
-                onPressed: widget.onEditPressed,
-                icon: Icon(
-                 widget.mode == Mode.read ? Icons.edit : Icons.close,
+            Row(
+              spacing: 10,
+              children: [
+                MainContainer(
+                  padding: const EdgeInsetsDirectional.all(4),
+                  content: IconButton(
+                    onPressed: widget.onEditPressed,
+                    icon: Icon(
+                     widget.mode == Mode.read ? Icons.edit : Icons.close,
+                    ),
+                  ),
                 ),
-              ),
-            )
+                MainContainer(
+                  padding: const EdgeInsetsDirectional.all(4),
+                  content: IconButton(
+                    onPressed: widget.onDeletePressed,
+                    icon: Icon(
+                      Icons.delete_rounded,
+                    ),
+                  ),
+                ),
+              ],
+            ),
         ],
       ),
     );
