@@ -2,6 +2,7 @@ import 'package:dsa_teaching_web/core/utils/navigation/inavigation_util.dart';
 import 'package:dsa_teaching_web/core/utils/service_locator/service_locator.dart';
 import 'package:dsa_teaching_web/domain/lesson/ilesson_repository.dart';
 import 'package:dsa_teaching_web/domain/services/lesson/ilesson_service.dart';
+import 'package:dsa_teaching_web/domain/teaching/iteaching_repository.dart';
 import 'package:dsa_teaching_web/presentation/initial/topic_details/bloc/topic_details_cubit.dart';
 import 'package:dsa_teaching_web/presentation/initial/topic_details/topic_details_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -27,6 +28,7 @@ class TopicDetailsFactory {
           categoryName: args.categoryName,
           topicName: args.topicName,
           lessonRepository: sl.get<ILessonRepository>(),
+          teachingRepository: sl.get<ITeachingRepository>(),
         )..init();
       },
       child: Builder(

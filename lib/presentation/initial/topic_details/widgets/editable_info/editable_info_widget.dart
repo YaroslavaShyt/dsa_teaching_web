@@ -1,5 +1,8 @@
 import 'package:dsa_teaching_web/core/utils/theme/text_theme.dart';
+import 'package:dsa_teaching_web/data/game/task.dart';
+import 'package:dsa_teaching_web/domain/game/game_answers_type.dart';
 import 'package:dsa_teaching_web/domain/game/igame.dart';
+import 'package:dsa_teaching_web/domain/game/itask.dart';
 import 'package:dsa_teaching_web/domain/theory/ilesson_theory.dart';
 import 'package:dsa_teaching_web/presentation/initial/topic_details/widgets/editable_info/add_tasks_form.dart';
 import 'package:dsa_teaching_web/presentation/initial/topic_details/widgets/editable_info/game_tasks_list.dart';
@@ -27,6 +30,8 @@ class EditableInfoWidget extends StatefulWidget {
     required String theoryStep2,
     required String theoryStep3,
     required String theoryStep4,
+    required int timeLimit,
+    required List<ITask> tasks,
   }) saveInfo;
 
   @override
@@ -46,7 +51,7 @@ class _EditableInfoWidgetState extends State<EditableInfoWidget> {
 
   final List<List<TextEditingController>> gameControllers = List.generate(
     4,
-    (int index) => List.generate(5, (int index) => TextEditingController()),
+    (int index) => List.generate(6, (int index) => TextEditingController()),
   );
 
   @override
@@ -176,7 +181,28 @@ class _EditableInfoWidgetState extends State<EditableInfoWidget> {
       theoryStep2: theory2Controller.text,
       theoryStep3: theory3Controller.text,
       theoryStep4: theory4Controller.text,
+      timeLimit: 3600,
+      tasks: _fetchTasks(),
     );
+  }
+
+  List<ITask> _fetchTasks() {
+    return gameControllers.map(
+      (controllersList) {
+        return Task(
+          questionNumber: gameControllers.indexOf(controllersList) + 1,
+          question: controllersList[0].text,
+          answerOptions: [
+            controllersList[1].text,
+            controllersList[2].text,
+            controllersList[3].text,
+            controllersList[4].text,
+          ],
+          correctAnswer: controllersList[5].text,
+          type: GameAnswersType.row,
+        );
+      },
+    ).toList();
   }
 
   void _initControllers() {

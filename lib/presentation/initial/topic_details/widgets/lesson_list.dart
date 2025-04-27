@@ -15,7 +15,7 @@ class LessonList extends StatelessWidget {
 
   final int selectedLesson;
   final ITopic lessons;
-  final void Function(int, Mode) onLessonSelected;
+  final void Function(int, int, Mode) onLessonSelected;
   final Mode mode;
   final VoidCallback onTap;
 
@@ -32,11 +32,12 @@ class LessonList extends StatelessWidget {
                 mode: mode,
                 onEditPressed: () {
                   onTap();
-                  onLessonSelected(lesson.id, Mode.edit);
+                  onLessonSelected(lesson.id!, lesson.gameId!, Mode.edit);
                 },
                 isSelected: selectedLesson == lesson.id,
                 lesson: lesson,
-                onTap: () => onLessonSelected(lesson.id, Mode.read),
+                onTap: () =>
+                    onLessonSelected(lesson.id!, lesson.gameId!, Mode.read),
               );
             },
           )

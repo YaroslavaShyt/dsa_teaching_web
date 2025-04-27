@@ -1,8 +1,14 @@
 import 'package:dsa_teaching_web/core/utils/logger/logger.dart';
 import 'package:dsa_teaching_web/core/utils/navigation/inavigation_util.dart';
+import 'package:dsa_teaching_web/data/game/game.dart';
+import 'package:dsa_teaching_web/data/lesson/lesson.dart';
+import 'package:dsa_teaching_web/data/lesson/lesson_plan.dart';
+import 'package:dsa_teaching_web/data/theory/theory.dart';
 import 'package:dsa_teaching_web/domain/game/igame.dart';
+import 'package:dsa_teaching_web/domain/game/itask.dart';
 import 'package:dsa_teaching_web/domain/lesson/ilesson_repository.dart';
 import 'package:dsa_teaching_web/domain/services/lesson/ilesson_service.dart';
+import 'package:dsa_teaching_web/domain/teaching/iteaching_repository.dart';
 import 'package:dsa_teaching_web/domain/theory/ilesson_theory.dart';
 import 'package:dsa_teaching_web/domain/topic/itopic.dart';
 import 'package:dsa_teaching_web/presentation/initial/topic_details/bloc/topic_details_state.dart';
@@ -15,11 +21,13 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
     required String categoryName,
     required String topicName,
     required ILessonService lessonService,
+    required ITeachingRepository teachingRepository,
   })  : _navigationUtil = navigationUtil,
         _lessonRepository = lessonRepository,
         _lessonService = lessonService,
         _topicName = topicName,
         _categoryName = categoryName,
+        _teachingRepository = teachingRepository,
         super(
           TopicDetailsState(),
         );
@@ -29,6 +37,7 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
   final INavigationUtil _navigationUtil;
   final ILessonRepository _lessonRepository;
   final ILessonService _lessonService;
+  final ITeachingRepository _teachingRepository;
 
   Future<void> init() async {
     try {
@@ -73,10 +82,10 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
     return null;
   }
 
-  Future<void> onLessonSelected(int lessonId, Mode mode) async {
+  Future<void> onLessonSelected(int lessonId, int gameId, Mode mode) async {
     try {
       final data = await Future.wait([
-        _lessonRepository.getLessonGame(lessonId),
+        _lessonRepository.getLessonGame(gameId),
         _lessonRepository.getLessonTheory(lessonId),
       ]);
 
@@ -104,5 +113,30 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
     required String theoryStep2,
     required String theoryStep3,
     required String theoryStep4,
-  }) async {}
+    required int timeLimit,
+    required List<ITask> tasks,
+  }) async {
+    try {
+      final bool isAdded = await _teachingRepository.addLesson(
+        _fetchTopic()!,
+        Lesson(
+          title: title,
+          plan: LessonPlan(
+              step1: step1, step2: step2, step3: step3, step4: step4),
+        ),
+        Theory(
+          theoryStep1: theoryStep1,
+          theoryStep2: theoryStep2,
+          theoryStep3: theoryStep3,
+          theoryStep4: theoryStep4,
+        ),
+        Game(title: title, timeLimit: timeLimit, tasks: tasks),
+      );
+      if (isAdded) {
+        await init();
+      }
+    } catch (error) {
+      logger.e(error);
+    }
+  }
 }

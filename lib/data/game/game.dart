@@ -10,10 +10,10 @@ const String _gameTasks = 'gameTasks';
 
 class Game implements IGame {
   Game({
-    required this.id,
     required this.title,
     required this.timeLimit,
     required this.tasks,
+    this.id,
   });
 
   factory Game.fromJson(Map<String, dynamic> data) {
@@ -30,7 +30,7 @@ class Game implements IGame {
   }
 
   @override
-  final int id;
+  final int? id;
 
   @override
   final String title;
@@ -40,4 +40,13 @@ class Game implements IGame {
 
   @override
   final List<ITask> tasks;
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'gameName': title,
+      'timeLimit': timeLimit,
+      'gameTasks': tasks.map((task) => task.toJson()).toList(),
+    };
+  }
 }

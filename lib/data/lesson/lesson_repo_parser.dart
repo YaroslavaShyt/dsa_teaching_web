@@ -1,9 +1,10 @@
 part of 'lesson_repository.dart';
 
-ITopic _createTopic(String topic, List lessonData) {
+ITopic _createTopic(int id, String topic, List lessonData) {
   return Topic(
     title: topic,
     lessons: _createLessons(lessonData),
+    id: id,
   );
 }
 
@@ -25,7 +26,11 @@ ICategory _createCategory(String category, Map categoryData) {
 List<ITopic> _createTopics(Map categoryData) {
   return categoryData.keys.map(
     (topic) {
-      return _createTopic(topic, categoryData[topic]);
+      return _createTopic(
+        categoryData[topic][0]['topicId'],
+        topic,
+        categoryData[topic],
+      );
     },
   ).toList();
 }

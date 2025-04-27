@@ -4,11 +4,13 @@ import 'package:dsa_teaching_web/data/auth/auth_repository.dart';
 import 'package:dsa_teaching_web/data/networking/networking_client.dart';
 import 'package:dsa_teaching_web/data/services/auth/token/token_service.dart';
 import 'package:dsa_teaching_web/data/services/lesson/lesson_service.dart';
+import 'package:dsa_teaching_web/data/teaching/teaching_repository.dart';
 import 'package:dsa_teaching_web/data/user/user_repository.dart';
 import 'package:dsa_teaching_web/domain/lesson/ilesson_repository.dart';
 import 'package:dsa_teaching_web/domain/networking/inetworking_client.dart';
 import 'package:dsa_teaching_web/domain/services/lesson/ilesson_service.dart';
 import 'package:dsa_teaching_web/domain/storage/ilocal_storage.dart';
+import 'package:dsa_teaching_web/domain/teaching/iteaching_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -53,6 +55,9 @@ class ServiceLocator {
     );
     sl.registerFactory<ILessonRepository>(
       () => LessonRepository(networkingClient: networkingClient),
+    );
+    sl.registerFactory<ITeachingRepository>(
+      () => TeachingRepository(networkingClient: networkingClient),
     );
   }
 

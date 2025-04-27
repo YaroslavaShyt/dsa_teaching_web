@@ -10,4 +10,6 @@ abstract interface class ITheory {
   final String theoryStep2;
   final String theoryStep3;
   final String theoryStep4;
+
+  Map<String, dynamic> toJson();
 }

@@ -42,4 +42,10 @@ class Endpoints {
   static const String _trainings = 'trainings';
   static const String getLearnedLessonsEndpoint = '$_trainings/user';
   static const String finishLessonEndpoint = '$_trainings/complete';
+
+  /// TEACHING
+  static const String _teachingEndpoint = 'teaching';
+  static const String addLessonEndpoint = '$_teachingEndpoint/';
+  static String updateLessonEndpoint(String id) => '$_teachingEndpoint/$id';
+  static String deleteLessonEndpoint(String id) => '$_teachingEndpoint/$id';
 }

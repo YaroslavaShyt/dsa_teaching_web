@@ -9,10 +9,10 @@ const String _gameId = 'gameId';
 
 class Lesson implements ILesson {
   Lesson({
-    required this.id,
-    required this.gameId,
     required this.title,
     required this.plan,
+    this.id,
+    this.gameId,
   });
 
   factory Lesson.fromJson(Map<String, dynamic> data) {
@@ -27,10 +27,21 @@ class Lesson implements ILesson {
   }
 
   @override
-  final int id;
+  Map<String, dynamic> toJson() {
+    return {
+      'lessonTitle': title,
+      'step1Plan': plan.step1,
+      'step2Plan': plan.step2,
+      'step3Plan': plan.step3,
+      'step4Plan': plan.step4,
+    };
+  }
 
   @override
-  final int gameId;
+  final int? id;
+
+  @override
+  final int? gameId;
 
   @override
   final String title;

@@ -19,4 +19,14 @@ class Theory implements ITheory {
 
   @override
   final String theoryStep4;
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'theoryStep1': theoryStep1,
+      'theoryStep2': theoryStep2,
+      'theoryStep3': theoryStep3,
+      'theoryStep4': theoryStep4,
+    };
+  }
 }

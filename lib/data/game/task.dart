@@ -10,12 +10,12 @@ const String _gameAnswersType = 'gameAnswersTypeId';
 
 class Task implements ITask {
   Task({
-    required this.id,
     required this.questionNumber,
     required this.question,
     required this.answerOptions,
     required this.correctAnswer,
     required this.type,
+    this.id,
   });
 
   factory Task.fromJson(Map<String, dynamic> data) {
@@ -30,7 +30,7 @@ class Task implements ITask {
   }
 
   @override
-  final int id;
+  final int? id;
 
   @override
   final int questionNumber;
@@ -46,4 +46,16 @@ class Task implements ITask {
 
   @override
   final GameAnswersType type;
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      //'taskId': id,
+      'questionNumber': questionNumber,
+      'question': question,
+      'answerOptions': answerOptions,
+      'correctAnswer': correctAnswer,
+      'gameAnswersTypeId': type == GameAnswersType.row ? 1 : 2,
+    };
+  }
 }
