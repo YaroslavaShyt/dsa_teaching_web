@@ -6,7 +6,7 @@ const String _questionNumber = 'questionNumber';
 const String _question = 'question';
 const String _answerOptions = 'answerOptions';
 const String _correctAnswer = 'correctAnswer';
-const String _gameAnswersType = 'gameAnswersType';
+const String _gameAnswersType = 'gameAnswersTypeId';
 
 class Task implements ITask {
   Task({
@@ -25,7 +25,7 @@ class Task implements ITask {
       question: data[_question],
       answerOptions: List<String>.from(data[_answerOptions]),
       correctAnswer: data[_correctAnswer],
-      type: GameAnswersType.apiToType(data[_gameAnswersType]),
+      type: GameAnswersType.apiToType(data[_gameAnswersType].toString()),
     );
   }
 

@@ -1,8 +1,9 @@
 import 'package:dsa_teaching_web/presentation/initial/topic_details/bloc/topic_details_cubit.dart';
-import 'package:dsa_teaching_web/presentation/initial/topic_details/widgets/editable_info_widget.dart';
+import 'package:dsa_teaching_web/presentation/initial/topic_details/widgets/editable_info/editable_info_widget.dart';
 import 'package:dsa_teaching_web/presentation/initial/topic_details/widgets/info_widget.dart';
 import 'package:dsa_teaching_web/presentation/initial/topic_details/widgets/lesson_list.dart';
 import 'package:dsa_teaching_web/presentation/initial/topic_details/widgets/select_lesson_placeholder.dart';
+import 'package:dsa_teaching_web/presentation/initial/topic_details/widgets/topic_row_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -35,15 +36,12 @@ class TopicDetailsScreen extends StatelessWidget {
                 spacing: 10,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Тема: ${state.topic!.title}",
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.w700,
-                    ),
+                  TopicRowWidget(
+                    title: state.topic!.title,
+                    onAddPressed: cubit.addLesson,
                   ),
                   Container(
-                    height: MediaQuery.sizeOf(context).height - 95,
+                    height: MediaQuery.sizeOf(context).height - 105,
                     // color: Colors.red,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -55,6 +53,10 @@ class TopicDetailsScreen extends StatelessWidget {
                           lessons: state.topic!,
                           onLessonSelected: cubit.onLessonSelected,
                         ),
+                        if (state.mode == Mode.add)
+                          EditableInfoWidget(
+                            saveInfo: cubit.saveInfo,
+                          ),
                         if (state.selectedGame != null &&
                             state.selectedTheory != null) ...[
                           if (state.mode == Mode.read)
@@ -66,11 +68,14 @@ class TopicDetailsScreen extends StatelessWidget {
                             EditableInfoWidget(
                               theory: state.selectedTheory!,
                               game: state.selectedGame!,
+                              saveInfo: cubit.saveInfo,
                             ),
                         ],
                         if (state.selectedGame == null &&
-                            state.selectedTheory == null)
-                          const SelectLessonPlaceholder(),
+                            state.selectedTheory == null) ...[
+                          if (state.mode == Mode.read)
+                            const SelectLessonPlaceholder(),
+                        ],
                       ],
                     ),
                   )

@@ -56,6 +56,10 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
     emit(state.copyWith(mode: newMode));
   }
 
+  void addLesson() {
+    emit(state.copyWith(mode: Mode.add));
+  }
+
   ITopic? _fetchTopic() {
     for (var category in _lessonService.summary) {
       if (category.title == _categoryName) {
@@ -69,7 +73,7 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
     return null;
   }
 
-  Future<void> onLessonSelected(int lessonId) async {
+  Future<void> onLessonSelected(int lessonId, Mode mode) async {
     try {
       final data = await Future.wait([
         _lessonRepository.getLessonGame(lessonId),
@@ -83,9 +87,22 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
         selectedTheory: theory,
         selectedGame: game,
         selectedLessonId: lessonId,
+        mode: mode,
       ));
     } catch (error) {
       logger.e(error);
     }
   }
+
+  Future<void> saveInfo({
+    required String title,
+    required String step1,
+    required String step2,
+    required String step3,
+    required String step4,
+    required String theoryStep1,
+    required String theoryStep2,
+    required String theoryStep3,
+    required String theoryStep4,
+  }) async {}
 }

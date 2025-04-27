@@ -5,7 +5,7 @@ import 'package:equatable/equatable.dart';
 
 enum TopicDetailsStatus { loading, success, nothingFound }
 
-enum Mode { read, edit }
+enum Mode { read, edit, add }
 
 class TopicDetailsState extends Equatable {
   const TopicDetailsState({

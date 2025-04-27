@@ -42,6 +42,10 @@ class Assets {
   static const String constantsDuration = 'lib/core/constants/duration.dart';
   static const String constantsImageAssets = 'lib/core/constants/image_assets.dart';
   static const String constantsSystem = 'lib/core/constants/system.dart';
+  static const String editableInfoAddTasksForm = 'lib/presentation/initial/topic_details/widgets/editable_info/add_tasks_form.dart';
+  static const String editableInfoEditableInfoWidget = 'lib/presentation/initial/topic_details/widgets/editable_info/editable_info_widget.dart';
+  static const String editableInfoGameTasksList = 'lib/presentation/initial/topic_details/widgets/editable_info/game_tasks_list.dart';
+  static const String editableInfoSaveButton = 'lib/presentation/initial/topic_details/widgets/editable_info/save_button.dart';
   static const String errorErrorFactory = 'lib/presentation/initial/widgets/placeholders/error/error_factory.dart';
   static const String errorErrorScreen = 'lib/presentation/initial/widgets/placeholders/error/error_screen.dart';
   static const String gameGame = 'lib/data/game/game.dart';
@@ -113,7 +117,6 @@ class Assets {
   static const String userUserService = 'lib/data/services/user/user_service.dart';
   static const String userUserState = 'lib/data/services/user/user_state.dart';
   static const String widgetsCourseList = 'lib/presentation/initial/home/widgets/course_list.dart';
-  static const String widgetsEditableTextWidget = 'lib/presentation/initial/topic_details/widgets/editable_text_widget.dart';
   static const String widgetsFormWidget = 'lib/presentation/initial/topic_details/widgets/form_widget.dart';
   static const String widgetsInfoWidget = 'lib/presentation/initial/topic_details/widgets/info_widget.dart';
   static const String widgetsLessonList = 'lib/presentation/initial/topic_details/widgets/lesson_list.dart';
@@ -122,6 +125,7 @@ class Assets {
   static const String widgetsMainContainer = 'lib/presentation/initial/widgets/main_container.dart';
   static const String widgetsMainShadow = 'lib/presentation/initial/widgets/main_shadow.dart';
   static const String widgetsSelectLessonPlaceholder = 'lib/presentation/initial/topic_details/widgets/select_lesson_placeholder.dart';
+  static const String widgetsTopicRowWidget = 'lib/presentation/initial/topic_details/widgets/topic_row_widget.dart';
   static const String widgetsTopicsList = 'lib/presentation/initial/home/widgets/topics_list.dart';
 
 }
