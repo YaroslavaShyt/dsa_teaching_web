@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+
 import '../../core/utils/logger/logger.dart';
 import '../../domain/category/icategory.dart';
 import '../../domain/game/igame.dart';
@@ -36,6 +37,41 @@ class LessonRepository implements ILessonRepository {
           return _createCategory(category, response.data[category]);
         },
       ).toList();
+    } catch (error) {
+      logger.e(error);
+    }
+    return [];
+  }
+
+  @override
+  Future<List<ICategory>> getTopicsSummary() async {
+    try {
+      final Response? response = await _networkingClient.get(
+        Endpoints.getTopicsSummaryEndpoint,
+      );
+
+      if (response == null) return [];
+
+      List<ICategory> categories = [];
+
+      for (var map in response.data) {
+        categories.add(
+          Category(
+            id: map['categoryId'],
+            title: map['categoryName'],
+            topics: map['topics']
+                .map<ITopic>(
+                  (topic) => Topic(
+                    id: topic['id'],
+                    title: topic['topicName'],
+                    lessons: [],
+                  ),
+                )
+                .toList(),
+          ),
+        );
+      }
+      return categories;
     } catch (error) {
       logger.e(error);
     }

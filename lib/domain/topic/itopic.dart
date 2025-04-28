@@ -2,12 +2,12 @@ import 'package:dsa_teaching_web/domain/lesson/ilesson.dart';
 
 abstract interface class ITopic {
   ITopic({
-    required this.id,
+    this.id,
     required this.title,
     required this.lessons,
   });
 
-  final int id;
+  final int? id;
   final String title;
   final List<ILesson> lessons;
 }

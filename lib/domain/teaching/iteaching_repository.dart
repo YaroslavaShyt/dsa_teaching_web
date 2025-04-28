@@ -20,4 +20,10 @@ abstract interface class ITeachingRepository {
   );
 
   Future<bool> deleteLesson(String lessonId);
+
+  Future<bool> addTopic(String topic, int categoryId);
+
+  Future<bool> updateTopic(String topic, int categoryId, String topicId);
+
+  Future<bool> deleteTopic(String topicId);
 }

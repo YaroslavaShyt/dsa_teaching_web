@@ -38,7 +38,7 @@ class TopicDetailsScreen extends StatelessWidget {
                 children: [
                   TopicRowWidget(
                     title: state.topic!.title,
-                    onAddPressed: cubit.addLesson,
+                    onDeletePressed: cubit.deleteTopic,
                     onBackPressed: cubit.onBackPressed,
                   ),
                   Container(

@@ -6,6 +6,8 @@ import '../theory/ilesson_theory.dart';
 abstract interface class ILessonRepository {
   Future<List<ICategory>> getLessonsSummary();
 
+  Future<List<ICategory>> getTopicsSummary();
+
   Future<ILessonTheory?> getLessonTheory(int id);
 
   Future<IGame?> getLessonGame(int id);

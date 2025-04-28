@@ -34,6 +34,7 @@ class Endpoints {
   /// LESSON
   static const String _lessonEndpoint = 'lessons';
   static const String getLessonSummaryEndpoint = '$_lessonEndpoint/summary';
+  static const String getTopicsSummaryEndpoint = '$_lessonEndpoint/topics';
 
   static String getLessonTheory(int id) => '$_lessonEndpoint/$id/details';
 
@@ -48,4 +49,7 @@ class Endpoints {
   static const String addLessonEndpoint = '$_teachingEndpoint/';
   static String updateLessonEndpoint(String id) => '$_teachingEndpoint/$id';
   static String deleteLessonEndpoint(String id) => '$_teachingEndpoint/$id';
+  static const String addTopicEndpoint = '$_teachingEndpoint/topic';
+  static String updateTopicEndpoint(String id) => '$addTopicEndpoint/$id';
+  static String deleteTopicEndpoint(String id) => '$addTopicEndpoint/$id';
 }

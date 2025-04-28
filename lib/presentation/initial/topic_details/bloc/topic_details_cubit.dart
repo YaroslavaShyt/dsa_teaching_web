@@ -85,6 +85,15 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
         }
       }
     }
+    for (var category in _lessonService.topicsSummary) {
+      if (category.title == _categoryName) {
+        for (var topic in category.topics) {
+          if (topic.title == _topicName) {
+            return topic;
+          }
+        }
+      }
+    }
     return null;
   }
 
@@ -257,6 +266,24 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
 
       if (isDeleted) {
         await init();
+      } else {
+        emit(state.copyWith(status: TopicDetailsStatus.success));
+      }
+    } catch (error) {
+      logger.e(error);
+    }
+  }
+
+  Future<void> deleteTopic() async {
+    try {
+      emit(state.copyWith(status: TopicDetailsStatus.loading));
+
+      final bool isDeleted = await _teachingRepository.deleteTopic(
+        state.topic!.id.toString(),
+      );
+
+      if (isDeleted) {
+        onBackPressed();
       } else {
         emit(state.copyWith(status: TopicDetailsStatus.success));
       }

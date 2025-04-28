@@ -4,4 +4,6 @@ abstract interface class ILessonService {
   Future<void> init();
 
   List<ICategory> get summary;
+
+  List<ICategory> get topicsSummary;
 }

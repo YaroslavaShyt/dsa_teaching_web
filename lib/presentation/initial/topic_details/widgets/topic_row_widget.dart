@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 class TopicRowWidget extends StatelessWidget {
   const TopicRowWidget({
     required this.title,
-    required this.onAddPressed,
+    required this.onDeletePressed,
     required this.onBackPressed,
     super.key,
   });
 
   final String title;
-  final VoidCallback onAddPressed;
+  final VoidCallback onDeletePressed;
   final VoidCallback onBackPressed;
 
   @override
@@ -34,15 +34,15 @@ class TopicRowWidget extends StatelessWidget {
             fontWeight: FontWeight.w700,
           ),
         ),
-        MainContainer(
-          padding: const EdgeInsetsDirectional.all(4),
-          content: IconButton(
-            onPressed: onAddPressed,
-            icon: Icon(
-              Icons.add,
-            ),
-          ),
-        )
+        // MainContainer(
+        //   padding: const EdgeInsetsDirectional.all(4),
+        //   content: IconButton(
+        //     onPressed: onDeletePressed,
+        //     icon: Icon(
+        //       Icons.delete,
+        //     ),
+        //   ),
+        // )
       ],
     );
   }

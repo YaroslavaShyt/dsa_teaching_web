@@ -1,9 +1,7 @@
-import 'package:dsa_teaching_web/core/utils/theme/app_color_theme.dart';
 import 'package:dsa_teaching_web/domain/category/icategory.dart';
 import 'package:dsa_teaching_web/domain/topic/itopic.dart';
 import 'package:dsa_teaching_web/presentation/initial/home/bloc/home_state.dart';
 import 'package:dsa_teaching_web/presentation/initial/home/widgets/topics_list.dart';
-import 'package:dsa_teaching_web/presentation/initial/widgets/main_container.dart';
 import 'package:flutter/material.dart';
 
 const String dataStructures = 'DATA_STRUCTURES';
@@ -15,6 +13,8 @@ class CourseList extends StatelessWidget {
     required this.onTap,
     required this.onAddPressed,
     required this.addCategoryStatus,
+    required this.delete,
+    required this.onEdit,
     super.key,
   });
 
@@ -22,6 +22,8 @@ class CourseList extends StatelessWidget {
   final void Function(ICategory, ITopic) onTap;
   final VoidCallback onAddPressed;
   final AddCategoryStatus addCategoryStatus;
+  final void Function(int) delete;
+  final void Function(ITopic, int) onEdit;
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +67,8 @@ class CourseList extends StatelessWidget {
                       TopicsList(
                         topic: topic,
                         onTap: () => onTap(category, topic),
+                        onDelete: () => delete(topic.id!),
+                        onEdit: () => onEdit(topic, category.id),
                       ),
                     ],
                   );

@@ -3,13 +3,13 @@ import 'package:dsa_teaching_web/domain/topic/itopic.dart';
 
 class Topic implements ITopic {
   Topic({
-    required this.id,
+    this.id,
     required this.title,
     required this.lessons,
   });
 
   @override
-  final int id;
+  final int? id;
 
   @override
   final String title;

@@ -45,52 +45,63 @@ class HomeScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Flexible(
-                            child: MainContainer(
-                          margin: const EdgeInsetsDirectional.only(end: 10),
-                          padding: const EdgeInsetsDirectional.all(10),
-                          content: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "Курси",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 30,
+                          child: MainContainer(
+                            margin: const EdgeInsetsDirectional.only(end: 10),
+                            padding: const EdgeInsetsDirectional.all(10),
+                            content: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Курси",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 30,
+                                      ),
                                     ),
-                                  ),
-                                  AddTopicButton(
-                                    onTap: cubit.onAddTopicPressed,
-                                    status: state.addCategoryStatus,
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 10),
-                              ...state.lessonsSummary.reversed.map(
-                                (category) {
-                                  return Padding(
-                                    padding: const EdgeInsetsDirectional.only(
-                                      bottom: 10,
+                                    AddTopicButton(
+                                      onTap: cubit.onAddTopicPressed,
+                                      status: state.addCategoryStatus,
                                     ),
-                                    child: CourseList(
-                                      category: category,
-                                      onTap: cubit.onTopicTap,
-                                      onAddPressed: cubit.onAddTopicPressed,
-                                      addCategoryStatus:
-                                          state.addCategoryStatus,
-                                    ),
-                                  );
-                                },
-                              ),
-                            ],
+                                  ],
+                                ),
+                                const SizedBox(height: 10),
+                                ...state.lessonsSummary.map(
+                                  (category) {
+                                    return Padding(
+                                      padding: const EdgeInsetsDirectional.only(
+                                        bottom: 10,
+                                      ),
+                                      child: CourseList(
+                                        category: category,
+                                        onTap: cubit.onTopicTap,
+                                        delete: cubit.deleteTopic,
+                                        onAddPressed: cubit.onAddTopicPressed,
+                                        onEdit: cubit.onEditTopicTap,
+                                        addCategoryStatus:
+                                            state.addCategoryStatus,
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
-                        )),
+                        ),
                         if (state.addCategoryStatus == AddCategoryStatus.active)
                           AddCategoryWidget(
+                            save: cubit.onAddTopic,
                             categories: state.lessonsSummary,
+                          ),
+                        if (state.addCategoryStatus == AddCategoryStatus.edit)
+                          AddCategoryWidget(
+                            save: cubit.onAddTopic,
+                            categories: state.lessonsSummary,
+                            topic: state.selectedTopic,
+                            categoryId: state.selectedCategoryId,
                           ),
                       ],
                     ),

@@ -84,4 +84,60 @@ class TeachingRepository implements ITeachingRepository {
     }
     return false;
   }
+
+  @override
+  Future<bool> addTopic(String topic, int categoryId) async {
+    try {
+      final Response? response = await _networkingClient.post(
+        Endpoints.addTopicEndpoint,
+        body: {
+          "topicName": topic,
+          "categoryId": categoryId,
+        },
+      );
+
+      if (response?.statusCode == 200) {
+        return true;
+      }
+    } catch (error) {
+      logger.e(error);
+    }
+    return false;
+  }
+
+  @override
+  Future<bool> updateTopic(String topic, int categoryId, String topicId) async {
+    try {
+      final Response? response = await _networkingClient.put(
+        Endpoints.updateTopicEndpoint(topicId),
+        body: {
+          "topicName": topic,
+          "categoryId": categoryId,
+        },
+      );
+
+      if (response?.statusCode == 200) {
+        return true;
+      }
+    } catch (error) {
+      logger.e(error);
+    }
+    return false;
+  }
+
+  @override
+  Future<bool> deleteTopic(String topicId) async {
+    try {
+      final Response? response = await _networkingClient.delete(
+        Endpoints.deleteTopicEndpoint(topicId),
+      );
+
+      if (response?.statusCode == 204) {
+        return true;
+      }
+    } catch (error) {
+      logger.e(error);
+    }
+    return false;
+  }
 }

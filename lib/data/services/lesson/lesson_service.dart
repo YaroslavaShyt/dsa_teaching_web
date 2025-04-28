@@ -19,9 +19,15 @@ class LessonService implements ILessonService {
   List<ICategory> _summary = [];
 
   @override
+  List<ICategory> get topicsSummary => _topicsSummary;
+  List<ICategory> _topicsSummary = [];
+
+  @override
   Future<void> init() async {
     try {
       _summary = await _lessonRepository.getLessonsSummary();
+
+      _topicsSummary = await _lessonRepository.getTopicsSummary();
     } catch (error) {
       logger.e(error);
     }

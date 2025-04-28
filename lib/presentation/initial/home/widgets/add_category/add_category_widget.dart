@@ -9,12 +9,16 @@ import 'package:flutter/material.dart';
 class AddCategoryWidget extends StatefulWidget {
   const AddCategoryWidget({
     required this.categories,
+    required this.save,
     this.topic,
+    this.categoryId,
     super.key,
   });
 
+  final int? categoryId;
   final ITopic? topic;
   final List<ICategory> categories;
+  final void Function(String, int, bool, int?) save;
 
   @override
   State<AddCategoryWidget> createState() => _AddCategoryWidgetState();
@@ -22,11 +26,13 @@ class AddCategoryWidget extends StatefulWidget {
 
 class _AddCategoryWidgetState extends State<AddCategoryWidget> {
   late TextEditingController titleController;
+  late int selectedId;
 
   @override
   void initState() {
     super.initState();
-    titleController = TextEditingController();
+    selectedId = widget.categoryId ?? widget.categories.first.id;
+    titleController = TextEditingController(text: widget.topic?.title);
   }
 
   @override
@@ -53,7 +59,7 @@ class _AddCategoryWidgetState extends State<AddCategoryWidget> {
                       ),
                     ),
                     DropdownButton<int>(
-                      value: widget.categories[0].id,
+                      value: selectedId,
                       iconEnabledColor: Colors.white,
                       items: widget.categories
                           .map<DropdownMenuItem<int>>(
@@ -67,7 +73,7 @@ class _AddCategoryWidgetState extends State<AddCategoryWidget> {
                             ),
                           )
                           .toList(),
-                      onChanged: (value) => {},
+                      onChanged: (value) => _onChanged(value as int),
                     ),
                     const SizedBox(height: 20),
                     Text(
@@ -80,7 +86,12 @@ class _AddCategoryWidgetState extends State<AddCategoryWidget> {
                     TextFormField(controller: titleController),
                     const SizedBox(height: 20),
                     SaveButton(
-                      onPressed: () {},
+                      onPressed: () => widget.save(
+                        titleController.text,
+                        selectedId,
+                        widget.topic != null,
+                        widget.topic?.id,
+                      ),
                     ),
                   ],
                 ),
@@ -92,20 +103,9 @@ class _AddCategoryWidgetState extends State<AddCategoryWidget> {
     );
   }
 
-  void _onChanged(int questionIndex, String? selectedKey) {
+  void _onChanged(int id) {
     setState(() {
-      // correctAnswers[questionIndex] = selectedKey;
-      //
-      // final index = switch (selectedKey) {
-      //   'a' => 1,
-      //   'b' => 2,
-      //   'c' => 3,
-      //   'd' => 4,
-      //   _ => 1,
-      // };
-      //
-      // widget.gameControllers[questionIndex][5].text =
-      //     widget.gameControllers[questionIndex][index].text;
+      selectedId = id;
     });
   }
 }
