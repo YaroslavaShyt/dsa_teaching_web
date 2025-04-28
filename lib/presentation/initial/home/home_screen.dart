@@ -1,4 +1,6 @@
 import 'package:dsa_teaching_web/presentation/initial/home/bloc/home_cubit.dart';
+import 'package:dsa_teaching_web/presentation/initial/home/widgets/add_category/add_category_widget.dart';
+import 'package:dsa_teaching_web/presentation/initial/home/widgets/add_topic_button.dart';
 import 'package:dsa_teaching_web/presentation/initial/home/widgets/course_list.dart';
 import 'package:dsa_teaching_web/presentation/initial/widgets/main_container.dart';
 import 'package:flutter/material.dart';
@@ -31,38 +33,69 @@ class HomeScreen extends StatelessWidget {
             return Center(child: CircularProgressIndicator());
           }
           if (state.status == HomeStatus.initial) {
-            return SingleChildScrollView(
-              child: Column(
-                children: [
-                  MainContainer(
-                    margin: const EdgeInsetsDirectional.all(10),
-                    padding: const EdgeInsetsDirectional.all(10),
-                    content: Row(
+            return Container(
+              padding: const EdgeInsetsDirectional.all(10),
+              height: MediaQuery.sizeOf(context).height - 100,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Курси",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w700,
-                                fontSize: 30,
+                        Flexible(
+                            child: MainContainer(
+                          margin: const EdgeInsetsDirectional.only(end: 10),
+                          padding: const EdgeInsetsDirectional.all(10),
+                          content: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Курси",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 30,
+                                    ),
+                                  ),
+                                  AddTopicButton(
+                                    onTap: cubit.onAddTopicPressed,
+                                    status: state.addCategoryStatus,
+                                  ),
+                                ],
                               ),
-                            ),
-                            ...state.lessonsSummary.map(
-                              (category) {
-                                return CourseList(
-                                  category: category,
-                                  onTap: cubit.onTopicTap,
-                                );
-                              },
-                            ),
-                          ],
-                        ),
+                              const SizedBox(height: 10),
+                              ...state.lessonsSummary.reversed.map(
+                                (category) {
+                                  return Padding(
+                                    padding: const EdgeInsetsDirectional.only(
+                                      bottom: 10,
+                                    ),
+                                    child: CourseList(
+                                      category: category,
+                                      onTap: cubit.onTopicTap,
+                                      onAddPressed: cubit.onAddTopicPressed,
+                                      addCategoryStatus:
+                                          state.addCategoryStatus,
+                                    ),
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+                        )),
+                        if (state.addCategoryStatus == AddCategoryStatus.active)
+                          AddCategoryWidget(
+                            categories: state.lessonsSummary,
+                          ),
                       ],
                     ),
-                  )
-                ],
+                  ],
+                ),
               ),
             );
           }

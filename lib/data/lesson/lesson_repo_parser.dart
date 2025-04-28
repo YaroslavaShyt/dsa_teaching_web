@@ -18,6 +18,7 @@ List<ILesson> _createLessons(List lessonData) {
 
 ICategory _createCategory(String category, Map categoryData) {
   return Category(
+    id: categoryData.values.first[0]['categoryId'],
     title: category,
     topics: _createTopics(categoryData),
   );

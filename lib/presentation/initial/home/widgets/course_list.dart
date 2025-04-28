@@ -1,6 +1,9 @@
+import 'package:dsa_teaching_web/core/utils/theme/app_color_theme.dart';
 import 'package:dsa_teaching_web/domain/category/icategory.dart';
 import 'package:dsa_teaching_web/domain/topic/itopic.dart';
+import 'package:dsa_teaching_web/presentation/initial/home/bloc/home_state.dart';
 import 'package:dsa_teaching_web/presentation/initial/home/widgets/topics_list.dart';
+import 'package:dsa_teaching_web/presentation/initial/widgets/main_container.dart';
 import 'package:flutter/material.dart';
 
 const String dataStructures = 'DATA_STRUCTURES';
@@ -10,26 +13,41 @@ class CourseList extends StatelessWidget {
   const CourseList({
     required this.category,
     required this.onTap,
+    required this.onAddPressed,
+    required this.addCategoryStatus,
     super.key,
   });
 
   final ICategory category;
   final void Function(ICategory, ITopic) onTap;
+  final VoidCallback onAddPressed;
+  final AddCategoryStatus addCategoryStatus;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Row(
+          spacing: 10,
+          children: [
+            Text(
+              category.title == algorithms
+                  ? "Алгоритми"
+                  : category.title == dataStructures
+                      ? "Структури даних"
+                      : category.title,
+              style: TextStyle(
+                fontWeight: FontWeight.w700,
+                fontSize: 22,
+              ),
+            ),
+          ],
+        ),
         Text(
-          category.title == algorithms
-              ? "Алгоритми"
-              : category.title == dataStructures
-                  ? "Структури даних"
-                  : category.title,
+          'Теми:',
           style: TextStyle(
-            fontWeight: FontWeight.w700,
-            fontSize: 24,
+            fontSize: 16,
           ),
         ),
         Padding(

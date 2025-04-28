@@ -2,6 +2,8 @@
 class Assets {
   Assets._();
 
+  static const String addCategoryAddCategoryWidget =
+      'lib/presentation/initial/home/widgets/add_category/add_category_widget.dart';
   static const String animatedGesturesTapAnimatedWidget =
       'lib/presentation/initial/widgets/animated_gestures/tap_animated_widget.dart';
   static const String animationsError = 'assets/animations/error.json';
@@ -194,6 +196,8 @@ class Assets {
   static const String userUserService =
       'lib/data/services/user/user_service.dart';
   static const String userUserState = 'lib/data/services/user/user_state.dart';
+  static const String widgetsAddTopicButton =
+      'lib/presentation/initial/home/widgets/add_topic_button.dart';
   static const String widgetsCourseList =
       'lib/presentation/initial/home/widgets/course_list.dart';
   static const String widgetsFormWidget =

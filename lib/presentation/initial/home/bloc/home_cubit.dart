@@ -4,7 +4,6 @@ import 'package:dsa_teaching_web/core/utils/navigation/routes.dart';
 import 'package:dsa_teaching_web/domain/category/icategory.dart';
 import 'package:dsa_teaching_web/domain/services/lesson/ilesson_service.dart';
 import 'package:dsa_teaching_web/domain/topic/itopic.dart';
-import 'package:dsa_teaching_web/presentation/initial/topic_details/topic_details_factory.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'home_state.dart';
@@ -23,6 +22,16 @@ class HomeCubit extends Cubit<HomeState> {
   void onTopicTap(ICategory category, ITopic topic) {
     _navigationUtil.navigateTo(
       AppRoutes.topicDetails(category.title, topic.title),
+    );
+  }
+
+  void onAddTopicPressed() {
+    emit(
+      state.copyWith(
+        addCategoryStatus: state.addCategoryStatus == AddCategoryStatus.active
+            ? AddCategoryStatus.initial
+            : AddCategoryStatus.active,
+      ),
     );
   }
 
