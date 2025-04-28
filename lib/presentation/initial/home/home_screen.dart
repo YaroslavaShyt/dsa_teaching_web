@@ -1,7 +1,9 @@
+import 'package:dsa_teaching_web/core/utils/theme/text_theme.dart';
 import 'package:dsa_teaching_web/presentation/initial/home/bloc/home_cubit.dart';
 import 'package:dsa_teaching_web/presentation/initial/home/widgets/add_category/add_category_widget.dart';
 import 'package:dsa_teaching_web/presentation/initial/home/widgets/add_topic_button.dart';
 import 'package:dsa_teaching_web/presentation/initial/home/widgets/course_list.dart';
+import 'package:dsa_teaching_web/presentation/initial/home/widgets/main_app_bar.dart';
 import 'package:dsa_teaching_web/presentation/initial/widgets/main_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,13 +21,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {},
-          icon: Icon(Icons.menu),
-        ),
-        title: Text("DSA Teaching"),
-      ),
       body: BlocConsumer<HomeCubit, HomeState>(
         listener: (context, state) {},
         builder: (context, state) {
@@ -40,6 +35,10 @@ class HomeScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    MainAppBar(
+                      userName: cubit.userName,
+                      onExitTap: cubit.onExitTap,
+                    ),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

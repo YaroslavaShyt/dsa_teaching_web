@@ -2,7 +2,9 @@ import 'package:dsa_teaching_web/core/utils/logger/logger.dart';
 import 'package:dsa_teaching_web/core/utils/navigation/inavigation_util.dart';
 import 'package:dsa_teaching_web/core/utils/navigation/routes.dart';
 import 'package:dsa_teaching_web/domain/category/icategory.dart';
+import 'package:dsa_teaching_web/domain/services/auth/iauth_service.dart';
 import 'package:dsa_teaching_web/domain/services/lesson/ilesson_service.dart';
+import 'package:dsa_teaching_web/domain/services/user/iuser_service.dart';
 import 'package:dsa_teaching_web/domain/teaching/iteaching_repository.dart';
 import 'package:dsa_teaching_web/domain/topic/itopic.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,14 +16,26 @@ class HomeCubit extends Cubit<HomeState> {
     required ILessonService lessonService,
     required INavigationUtil navigationUtil,
     required ITeachingRepository teachingRepository,
+    required IAuthService authService,
+    required IUserService userService,
   })  : _lessonService = lessonService,
         _navigationUtil = navigationUtil,
         _teachingRepository = teachingRepository,
+        _userService = userService,
+        _authService = authService,
         super(HomeState());
 
   final ILessonService _lessonService;
   final INavigationUtil _navigationUtil;
   final ITeachingRepository _teachingRepository;
+  final IAuthService _authService;
+  final IUserService _userService;
+
+  String get userName => _userService.user?.firstName ?? 'Admin';
+
+  Future<void> onExitTap() async {
+    _authService.signOut();
+  }
 
   void onTopicTap(ICategory category, ITopic topic) {
     _navigationUtil.navigateTo(

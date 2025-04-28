@@ -56,26 +56,27 @@ class AuthScreen extends StatelessWidget {
                         style: textTheme.titleLarge?.copyWith(
                           color: colorScheme.primaryFixed,
                           fontWeight: FontWeight.w700,
-                          fontSize: 50,
+                          fontSize: 40,
                         ),
                       ),
                       Text(
                         'Керуйте навчальними матеріалами швидко та легко!',
                         style: textTheme.titleLarge?.copyWith(
                           fontWeight: FontWeight.w700,
-                          fontSize: 40,
+                          fontSize: 30,
                         ),
                         textAlign: TextAlign.center,
                       ),
                       RobotAnimation(
-                        height: 500,
-                        width: 450,
+                        height: 300,
+                        width: 250,
                       ),
                       Padding(
                         padding: EdgeInsetsDirectional.symmetric(
                           horizontal: MediaQuery.sizeOf(context).width / 20,
                         ),
                         child: MainContainer(
+                          width: 500,
                           padding: const EdgeInsetsDirectional.all(20),
                           content: Column(
                             spacing: 28,
@@ -101,7 +102,8 @@ class AuthScreen extends StatelessWidget {
                                           'Увійти',
                                           style: textTheme.titleLarge?.copyWith(
                                             fontWeight: FontWeight.w700,
-                                            fontSize: 30,
+                                            fontSize: 20,
+                                            color: colorScheme.primaryFixed,
                                           ),
                                         ),
                                 ),

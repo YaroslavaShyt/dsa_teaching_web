@@ -208,6 +208,8 @@ class Assets {
       'lib/presentation/initial/topic_details/widgets/lesson_list.dart';
   static const String widgetsLessonNameWidget =
       'lib/presentation/initial/topic_details/widgets/lesson_name_widget.dart';
+  static const String widgetsMainAppBar =
+      'lib/presentation/initial/home/widgets/main_app_bar.dart';
   static const String widgetsMainBackground =
       'lib/presentation/initial/widgets/main_background.dart';
   static const String widgetsMainContainer =
