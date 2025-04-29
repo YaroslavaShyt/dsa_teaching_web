@@ -5,7 +5,7 @@ import 'package:equatable/equatable.dart';
 
 enum TopicDetailsStatus { loading, success, nothingFound }
 
-enum Mode { read, edit, add }
+enum Mode { initial, read, edit, add }
 
 class TopicDetailsState extends Equatable {
   const TopicDetailsState({
@@ -14,7 +14,7 @@ class TopicDetailsState extends Equatable {
     this.selectedLessonId,
     this.selectedGame,
     this.selectedTheory,
-    this.mode = Mode.read,
+    this.mode = Mode.initial,
   });
 
   TopicDetailsState copyWith({

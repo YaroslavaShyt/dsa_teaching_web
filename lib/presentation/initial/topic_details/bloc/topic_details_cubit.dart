@@ -56,6 +56,7 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
           state.copyWith(
             topic: topic,
             status: TopicDetailsStatus.success,
+            mode: Mode.initial,
           ),
         );
         return;
@@ -67,12 +68,19 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
   }
 
   void changeMode() {
-    final Mode newMode = state.mode == Mode.read ? Mode.edit : Mode.read;
+    Mode? newMode;
+
+    if (state.mode == Mode.read || state.mode == Mode.initial) {
+      newMode = Mode.edit;
+    } else if (state.mode == Mode.edit) {
+      newMode = Mode.initial;
+    }
     emit(state.copyWith(mode: newMode));
   }
 
   void addLesson() {
-    emit(state.copyWith(mode: Mode.add));
+    emit(
+        state.copyWith(mode: state.mode == Mode.add ? Mode.initial : Mode.add));
   }
 
   ITopic? _fetchTopic() {

@@ -38,7 +38,8 @@ class TopicDetailsScreen extends StatelessWidget {
                 children: [
                   TopicRowWidget(
                     title: state.topic!.title,
-                    onDeletePressed: cubit.deleteTopic,
+                    isAdding: state.mode == Mode.add,
+                    onAddPressed: cubit.addLesson,
                     onBackPressed: cubit.onBackPressed,
                   ),
                   Container(
@@ -75,7 +76,8 @@ class TopicDetailsScreen extends StatelessWidget {
                         ],
                         if (state.selectedGame == null &&
                             state.selectedTheory == null) ...[
-                          if (state.mode == Mode.read)
+                          if (state.mode == Mode.read ||
+                              state.mode == Mode.initial)
                             const SelectLessonPlaceholder(),
                         ],
                       ],

@@ -84,7 +84,7 @@ class _EditableInfoWidgetState extends State<EditableInfoWidget> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Назва уроку",
+                        "Назва лекції",
                         style: textTheme.bodyMedium?.copyWith(
                           fontSize: 20,
                           fontWeight: FontWeight.w700,

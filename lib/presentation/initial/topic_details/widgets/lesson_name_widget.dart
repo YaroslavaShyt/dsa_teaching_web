@@ -46,7 +46,9 @@ class _LessonNameWidgetState extends State<LessonNameWidget> {
                 ? colorScheme.onSurface.withValues(alpha: 0.3)
                 : colorScheme.surface,
             content: GestureDetector(
-              onTap: widget.onTap,
+              onTap: () {
+                widget.onTap();
+              },
               child: Text(
                 widget.lesson.title,
                 style: TextStyle(
@@ -69,7 +71,9 @@ class _LessonNameWidgetState extends State<LessonNameWidget> {
                   content: IconButton(
                     onPressed: widget.onEditPressed,
                     icon: Icon(
-                     widget.mode == Mode.read ? Icons.edit : Icons.close,
+                      widget.mode == Mode.read || widget.mode == Mode.initial
+                          ? Icons.edit
+                          : Icons.close,
                     ),
                   ),
                 ),

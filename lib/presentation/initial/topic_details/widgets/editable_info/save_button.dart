@@ -15,8 +15,10 @@ class SaveButton extends StatelessWidget {
       alignment: Alignment.center,
       child: Padding(
         padding: EdgeInsetsDirectional.symmetric(
-            horizontal: MediaQuery.sizeOf(context).width * 0.1),
+          horizontal: 50,
+        ),
         child: MainOutlinedButton(
+          width: 200,
           onPressed: onPressed,
           child: Text(
             "Зберегти",
