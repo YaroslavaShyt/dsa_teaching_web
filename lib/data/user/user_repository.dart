@@ -34,6 +34,23 @@ class UserRepository implements IUserRepository {
   }
 
   @override
+  Future<List<IUser>> getAllUsers() async {
+    try {
+      final Response? response = await _networkingClient.get(
+        Endpoints.allUsersEndpoint,
+      );
+      if (response?.statusCode == 200) {
+        return response?.data
+            .map<IUser>((json) => User.fromJson(json))
+            .toList();
+      }
+    } catch (error) {
+      logger.e(error);
+    }
+    return [];
+  }
+
+  @override
   Future<void> updateUser(Map<String, String> data) async {
     try {
       await _networkingClient.put(

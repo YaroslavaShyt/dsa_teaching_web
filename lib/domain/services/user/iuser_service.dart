@@ -5,9 +5,7 @@ abstract interface class IUserService {
 
   Future<void> init();
 
-  Future<void> updateUser({
-    String? name,
-  });
+  Future<List<IUser>> getAllUsers();
 
   Future<void> cleanUserData();
 

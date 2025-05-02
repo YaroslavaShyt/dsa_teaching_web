@@ -2,6 +2,7 @@ import 'package:dsa_teaching_web/core/utils/navigation/routes.dart';
 import 'package:dsa_teaching_web/presentation/initial/auth/auth_factory.dart';
 import 'package:dsa_teaching_web/presentation/initial/initial_factory.dart';
 import 'package:dsa_teaching_web/presentation/initial/topic_details/topic_details_factory.dart';
+import 'package:dsa_teaching_web/presentation/initial/users/users_factory.dart';
 import 'package:flutter/material.dart';
 
 class AppRouter {
@@ -11,6 +12,7 @@ class AppRouter {
     }
     return switch (routeSettings.name) {
       AppRoutes.routeAuth => _buildAuth(routeSettings),
+      AppRoutes.routeUsers => _buildUsers(routeSettings),
       AppRoutes.topicDetails => _buildTopicDetails(routeSettings),
       _ => _buildInitial(routeSettings),
     };
@@ -27,6 +29,13 @@ class AppRouter {
     return MaterialPageRoute(
       settings: settings,
       builder: (_) => AuthFactory.build(),
+    );
+  }
+
+  static PageRoute _buildUsers(RouteSettings settings) {
+    return MaterialPageRoute(
+      settings: settings,
+      builder: (_) => UsersFactory.build(),
     );
   }
 

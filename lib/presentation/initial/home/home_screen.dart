@@ -38,6 +38,7 @@ class HomeScreen extends StatelessWidget {
                     MainAppBar(
                       userName: cubit.userName,
                       onExitTap: cubit.onExitTap,
+                      onUsersTap: cubit.onUsersTap,
                     ),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,

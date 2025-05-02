@@ -37,6 +37,10 @@ class HomeCubit extends Cubit<HomeState> {
     _authService.signOut();
   }
 
+  void onUsersTap() {
+    _navigationUtil.navigateTo(AppRoutes.routeUsers);
+  }
+
   void onTopicTap(ICategory category, ITopic topic) {
     _navigationUtil.navigateTo(
       AppRoutes.topicDetails(category.title, topic.title),

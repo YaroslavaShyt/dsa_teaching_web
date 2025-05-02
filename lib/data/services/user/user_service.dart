@@ -55,20 +55,6 @@ class UserService extends Cubit<UserState> implements IUserService {
   }
 
   @override
-  Future<void> updateUser({
-    String? name,
-  }) async {
-    try {
-      emit(state.copyWith(user: user?.copyWith(firstName: name)));
-      await _userRepository.updateUser(
-        state.user!.toJson(state.user!),
-      );
-    } catch (error) {
-      logger.e(error);
-    }
-  }
-
-  @override
   Future<void> cleanUserData() async {
     await _authService.signOut();
   }
@@ -87,6 +73,16 @@ class UserService extends Cubit<UserState> implements IUserService {
     } catch (error) {
       logger.e(error);
     }
+  }
+
+  @override
+  Future<List<IUser>> getAllUsers() async {
+    try {
+      return _userRepository.getAllUsers();
+    } catch (error) {
+      logger.e(error);
+    }
+    return [];
   }
 
   @override

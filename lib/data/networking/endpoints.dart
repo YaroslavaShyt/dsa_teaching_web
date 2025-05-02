@@ -11,6 +11,7 @@ class Endpoints {
 
   /// USER
   static const String userEndpoint = 'users';
+  static const String allUsersEndpoint = 'users/all';
 
   /// ACHIEVEMENTS
   static const String _achievements = 'achievements';
