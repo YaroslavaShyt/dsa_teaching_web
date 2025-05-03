@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:dsa_teaching_web/data/services/user/user_state.dart';
 import 'package:dsa_teaching_web/domain/services/auth/iauth_service.dart';
+import 'package:dsa_teaching_web/domain/user/iuser_learned_lessons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -79,6 +80,16 @@ class UserService extends Cubit<UserState> implements IUserService {
   Future<List<IUser>> getAllUsers() async {
     try {
       return _userRepository.getAllUsers();
+    } catch (error) {
+      logger.e(error);
+    }
+    return [];
+  }
+
+  @override
+  Future<List<IUserLearnedLessons>> getAllUserLessons(int id) async {
+    try {
+      return _userRepository.getUserLearnedLessons(id);
     } catch (error) {
       logger.e(error);
     }

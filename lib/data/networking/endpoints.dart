@@ -30,7 +30,7 @@ class Endpoints {
 
   /// STATISTICS
   static const String _statistics = 'statistics';
-  static const String statisticsEndpoint = '$_statistics/';
+  static String statisticsEndpoint(int id) => '$_statistics/teaching/$id';
 
   /// LESSON
   static const String _lessonEndpoint = 'lessons';

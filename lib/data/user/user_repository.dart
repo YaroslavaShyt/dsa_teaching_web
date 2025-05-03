@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:dsa_teaching_web/data/user/user.dart';
+import 'package:dsa_teaching_web/data/user/user_learned_lessons.dart';
+import 'package:dsa_teaching_web/domain/user/iuser_learned_lessons.dart';
 
 import '../../core/utils/logger/logger.dart';
 import '../../domain/networking/inetworking_client.dart';
@@ -74,5 +76,24 @@ class UserRepository implements IUserRepository {
       logger.e(error);
     }
     return false;
+  }
+
+  @override
+  Future<List<IUserLearnedLessons>> getUserLearnedLessons(int id) async {
+    try {
+      final Response? response = await _networkingClient.get(
+        Endpoints.statisticsEndpoint(id),
+      );
+
+      if (response?.statusCode == 200) {
+        return response?.data
+            .map<IUserLearnedLessons>(
+                (json) => UserLearnedLessons.fromJson(json))
+            .toList();
+      }
+    } catch (error) {
+      logger.e(error);
+    }
+    return [];
   }
 }
