@@ -48,6 +48,7 @@ class _EditableInfoWidgetState extends State<EditableInfoWidget> {
   late TextEditingController theory2Controller;
   late TextEditingController theory3Controller;
   late TextEditingController theory4Controller;
+  late TextEditingController timeLimitController;
 
   List<List<TextEditingController>> gameControllers = List.generate(
     4,
@@ -148,6 +149,11 @@ class _EditableInfoWidgetState extends State<EditableInfoWidget> {
                         ),
                       ),
                       const SizedBox(height: 30),
+                      TextFormField(
+                        controller: timeLimitController,
+                        decoration: InputDecoration(labelText: "Час (хв)"),
+                      ),
+                      const SizedBox(height: 30),
                       AddTasksForm(
                         gameControllers: gameControllers,
                       ),
@@ -176,7 +182,7 @@ class _EditableInfoWidgetState extends State<EditableInfoWidget> {
       theoryStep2: theory2Controller.text,
       theoryStep3: theory3Controller.text,
       theoryStep4: theory4Controller.text,
-      timeLimit: 3600,
+      timeLimit: int.parse(timeLimitController.text) * 60,
       tasks: _fetchTasks(),
       isNewLesson: widget.theory == null,
     );
@@ -220,6 +226,9 @@ class _EditableInfoWidgetState extends State<EditableInfoWidget> {
         TextEditingController(text: widget.theory?.lessonTheory.theoryStep3);
     theory4Controller =
         TextEditingController(text: widget.theory?.lessonTheory.theoryStep4);
+    timeLimitController = TextEditingController(
+      text: widget.game != null ? "${widget.game!.timeLimit / 60}" : null,
+    );
 
     if (widget.theory != null && widget.game != null) {
       gameControllers = List.generate(
@@ -259,6 +268,7 @@ class _EditableInfoWidgetState extends State<EditableInfoWidget> {
     theory2Controller.dispose();
     theory3Controller.dispose();
     theory4Controller.dispose();
+    timeLimitController.dispose();
     gameControllers.forEach((controllersList) {
       controllersList.forEach((controller) => controller.dispose());
     });

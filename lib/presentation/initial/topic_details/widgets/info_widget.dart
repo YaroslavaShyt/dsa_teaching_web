@@ -76,7 +76,7 @@ class InfoWidget extends StatelessWidget {
                     ),
                     SizedBox(height: 50),
                     Text(
-                      "Перевірка знань",
+                      "Перевірка знань. Час: ${game.timeLimit / 60} хв",
                       style: textTheme.bodyMedium?.copyWith(
                         fontWeight: FontWeight.w700,
                         fontSize: 20,

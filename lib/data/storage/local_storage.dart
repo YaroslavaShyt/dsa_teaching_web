@@ -11,16 +11,19 @@ class LocalStorage implements ILocalStorage {
 
   @override
   Future<void> create({required String key, required value}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove(key);
+
     if (value is String) {
-      await _sharedPreferences.setString(key, value);
+      await prefs.setString(key, value);
     } else if (value is int) {
-      await _sharedPreferences.setInt(key, value);
+      await prefs.setInt(key, value);
     } else if (value is double) {
-      await _sharedPreferences.setDouble(key, value);
+      await prefs.setDouble(key, value);
     } else if (value is bool) {
-      await _sharedPreferences.setBool(key, value);
+      await prefs.setBool(key, value);
     } else if (value is List<String>) {
-      await _sharedPreferences.setStringList(key, value);
+      await prefs.setStringList(key, value);
     } else {
       throw ArgumentError('Unsupported value type');
     }
@@ -28,18 +31,22 @@ class LocalStorage implements ILocalStorage {
 
   @override
   Future<void> delete({required String key}) async {
-    await _sharedPreferences.remove(key);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove(key);
+    await prefs.reload();
+    final val = await prefs.get(key);
+    print(val);
   }
 
   @override
   Future<dynamic> read({required String key}) async {
-    return _sharedPreferences
-        .get(key); // Returns the value associated with the key
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    return prefs.get(key);
   }
 
   @override
   Future<void> update({required String key, required value}) async {
-    await delete(key: key); // Remove existing value if any
-    await create(key: key, value: value); // Set new value
+    await create(key: key, value: value);
   }
 }

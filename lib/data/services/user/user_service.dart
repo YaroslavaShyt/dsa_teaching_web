@@ -49,15 +49,19 @@ class UserService extends Cubit<UserState> implements IUserService {
       final UserStatus status =
           user == null ? UserStatus.notInitialized : UserStatus.initialized;
 
+      if (status == UserStatus.notInitialized) await cleanUserData();
+
       emit(state.copyWith(status: status, user: user));
     } catch (error) {
       logger.e(error);
+      await cleanUserData();
     }
   }
 
   @override
   Future<void> cleanUserData() async {
     await _authService.signOut();
+    print("data must be cleaned");
   }
 
   @override

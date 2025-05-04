@@ -30,8 +30,8 @@ class TokenService implements ITokenService {
   Future<bool> saveToken(IAuthResponse token) async {
     try {
       await Future.wait([
-        _storage.create(key: _token, value: token.token),
-        _storage.create(key: _id, value: token.userId.toString())
+        _storage.update(key: _token, value: token.token),
+        _storage.update(key: _id, value: token.userId.toString())
       ]);
       return true;
     } catch (error) {
