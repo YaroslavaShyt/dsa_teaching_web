@@ -24,7 +24,7 @@ class SelectLessonPlaceholder extends StatelessWidget {
               height: 200,
               width: 180,
             ),
-            Text("Оберіть урок, аби побачити деталі"),
+            Text("Оберіть лекцію, аби побачити деталі"),
           ],
         ),
       ),

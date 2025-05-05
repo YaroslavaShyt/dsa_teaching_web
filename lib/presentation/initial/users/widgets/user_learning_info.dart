@@ -17,7 +17,7 @@ class UserLearningInfoWidget extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Container(
+        SizedBox(
           width: 600,
           child: Row(
             mainAxisSize: MainAxisSize.max,

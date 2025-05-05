@@ -42,9 +42,8 @@ class TopicDetailsScreen extends StatelessWidget {
                     onAddPressed: cubit.addLesson,
                     onBackPressed: cubit.onBackPressed,
                   ),
-                  Container(
+                  SizedBox(
                     height: MediaQuery.sizeOf(context).height - 105,
-                    // color: Colors.red,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

@@ -1,7 +1,6 @@
 import 'package:dsa_teaching_web/core/utils/logger/logger.dart';
 import 'package:dsa_teaching_web/data/auth/sign_in_model.dart';
 import 'package:dsa_teaching_web/domain/services/auth/iauth_service.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'auth_state.dart';
@@ -10,11 +9,7 @@ class AuthCubit extends Cubit<AuthState> {
   AuthCubit({
     required IAuthService authService,
   })  : _authService = authService,
-        super(AuthState(
-          login: 'slavka112015@ukr.net',
-          password: 'slavka',
-          isButtonActive: true,
-        ));
+        super(AuthState());
 
   final IAuthService _authService;
 
@@ -30,7 +25,6 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> onLoginButtonPressed() async {
     try {
-      debugPrint("pressed");
       if (!state.isButtonActive) return;
 
       emit(state.copyWith(status: LoginStatus.loading));

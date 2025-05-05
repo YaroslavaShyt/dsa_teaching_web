@@ -29,7 +29,7 @@ class Lesson implements ILesson {
   @override
   Map<String, dynamic> toJson() {
     return {
-      'lessonTitle': title,
+      _lessonTitle: title,
       'step1Plan': plan.step1,
       'step2Plan': plan.step2,
       'step3Plan': plan.step3,

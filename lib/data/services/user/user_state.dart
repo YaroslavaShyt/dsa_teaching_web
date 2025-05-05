@@ -18,11 +18,11 @@ class UserState extends Equatable {
     UserStatus? status,
     IUser? user,
   }) {
+    final bool shouldClearUser =
+        status == UserStatus.notInitialized || status == UserStatus.undefined;
+
     return UserState(
-      user:
-          status == UserStatus.notInitialized || status == UserStatus.undefined
-              ? null
-              : user,
+      user: shouldClearUser ? null : user,
       status: status ?? this.status,
     );
   }

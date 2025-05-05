@@ -50,12 +50,12 @@ class Task implements ITask {
   @override
   Map<String, dynamic> toJson() {
     return {
-      'taskId': id,
-      'questionNumber': questionNumber,
-      'question': question,
-      'answerOptions': answerOptions,
-      'correctAnswer': correctAnswer,
-      'gameAnswersTypeId': type == GameAnswersType.row ? 1 : 2,
+      _taskId: id,
+      _questionNumber: questionNumber,
+      _question: question,
+      _answerOptions: answerOptions,
+      _correctAnswer: correctAnswer,
+      _gameAnswersType: type == GameAnswersType.row ? 1 : 2,
     };
   }
 }

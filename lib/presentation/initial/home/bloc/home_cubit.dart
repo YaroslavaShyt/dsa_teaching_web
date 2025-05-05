@@ -33,9 +33,7 @@ class HomeCubit extends Cubit<HomeState> {
 
   String get userName => _userService.user?.firstName ?? 'Admin';
 
-  Future<void> onExitTap() async {
-    _authService.signOut();
-  }
+  void onExitTap() => _authService.signOut();
 
   void onUsersTap() {
     _navigationUtil.navigateTo(AppRoutes.routeUsers);
@@ -76,9 +74,10 @@ class HomeCubit extends Cubit<HomeState> {
           : HomeStatus.failure;
       emit(
         state.copyWith(
-            lessonsSummary: _lessonService.topicsSummary,
-            status: status,
-            addCategoryStatus: AddCategoryStatus.initial),
+          lessonsSummary: _lessonService.topicsSummary,
+          status: status,
+          addCategoryStatus: AddCategoryStatus.initial,
+        ),
       );
     } catch (error) {
       logger.e(error);
@@ -129,9 +128,9 @@ class HomeCubit extends Cubit<HomeState> {
 
       if (isDeleted) {
         await init();
-      } else {
-        emit(state.copyWith(status: HomeStatus.initial));
+        return;
       }
+      emit(state.copyWith(status: HomeStatus.initial));
     } catch (error) {
       logger.e(error);
     }

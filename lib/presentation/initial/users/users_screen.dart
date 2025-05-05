@@ -35,9 +35,7 @@ class UsersScreen extends StatelessWidget {
                         padding: const EdgeInsetsDirectional.all(4),
                         content: IconButton(
                           onPressed: cubit.onBackPressed,
-                          icon: Icon(
-                            Icons.arrow_back,
-                          ),
+                          icon: Icon(Icons.arrow_back),
                         ),
                       ),
                       const UsersText(),
@@ -46,70 +44,76 @@ class UsersScreen extends StatelessWidget {
                   if (state.status == UserStatus.loading)
                     const Center(child: CircularProgressIndicator()),
                   if (state.status == UserStatus.success) ...[
-                    if (MediaQuery.sizeOf(context).width < 1500) ...[
-                      SizedBox(
-                        height: MediaQuery.sizeOf(context).height - 100,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            UserListTable(
-                              users: state.users,
-                              onUserSelected: cubit.onUserSelected,
-                              selectedId: state.selectedUserId,
-                            ),
-                            if (state.screenStatus ==
-                                ScreenStatus.seeUserInfo) ...[
-                              Container(
-                                height: 4,
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                ),
-                              ),
-                              UserLearningInfoWidget(
-                                lessons: state.userLearnedLessons,
-                                onClosePressed: cubit.onClosePressed,
-                              ),
-                            ]
-                          ],
-                        ),
-                      ),
-                    ] else
-                      SizedBox(
-                        height: MediaQuery.sizeOf(context).height - 100,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            UserListTable(
-                              users: state.users,
-                              onUserSelected: cubit.onUserSelected,
-                              selectedId: state.selectedUserId,
-                            ),
-                            if (state.screenStatus ==
-                                ScreenStatus.seeUserInfo) ...[
-                              Container(
-                                width: 4,
-                                height: double.infinity,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                ),
-                              ),
-                              UserLearningInfoWidget(
-                                lessons: state.userLearnedLessons,
-                                onClosePressed: cubit.onClosePressed,
-                              ),
-                            ]
-                          ],
-                        ),
-                      ),
+                    if (MediaQuery.sizeOf(context).width < 1500)
+                      _buildColumn(context, state)
+                    else
+                      _buildRow(context, state),
                   ],
                 ],
               );
             },
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildColumn(BuildContext context, UsersState state) {
+    return SizedBox(
+      height: MediaQuery.sizeOf(context).height - 100,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          UserListTable(
+            users: state.users,
+            onUserSelected: cubit.onUserSelected,
+            selectedId: state.selectedUserId,
+          ),
+          if (state.screenStatus == ScreenStatus.seeUserInfo) ...[
+            Container(
+              height: 4,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.white,
+              ),
+            ),
+            UserLearningInfoWidget(
+              lessons: state.userLearnedLessons,
+              onClosePressed: cubit.onClosePressed,
+            ),
+          ]
+        ],
+      ),
+    );
+  }
+
+  Widget _buildRow(BuildContext context, UsersState state) {
+    return SizedBox(
+      height: MediaQuery.sizeOf(context).height - 100,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          UserListTable(
+            users: state.users,
+            onUserSelected: cubit.onUserSelected,
+            selectedId: state.selectedUserId,
+          ),
+          if (state.screenStatus == ScreenStatus.seeUserInfo) ...[
+            Container(
+              width: 4,
+              height: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.white,
+              ),
+            ),
+            UserLearningInfoWidget(
+              lessons: state.userLearnedLessons,
+              onClosePressed: cubit.onClosePressed,
+            ),
+          ]
+        ],
       ),
     );
   }

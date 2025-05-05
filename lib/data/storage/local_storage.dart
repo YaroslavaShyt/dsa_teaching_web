@@ -16,17 +16,25 @@ class LocalStorage implements ILocalStorage {
 
     if (value is String) {
       await prefs.setString(key, value);
-    } else if (value is int) {
-      await prefs.setInt(key, value);
-    } else if (value is double) {
-      await prefs.setDouble(key, value);
-    } else if (value is bool) {
-      await prefs.setBool(key, value);
-    } else if (value is List<String>) {
-      await prefs.setStringList(key, value);
-    } else {
-      throw ArgumentError('Unsupported value type');
+      return;
     }
+    if (value is int) {
+      await prefs.setInt(key, value);
+      return;
+    }
+    if (value is double) {
+      await prefs.setDouble(key, value);
+      return;
+    }
+    if (value is bool) {
+      await prefs.setBool(key, value);
+      return;
+    }
+    if (value is List<String>) {
+      await prefs.setStringList(key, value);
+      return;
+    }
+    throw ArgumentError('Unsupported value type');
   }
 
   @override
@@ -34,8 +42,6 @@ class LocalStorage implements ILocalStorage {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove(key);
     await prefs.reload();
-    final val = await prefs.get(key);
-    print(val);
   }
 
   @override

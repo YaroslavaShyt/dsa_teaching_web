@@ -40,13 +40,16 @@ class ServiceLocator {
   }
 
   static void _initNetworking() {
-    sl.registerFactory<INetworkingClient>(() => NetworkingClient(
-          localStorage: sl<ILocalStorage>(),
-        ));
+    sl.registerFactory<INetworkingClient>(
+      () => NetworkingClient(
+        localStorage: sl<ILocalStorage>(),
+      ),
+    );
   }
 
   static void _initRepos() {
     final INetworkingClient networkingClient = sl.get<INetworkingClient>();
+
     sl.registerFactory<IAuthRepository>(
       () => AuthRepository(networkingClient: networkingClient),
     );
@@ -74,6 +77,7 @@ class ServiceLocator {
 
   static Future<void> _initLocalStorage() async {
     final SharedPreferences sharedPref = await SharedPreferences.getInstance();
+
     sl.registerFactory<ILocalStorage>(
       () => LocalStorage(sharedPreferences: sharedPref),
     );

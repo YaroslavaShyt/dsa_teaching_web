@@ -8,6 +8,8 @@ import 'package:dsa_teaching_web/domain/teaching/iteaching_repository.dart';
 import 'package:dsa_teaching_web/domain/theory/itheory.dart';
 import 'package:dsa_teaching_web/domain/topic/itopic.dart';
 
+const _topicId = 'topicId';
+
 class TeachingRepository implements ITeachingRepository {
   TeachingRepository({
     required INetworkingClient networkingClient,
@@ -26,7 +28,7 @@ class TeachingRepository implements ITeachingRepository {
       final Response? response = await _networkingClient.post(
         Endpoints.addLessonEndpoint,
         body: {
-          'topicId': topic.id,
+          _topicId: topic.id,
           ...lesson.toJson(),
           ...theory.toJson(),
           ...game.toJson(),
@@ -69,7 +71,7 @@ class TeachingRepository implements ITeachingRepository {
       final Response? response = await _networkingClient.put(
         Endpoints.updateLessonEndpoint(lesson.id!.toString()),
         body: {
-          'topicId': topic.id.toString(),
+          _topicId: topic.id.toString(),
           ...lesson.toJson(),
           ...theory.toJson(),
           ...game.toJson(),

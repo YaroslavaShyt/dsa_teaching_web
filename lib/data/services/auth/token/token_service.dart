@@ -1,3 +1,4 @@
+import 'package:dsa_teaching_web/core/utils/logger/logger.dart';
 import 'package:dsa_teaching_web/domain/storage/ilocal_storage.dart';
 
 import '../../../../domain/auth/iauth_response.dart';
@@ -20,22 +21,26 @@ class TokenService implements ITokenService {
 
   @override
   Future<void> clearToken() async {
-    await Future.wait([
-      _storage.delete(key: _token),
-      _storage.delete(key: _id),
-    ]);
+    await Future.wait(
+      [
+        _storage.delete(key: _token),
+        _storage.delete(key: _id),
+      ],
+    );
   }
 
   @override
   Future<bool> saveToken(IAuthResponse token) async {
     try {
-      await Future.wait([
-        _storage.update(key: _token, value: token.token),
-        _storage.update(key: _id, value: token.userId.toString())
-      ]);
+      await Future.wait(
+        [
+          _storage.update(key: _token, value: token.token),
+          _storage.update(key: _id, value: token.userId.toString())
+        ],
+      );
       return true;
     } catch (error) {
-      print(error);
+      logger.e(error);
     }
     return false;
   }

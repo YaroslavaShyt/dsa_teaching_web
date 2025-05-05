@@ -1,38 +1,43 @@
 import 'package:dio/dio.dart';
-import 'package:logger/logger.dart';
+import 'package:dsa_teaching_web/core/utils/logger/logger.dart';
 
 class LoggerInterceptor extends Interceptor {
-  Logger logger = Logger(
-    printer: PrettyPrinter(
-      methodCount: 0,
-      printEmojis: true,
-    ),
-  );
-
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
     final RequestOptions options = err.requestOptions;
     final String requestPath = '${options.baseUrl}${options.path}';
-    logger.e('${options.method} request => $requestPath');
-    logger.d('Error type: ${err.error} \n'
-             'Error message: ${err.message}');
+
+    logger.d(
+      '${options.method} request => $requestPath\n'
+      'Error type: ${err.error} \n'
+      'Error message: ${err.message}',
+    );
+
     handler.next(err);
   }
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    final requestPath = '${options.baseUrl}${options.path}';
-    logger.i('${options.method} request => $requestPath\n'
-        'DATA: ${options.data}');
+    final String requestPath = '${options.baseUrl}${options.path}';
+
+    logger.i(
+      '${options.method} request => $requestPath\n'
+      'DATA: ${options.data}',
+    );
+
     handler.next(options);
   }
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
-    logger.d('STATUSCODE: ${response.statusCode} \n '
-             'STATUSMESSAGE: ${response.statusMessage} \n'
-             'HEADERS: ${response.headers} \n'
-             'Data: ${response.data}');
+    logger.d(
+      '${response.requestOptions.method} request => ${response.realUri}\n'
+      'STATUS CODE: ${response.statusCode} \n '
+      'STATUS MESSAGE: ${response.statusMessage} \n'
+      'HEADERS: ${response.headers} \n'
+      'DATA: ${response.data}',
+    );
+
     handler.next(response);
   }
 }

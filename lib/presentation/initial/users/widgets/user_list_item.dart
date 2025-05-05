@@ -16,6 +16,8 @@ class UserListTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ColorScheme colorScheme = getColorScheme(context);
+
     return DataTable(
       columns: const [
         DataColumn(label: Text('Імʼя')),
@@ -24,25 +26,28 @@ class UserListTable extends StatelessWidget {
       ],
       rows: users.map(
         (user) {
+          final bool isSelected = selectedId.toString() == user.id;
+          final int userId = int.parse(user.id);
+
           return DataRow(
-            color: selectedId.toString() == user.id
+            color: isSelected
                 ? WidgetStatePropertyAll(
-                    getColorScheme(context).onSurface.withValues(alpha: 0.4),
+                    colorScheme.onSurface.withValues(alpha: 0.4),
                   )
                 : null,
             mouseCursor: WidgetStatePropertyAll(SystemMouseCursors.click),
             cells: [
               DataCell(
                 Text(user.firstName),
-                onTap: () => onUserSelected(int.parse(user.id)),
+                onTap: () => onUserSelected(userId),
               ),
               DataCell(
                 Text(user.email),
-                onTap: () => onUserSelected(int.parse(user.id)),
+                onTap: () => onUserSelected(userId),
               ),
               DataCell(
                 Text(user.createdAt),
-                onTap: () => onUserSelected(int.parse(user.id)),
+                onTap: () => onUserSelected(userId),
               ),
             ],
           );

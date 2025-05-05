@@ -30,9 +30,7 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
         _topicName = topicName,
         _categoryName = categoryName,
         _teachingRepository = teachingRepository,
-        super(
-          TopicDetailsState(),
-        );
+        super(TopicDetailsState());
 
   final String _topicName;
   final String _categoryName;
@@ -51,6 +49,7 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
       await _lessonService.init();
 
       final ITopic? topic = _fetchTopic();
+
       if (topic != null) {
         emit(
           state.copyWith(
@@ -80,7 +79,8 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
 
   void addLesson() {
     emit(
-        state.copyWith(mode: state.mode == Mode.add ? Mode.initial : Mode.add));
+      state.copyWith(mode: state.mode == Mode.add ? Mode.initial : Mode.add),
+    );
   }
 
   ITopic? _fetchTopic() {
@@ -274,9 +274,9 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
 
       if (isDeleted) {
         await init();
-      } else {
-        emit(state.copyWith(status: TopicDetailsStatus.success));
+        return;
       }
+      emit(state.copyWith(status: TopicDetailsStatus.success));
     } catch (error) {
       logger.e(error);
     }
@@ -292,9 +292,9 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
 
       if (isDeleted) {
         onBackPressed();
-      } else {
-        emit(state.copyWith(status: TopicDetailsStatus.success));
+        return;
       }
+      emit(state.copyWith(status: TopicDetailsStatus.success));
     } catch (error) {
       logger.e(error);
     }

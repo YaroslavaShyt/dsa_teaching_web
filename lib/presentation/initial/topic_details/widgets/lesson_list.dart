@@ -32,6 +32,8 @@ class LessonList extends StatelessWidget {
             (lesson) {
               return LessonNameWidget(
                 mode: mode,
+                isSelected: selectedLesson == lesson.id,
+                lesson: lesson,
                 onEditPressed: () {
                   onTap();
                   onLessonSelected(lesson.id!, lesson.gameId!,
@@ -42,10 +44,9 @@ class LessonList extends StatelessWidget {
                   onLessonSelected(lesson.id!, lesson.gameId!, Mode.initial);
                   onDelete(lesson.id!.toString());
                 },
-                isSelected: selectedLesson == lesson.id,
-                lesson: lesson,
-                onTap: () =>
-                    onLessonSelected(lesson.id!, lesson.gameId!, Mode.read),
+                onTap: () {
+                  onLessonSelected(lesson.id!, lesson.gameId!, Mode.read);
+                },
               );
             },
           )

@@ -44,9 +44,7 @@ class UsersCubit extends Cubit<UsersState> {
       );
 
       final List<IUserLearnedLessons> lessons =
-          await _userService.getAllUserLessons(
-        id,
-      );
+          await _userService.getAllUserLessons(id);
 
       emit(
         state.copyWith(

@@ -1,4 +1,3 @@
-import 'package:dsa_teaching_web/core/utils/theme/text_theme.dart';
 import 'package:dsa_teaching_web/presentation/initial/home/bloc/home_cubit.dart';
 import 'package:dsa_teaching_web/presentation/initial/home/widgets/add_category/add_category_widget.dart';
 import 'package:dsa_teaching_web/presentation/initial/home/widgets/add_topic_button.dart';
@@ -110,7 +109,7 @@ class HomeScreen extends StatelessWidget {
               ),
             );
           }
-          return Text('failure');
+          return Text('Щось пішло не так');
         },
       ),
     );

@@ -10,5 +10,4 @@ abstract interface class ISignUpModel {
   final String password;
 
   Map<String, String> toJson();
-
 }

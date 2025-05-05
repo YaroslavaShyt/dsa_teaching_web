@@ -13,20 +13,22 @@ class FormWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text('План'),
-          ...List.generate(4, (index) {
-            return Row(
-              children: [
-                Text('${index + 1}'),
-                const SizedBox(width: 10),
-                Expanded(
-                  // додаємо щоб розширити текстове поле
-                  child: MainTextField(
-                    labelText: '',
+          ...List.generate(
+            4,
+            (index) {
+              return Row(
+                spacing: 10,
+                children: [
+                  Text('${index + 1}'),
+                  Expanded(
+                    child: MainTextField(
+                      labelText: '',
+                    ),
                   ),
-                ),
-              ],
-            );
-          }),
+                ],
+              );
+            },
+          ),
         ],
       ),
     );

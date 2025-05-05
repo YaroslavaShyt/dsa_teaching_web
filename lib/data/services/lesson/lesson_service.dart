@@ -3,9 +3,6 @@ import 'package:dsa_teaching_web/domain/category/icategory.dart';
 import 'package:dsa_teaching_web/domain/lesson/ilesson_repository.dart';
 import 'package:dsa_teaching_web/domain/services/lesson/ilesson_service.dart';
 
-const String _algorithms = "ALGORITHMS";
-const String _dataStructures = "DATA_STRUCTURES";
-
 class LessonService implements ILessonService {
   LessonService({
     required ILessonRepository lessonRepository,
@@ -25,9 +22,15 @@ class LessonService implements ILessonService {
   @override
   Future<void> init() async {
     try {
-      _summary = await _lessonRepository.getLessonsSummary();
+      final data = await Future.wait(
+        [
+          _lessonRepository.getLessonsSummary(),
+          _lessonRepository.getTopicsSummary(),
+        ],
+      );
+      _summary = data.first;
 
-      _topicsSummary = await _lessonRepository.getTopicsSummary();
+      _topicsSummary = data.last;
     } catch (error) {
       logger.e(error);
     }

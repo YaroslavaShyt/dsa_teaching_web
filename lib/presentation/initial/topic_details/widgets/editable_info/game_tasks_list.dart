@@ -18,16 +18,15 @@ class _GameTasksListState extends State<GameTasksList> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsetsDirectional.only(
-        bottom: 12,
-      ),
+      padding: const EdgeInsetsDirectional.only(bottom: 12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(widget.task.question),
           ...widget.task.answerOptions.map(
             (option) {
-              final index = widget.task.answerOptions.indexOf(option);
+              final int index = widget.task.answerOptions.indexOf(option);
+
               return Row(
                 children: [
                   Radio<String>(

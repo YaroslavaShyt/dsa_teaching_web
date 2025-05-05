@@ -22,15 +22,18 @@ class _AddTasksFormState extends State<AddTasksForm> {
   void initState() {
     super.initState();
 
-    correctAnswers = List.generate(4, (index) {
-      final text = widget.gameControllers[index][5].text;
-      for (int i = 1; i <= 4; i++) {
-        if (widget.gameControllers[index][i].text == text) {
-          return ['a', 'b', 'c', 'd'][i - 1];
+    correctAnswers = List.generate(
+      4,
+      (index) {
+        final text = widget.gameControllers[index][5].text;
+        for (int i = 1; i <= 4; i++) {
+          if (widget.gameControllers[index][i].text == text) {
+            return ['a', 'b', 'c', 'd'][i - 1];
+          }
         }
-      }
-      return null;
-    });
+        return null;
+      },
+    );
   }
 
   @override
@@ -62,7 +65,9 @@ class _AddTasksFormState extends State<AddTasksForm> {
         spacing: 6,
         children: [
           MainTextField(
-              labelText: 'Питання $number', controller: controllers[0]),
+            labelText: 'Питання $number',
+            controller: controllers[0],
+          ),
           MainTextField(labelText: 'a)', controller: controllers[1]),
           MainTextField(labelText: 'b)', controller: controllers[2]),
           MainTextField(labelText: 'c)', controller: controllers[3]),
@@ -90,19 +95,21 @@ class _AddTasksFormState extends State<AddTasksForm> {
   }
 
   void _onChanged(int questionIndex, String? selectedKey) {
-    setState(() {
-      correctAnswers[questionIndex] = selectedKey;
+    setState(
+      () {
+        correctAnswers[questionIndex] = selectedKey;
 
-      final index = switch (selectedKey) {
-        'a' => 1,
-        'b' => 2,
-        'c' => 3,
-        'd' => 4,
-        _ => 1,
-      };
+        final int index = switch (selectedKey) {
+          'a' => 1,
+          'b' => 2,
+          'c' => 3,
+          'd' => 4,
+          _ => 1,
+        };
 
-      widget.gameControllers[questionIndex][5].text =
-          widget.gameControllers[questionIndex][index].text;
-    });
+        widget.gameControllers[questionIndex][5].text =
+            widget.gameControllers[questionIndex][index].text;
+      },
+    );
   }
 }

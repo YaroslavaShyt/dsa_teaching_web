@@ -1,7 +1,6 @@
 const String _endpoint = String.fromEnvironment('url');
 
 class Endpoints {
-  /// ipconfig from windows
   static const String baseEndpoint = 'http://$_endpoint/api/';
 
   /// AUTH
@@ -13,23 +12,9 @@ class Endpoints {
   static const String userEndpoint = 'users/admin';
   static const String allUsersEndpoint = 'users/all';
 
-  /// ACHIEVEMENTS
-  static const String _achievements = 'achievements';
-  static const String getAllAchievementsEndpoint = '$_achievements/';
-  static String userAchievementsEndpoint = '$_achievements/user/';
-  static const String addNewAchievementEndpoint = '$_achievements/user/add';
-
-  /// STREAK
-  static const String _streak = 'streak';
-  static String userStreakEndpoint = "$_streak/";
-  static String updateUserStreakEndpoint = '$_streak/update';
-
-  /// REWARDS
-  static const String _rewards = 'rewards';
-  static const String rewardsEndpoint = '$_rewards/update';
-
   /// STATISTICS
   static const String _statistics = 'statistics';
+
   static String statisticsEndpoint(int id) => '$_statistics/teaching/$id';
 
   /// LESSON
@@ -41,16 +26,16 @@ class Endpoints {
 
   static String getLessonGame(int id) => '$_lessonEndpoint/$id/game';
 
-  static const String _trainings = 'trainings';
-  static const String getLearnedLessonsEndpoint = '$_trainings/user';
-  static const String finishLessonEndpoint = '$_trainings/complete';
-
   /// TEACHING
   static const String _teachingEndpoint = 'teaching';
   static const String addLessonEndpoint = '$_teachingEndpoint/';
+
   static String updateLessonEndpoint(String id) => '$_teachingEndpoint/$id';
+
   static String deleteLessonEndpoint(String id) => '$_teachingEndpoint/$id';
   static const String addTopicEndpoint = '$_teachingEndpoint/topic';
+
   static String updateTopicEndpoint(String id) => '$addTopicEndpoint/$id';
+
   static String deleteTopicEndpoint(String id) => '$addTopicEndpoint/$id';
 }

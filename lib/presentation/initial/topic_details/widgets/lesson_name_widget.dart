@@ -46,9 +46,7 @@ class _LessonNameWidgetState extends State<LessonNameWidget> {
                 ? colorScheme.onSurface.withValues(alpha: 0.3)
                 : colorScheme.surface,
             content: GestureDetector(
-              onTap: () {
-                widget.onTap();
-              },
+              onTap: widget.onTap,
               child: Text(
                 widget.lesson.title,
                 style: TextStyle(

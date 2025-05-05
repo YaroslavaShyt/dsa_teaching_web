@@ -7,13 +7,6 @@ class UserLearnedLessons implements IUserLearnedLessons {
     required this.timeSpent,
   });
 
-  @override
-  final String title;
-  @override
-  final String date;
-  @override
-  final int timeSpent;
-
   factory UserLearnedLessons.fromJson(Map<String, dynamic> data) {
     return UserLearnedLessons(
       title: data['lessonName'],
@@ -21,4 +14,11 @@ class UserLearnedLessons implements IUserLearnedLessons {
       timeSpent: data['timeSpent'],
     );
   }
+
+  @override
+  final String title;
+  @override
+  final String date;
+  @override
+  final int timeSpent;
 }

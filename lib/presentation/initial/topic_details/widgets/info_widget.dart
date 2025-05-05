@@ -1,6 +1,7 @@
 import 'package:dsa_teaching_web/core/utils/theme/text_theme.dart';
 import 'package:dsa_teaching_web/domain/game/igame.dart';
 import 'package:dsa_teaching_web/domain/theory/ilesson_theory.dart';
+import 'package:dsa_teaching_web/presentation/initial/topic_details/widgets/game_task.dart';
 import 'package:dsa_teaching_web/presentation/initial/widgets/main_container.dart';
 import 'package:flutter/material.dart';
 
@@ -19,8 +20,7 @@ class InfoWidget extends StatelessWidget {
     final TextTheme textTheme = getTextTheme(context);
 
     return Flexible(
-      child: Container(
-        // color: Colors.green,
+      child: SizedBox(
         height: MediaQuery.sizeOf(context).height - 100,
         width: double.infinity,
         child: SingleChildScrollView(
@@ -84,39 +84,9 @@ class InfoWidget extends StatelessWidget {
                     ),
                     ...game.tasks.map(
                       (task) {
-                        return Padding(
-                          padding: const EdgeInsetsDirectional.only(bottom: 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsetsDirectional.only(bottom: 8),
-                                child: Text(
-                                  "${game.tasks.indexOf(task) + 1}. ${task.question}",
-                                  softWrap: true,
-                                  overflow: TextOverflow.visible,
-                                ),
-                              ),
-                              ...task.answerOptions.map(
-                                (option) {
-                                  return Padding(
-                                    padding: const EdgeInsetsDirectional.only(
-                                        start: 8),
-                                    child: Text(
-                                      "${letters[task.answerOptions.indexOf(option)]}. $option",
-                                      style: textTheme.bodyMedium?.copyWith(
-                                        fontWeight: option == task.correctAnswer
-                                            ? FontWeight.w700
-                                            : null,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ],
-                          ),
+                        return GameTask(
+                          game: game,
+                          task: task,
                         );
                       },
                     )

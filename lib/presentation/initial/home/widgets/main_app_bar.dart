@@ -23,6 +23,9 @@ class _MainAppBarState extends State<MainAppBar> {
 
   @override
   Widget build(BuildContext context) {
+    final ColorScheme colorScheme = getColorScheme(context);
+    final TextTheme textTheme = getTextTheme(context);
+
     return SizedBox(
       height: 60,
       child: Row(
@@ -50,9 +53,7 @@ class _MainAppBarState extends State<MainAppBar> {
                     child: Text(
                       'Усі користувачі',
                       style: TextStyle(
-                        color: _isHovered
-                            ? getColorScheme(context).primaryFixed
-                            : null,
+                        color: _isHovered ? colorScheme.primaryFixed : null,
                       ),
                     ),
                   ),
@@ -64,19 +65,19 @@ class _MainAppBarState extends State<MainAppBar> {
             children: [
               Text(
                 "Панель адміністрування",
-                style: getTextTheme(context).labelSmall?.copyWith(
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white,
-                      fontSize: 20,
-                    ),
+                style: textTheme.labelSmall?.copyWith(
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white,
+                  fontSize: 20,
+                ),
               ),
               Text(
                 '  DSA Teaching',
-                style: getTextTheme(context).labelSmall?.copyWith(
-                      fontWeight: FontWeight.w700,
-                      color: getColorScheme(context).primaryFixed,
-                      fontSize: 20,
-                    ),
+                style: textTheme.labelSmall?.copyWith(
+                  fontWeight: FontWeight.w700,
+                  color: colorScheme.primaryFixed,
+                  fontSize: 20,
+                ),
               ),
             ],
           ),

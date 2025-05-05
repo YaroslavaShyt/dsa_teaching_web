@@ -69,7 +69,7 @@ class _EditableInfoWidgetState extends State<EditableInfoWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = getTextTheme(context);
+    final TextTheme textTheme = getTextTheme(context);
 
     return Flexible(
       child: SizedBox(
