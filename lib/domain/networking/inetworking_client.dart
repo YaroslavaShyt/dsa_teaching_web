@@ -10,12 +10,12 @@ abstract class INetworkingClient {
   Future<Response?> post(
     String endpoint, {
     Map<String, dynamic>? queryParameters,
-    Map<String, dynamic>? body,
+    dynamic body,
   });
 
   Future<Response?> put(
     String endpoint, {
-    Map<String, dynamic> body,
+    dynamic body,
     Map<String, dynamic>? queryParameters,
   });
 

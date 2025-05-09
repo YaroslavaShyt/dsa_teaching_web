@@ -58,7 +58,7 @@ class NetworkingClient implements INetworkingClient {
   Future<Response?> post(
     String endpoint, {
     Map<String, dynamic>? queryParameters,
-    Map<String, dynamic>? body,
+    dynamic body,
   }) async {
     try {
       return _dio.post(
@@ -74,7 +74,7 @@ class NetworkingClient implements INetworkingClient {
   @override
   Future<Response?> put(
     String endpoint, {
-    Map<String, dynamic>? body,
+    dynamic body,
     Map<String, dynamic>? queryParameters,
   }) async {
     try {

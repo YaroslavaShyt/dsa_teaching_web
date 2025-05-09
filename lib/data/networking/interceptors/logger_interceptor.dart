@@ -19,11 +19,26 @@ class LoggerInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     final String requestPath = '${options.baseUrl}${options.path}';
+    String logMessage = '${options.method} request => $requestPath\n';
 
-    logger.i(
-      '${options.method} request => $requestPath\n'
-      'DATA: ${options.data}',
-    );
+    final data = options.data;
+
+    if (data is FormData) {
+      logMessage += 'FormData Fields:\n';
+      for (final field in data.fields) {
+        logMessage += '  ${field.key}: ${field.value}\n';
+      }
+
+      logMessage += 'FormData Files:\n';
+      for (final file in data.files) {
+        logMessage +=
+            '  ${file.key}: filename=${file.value.filename}, contentType=${file.value.contentType}\n';
+      }
+    } else {
+      logMessage += 'DATA: $data';
+    }
+
+    logger.i(logMessage);
 
     handler.next(options);
   }

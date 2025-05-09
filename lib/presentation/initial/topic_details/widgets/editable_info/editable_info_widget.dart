@@ -1,9 +1,14 @@
+import 'dart:async';
+import 'dart:html' as html;
+
+import 'package:dsa_teaching_web/core/utils/logger/logger.dart';
 import 'package:dsa_teaching_web/core/utils/theme/text_theme.dart';
 import 'package:dsa_teaching_web/data/game/task.dart';
 import 'package:dsa_teaching_web/domain/game/game_answers_type.dart';
 import 'package:dsa_teaching_web/domain/game/igame.dart';
 import 'package:dsa_teaching_web/domain/game/itask.dart';
 import 'package:dsa_teaching_web/domain/theory/ilesson_theory.dart';
+import 'package:dsa_teaching_web/presentation/initial/topic_details/widgets/add_image_button.dart';
 import 'package:dsa_teaching_web/presentation/initial/topic_details/widgets/editable_info/add_tasks_form.dart';
 import 'package:dsa_teaching_web/presentation/initial/topic_details/widgets/editable_info/save_button.dart';
 import 'package:dsa_teaching_web/presentation/initial/widgets/main_container.dart';
@@ -29,6 +34,10 @@ class EditableInfoWidget extends StatefulWidget {
     required String theoryStep2,
     required String theoryStep3,
     required String theoryStep4,
+    required html.File? theoryImageStep1,
+    required html.File? theoryImageStep2,
+    required html.File? theoryImageStep3,
+    required html.File? theoryImageStep4,
     required int timeLimit,
     required List<ITask> tasks,
     required bool isNewLesson,
@@ -54,6 +63,15 @@ class _EditableInfoWidgetState extends State<EditableInfoWidget> {
     4,
     (int index) => List.generate(6, (int index) => TextEditingController()),
   );
+
+  html.File? theoryImage1File;
+  html.File? theoryImage2File;
+  html.File? theoryImage3File;
+  html.File? theoryImage4File;
+  String? theoryImage1Url;
+  String? theoryImage2Url;
+  String? theoryImage3Url;
+  String? theoryImage4Url;
 
   @override
   void initState() {
@@ -128,17 +146,41 @@ class _EditableInfoWidgetState extends State<EditableInfoWidget> {
                         controller: theory1Controller,
                         maxLines: null,
                       ),
+                      AddImageButton(
+                        onTap: () => _pickImage(1),
+                        path: widget.theory?.lessonTheory.theoryImageStep1,
+                        currentFile: theoryImage1Url,
+                        remove: () => _remove(1),
+                      ),
                       TextFormField(
                         controller: theory2Controller,
                         maxLines: null,
+                      ),
+                      AddImageButton(
+                        onTap: () => _pickImage(2),
+                        path: widget.theory?.lessonTheory.theoryImageStep2,
+                        currentFile: theoryImage2Url,
+                        remove: () => _remove(2),
                       ),
                       TextFormField(
                         controller: theory3Controller,
                         maxLines: null,
                       ),
+                      AddImageButton(
+                        onTap: () => _pickImage(3),
+                        path: widget.theory?.lessonTheory.theoryImageStep3,
+                        currentFile: theoryImage3Url,
+                        remove: () => _remove(3),
+                      ),
                       TextFormField(
                         controller: theory4Controller,
                         maxLines: null,
+                      ),
+                      AddImageButton(
+                        onTap: () => _pickImage(4),
+                        path: widget.theory?.lessonTheory.theoryImageStep4,
+                        currentFile: theoryImage4Url,
+                        remove: () => _remove(4),
                       ),
                       const SizedBox(height: 20),
                       Text(
@@ -185,6 +227,10 @@ class _EditableInfoWidgetState extends State<EditableInfoWidget> {
       timeLimit: int.parse(timeLimitController.text) * 60,
       tasks: _fetchTasks(),
       isNewLesson: widget.theory == null,
+      theoryImageStep1: theoryImage1File,
+      theoryImageStep2: theoryImage2File,
+      theoryImageStep3: theoryImage3File,
+      theoryImageStep4: theoryImage4File,
     );
     _initControllers();
   }
@@ -271,6 +317,84 @@ class _EditableInfoWidgetState extends State<EditableInfoWidget> {
     timeLimitController.dispose();
     gameControllers.forEach((controllersList) {
       controllersList.forEach((controller) => controller.dispose());
+    });
+  }
+
+  Future<void> _pickImage(int step) async {
+    html.FileUploadInputElement uploadInput = html.FileUploadInputElement();
+    uploadInput.accept = 'image/*';
+    uploadInput.click();
+
+    uploadInput.onChange.listen((e) async {
+      final files = uploadInput.files;
+      if (files!.isEmpty) return;
+
+      final file = files[0];
+
+      setState(() {
+        if (step == 1) {
+          theoryImage1File = file;
+          fileToDataUrl(file, 1);
+        } else if (step == 2) {
+          theoryImage2File = file;
+          fileToDataUrl(file, 2);
+        } else if (step == 3) {
+          theoryImage3File = file;
+          fileToDataUrl(file, 3);
+        } else if (step == 4) {
+          theoryImage4File = file;
+          fileToDataUrl(file, 4);
+        }
+      });
+    });
+  }
+
+  Future<void> fileToDataUrl(html.File file, int index) async {
+    try {
+      final reader = html.FileReader();
+      final completer = Completer<String>();
+
+      reader.onLoadEnd.listen((_) {
+        completer.complete(reader.result as String);
+      });
+
+      reader.readAsDataUrl(file);
+
+      String data = await completer.future;
+
+      setState(() {
+        if (index == 1) {
+          theoryImage1Url = data;
+        }
+        if (index == 2) {
+          theoryImage2Url = data;
+        }
+        if (index == 3) {
+          theoryImage3Url = data;
+        }
+        if (index == 4) {
+          theoryImage4Url = data;
+        }
+      });
+    } catch (error) {
+      logger.e(error);
+    }
+  }
+
+  void _remove(int index) {
+    setState(() {
+      if (index == 1) {
+        theoryImage1Url = null;
+      }
+      if (index == 2) {
+        theoryImage2Url = null;
+      }
+      if (index == 3) {
+        theoryImage3Url = null;
+      }
+      if (index == 4) {
+        theoryImage4Url = null;
+      }
     });
   }
 }

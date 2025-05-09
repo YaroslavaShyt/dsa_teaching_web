@@ -1,3 +1,5 @@
+import 'dart:html' as html;
+
 import 'package:dsa_teaching_web/core/utils/logger/logger.dart';
 import 'package:dsa_teaching_web/core/utils/navigation/inavigation_util.dart';
 import 'package:dsa_teaching_web/core/utils/navigation/routes.dart';
@@ -138,6 +140,10 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
     required String theoryStep4,
     required int timeLimit,
     required List<ITask> tasks,
+    required html.File? theoryImageStep1,
+    required html.File? theoryImageStep2,
+    required html.File? theoryImageStep3,
+    required html.File? theoryImageStep4,
     bool isNewLesson = false,
   }) async {
     try {
@@ -154,6 +160,10 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
           theoryStep4: theoryStep4,
           timeLimit: timeLimit,
           tasks: tasks,
+          theoryImage1File: theoryImageStep1,
+          theoryImage2File: theoryImageStep2,
+          theoryImage3File: theoryImageStep3,
+          theoryImage4File: theoryImageStep4,
         );
         return;
       }
@@ -169,6 +179,10 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
         theoryStep4: theoryStep4,
         timeLimit: timeLimit,
         tasks: tasks,
+        theoryImageStep1: theoryImageStep1,
+        theoryImageStep2: theoryImageStep2,
+        theoryImageStep3: theoryImageStep3,
+        theoryImageStep4: theoryImageStep4,
       );
     } catch (error) {
       logger.e(error);
@@ -187,6 +201,10 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
     required String theoryStep4,
     required int timeLimit,
     required List<ITask> tasks,
+    html.File? theoryImage1File,
+    html.File? theoryImage2File,
+    html.File? theoryImage3File,
+    html.File? theoryImage4File,
   }) async {
     final bool isAdded = await _teachingRepository.addLesson(
       _fetchTopic()!,
@@ -204,8 +222,16 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
         theoryStep2: theoryStep2,
         theoryStep3: theoryStep3,
         theoryStep4: theoryStep4,
+        theoryImageStep1: '',
+        theoryImageStep2: '',
+        theoryImageStep3: '',
+        theoryImageStep4: '',
       ),
       Game(title: title, timeLimit: timeLimit, tasks: tasks),
+      theoryImage1File,
+      theoryImage2File,
+      theoryImage3File,
+      theoryImage4File,
     );
     if (isAdded) {
       await init();
@@ -224,6 +250,10 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
     required String theoryStep4,
     required int timeLimit,
     required List<ITask> tasks,
+    required html.File? theoryImageStep1,
+    required html.File? theoryImageStep2,
+    required html.File? theoryImageStep3,
+    required html.File? theoryImageStep4,
   }) async {
     final bool isUpdated = await _teachingRepository.updateLesson(
       _fetchTopic()!,
@@ -242,6 +272,10 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
         theoryStep2: theoryStep2,
         theoryStep3: theoryStep3,
         theoryStep4: theoryStep4,
+        theoryImageStep1: '',
+        theoryImageStep2: '',
+        theoryImageStep3: '',
+        theoryImageStep4: '',
       ),
       Game(
         id: state.selectedGame!.id,
@@ -260,6 +294,10 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
             )
             .toList(),
       ),
+      theoryImageStep1,
+      theoryImageStep2,
+      theoryImageStep3,
+      theoryImageStep4,
     );
     if (isUpdated) {
       await init();

@@ -2,6 +2,7 @@ import 'package:dsa_teaching_web/core/utils/theme/text_theme.dart';
 import 'package:dsa_teaching_web/domain/game/igame.dart';
 import 'package:dsa_teaching_web/domain/theory/ilesson_theory.dart';
 import 'package:dsa_teaching_web/presentation/initial/topic_details/widgets/game_task.dart';
+import 'package:dsa_teaching_web/presentation/initial/topic_details/widgets/theory_image.dart';
 import 'package:dsa_teaching_web/presentation/initial/widgets/main_container.dart';
 import 'package:flutter/material.dart';
 
@@ -64,16 +65,25 @@ class InfoWidget extends StatelessWidget {
                       softWrap: true,
                       overflow: TextOverflow.visible,
                     ),
+                    TheoryImage(image: theory.lessonTheory.theoryImageStep1),
                     Text(
                       theory.lessonTheory.theoryStep2,
                       softWrap: true,
                       overflow: TextOverflow.visible,
                     ),
+                    TheoryImage(image: theory.lessonTheory.theoryImageStep2),
                     Text(
                       theory.lessonTheory.theoryStep3,
                       softWrap: true,
                       overflow: TextOverflow.visible,
                     ),
+                    TheoryImage(image: theory.lessonTheory.theoryImageStep3),
+                    Text(
+                      theory.lessonTheory.theoryStep4,
+                      softWrap: true,
+                      overflow: TextOverflow.visible,
+                    ),
+                    TheoryImage(image: theory.lessonTheory.theoryImageStep4),
                     SizedBox(height: 50),
                     Text(
                       "Перевірка знань. Час: ${game.timeLimit / 60} хв",

@@ -5,6 +5,8 @@ import '../../domain/theory/ilesson_theory.dart';
 import '../../domain/theory/itheory.dart';
 import '../lesson/lesson_plan.dart';
 
+const String _endpoint = String.fromEnvironment('url');
+
 const String _lessonTitle = 'lessonTitle';
 const String _step1Plan = 'step1Plan';
 const String _step2Plan = 'step2Plan';
@@ -14,6 +16,10 @@ const String _theoryStep1 = 'theoryStep1';
 const String _theoryStep2 = 'theoryStep2';
 const String _theoryStep3 = 'theoryStep3';
 const String _theoryStep4 = 'theoryStep4';
+const String _theoryImageStep1 = 'theoryImageStep1';
+const String _theoryImageStep2 = 'theoryImageStep2';
+const String _theoryImageStep3 = 'theoryImageStep3';
+const String _theoryImageStep4 = 'theoryImageStep4';
 
 class LessonTheory implements ILessonTheory {
   LessonTheory({
@@ -36,6 +42,10 @@ class LessonTheory implements ILessonTheory {
         theoryStep2: data[_theoryStep2],
         theoryStep3: data[_theoryStep3],
         theoryStep4: data[_theoryStep4],
+        theoryImageStep1: _getImage(data[_theoryImageStep1]),
+        theoryImageStep2: _getImage(data[_theoryImageStep2]),
+        theoryImageStep3: _getImage(data[_theoryImageStep3]),
+        theoryImageStep4: _getImage(data[_theoryImageStep4]),
       ),
     );
   }
@@ -48,4 +58,11 @@ class LessonTheory implements ILessonTheory {
 
   @override
   final ITheory lessonTheory;
+
+  static String _getImage(String? path) {
+    if (path != null && path.startsWith('/files/theory/')) {
+      return 'http://$_endpoint$path';
+    }
+    return '';
+  }
 }

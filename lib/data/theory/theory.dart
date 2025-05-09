@@ -6,6 +6,10 @@ class Theory implements ITheory {
     required this.theoryStep2,
     required this.theoryStep3,
     required this.theoryStep4,
+    required this.theoryImageStep1,
+    required this.theoryImageStep2,
+    required this.theoryImageStep3,
+    required this.theoryImageStep4,
   });
 
   @override
@@ -19,6 +23,15 @@ class Theory implements ITheory {
 
   @override
   final String theoryStep4;
+
+  @override
+  final String theoryImageStep1;
+  @override
+  final String theoryImageStep2;
+  @override
+  final String theoryImageStep3;
+  @override
+  final String theoryImageStep4;
 
   @override
   Map<String, dynamic> toJson() {

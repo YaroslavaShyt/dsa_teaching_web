@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dsa_teaching_web/data/game/task.dart';
 import 'package:dsa_teaching_web/domain/game/igame.dart';
 
@@ -47,7 +49,7 @@ class Game implements IGame {
       'gameId': id,
       'gameName': title,
       'timeLimit': timeLimit,
-      'gameTasks': tasks.map((task) => task.toJson()).toList(),
+      'gameTasks': json.encode(tasks.map((task) => task.toJson()).toList()),
     };
   }
 }
