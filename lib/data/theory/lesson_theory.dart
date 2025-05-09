@@ -38,6 +38,7 @@ class LessonTheory implements ILessonTheory {
         step4: data[_step4Plan],
       ),
       lessonTheory: Theory(
+        id: data["id"],
         theoryStep1: data[_theoryStep1],
         theoryStep2: data[_theoryStep2],
         theoryStep3: data[_theoryStep3],

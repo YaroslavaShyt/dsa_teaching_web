@@ -10,7 +10,11 @@ class Theory implements ITheory {
     required this.theoryImageStep2,
     required this.theoryImageStep3,
     required this.theoryImageStep4,
+    this.id,
   });
+
+  @override
+  final int? id;
 
   @override
   final String theoryStep1;

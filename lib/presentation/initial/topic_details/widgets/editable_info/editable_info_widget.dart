@@ -41,6 +41,7 @@ class EditableInfoWidget extends StatefulWidget {
     required int timeLimit,
     required List<ITask> tasks,
     required bool isNewLesson,
+    required int theoryId,
   }) saveInfo;
 
   @override
@@ -148,7 +149,6 @@ class _EditableInfoWidgetState extends State<EditableInfoWidget> {
                       ),
                       AddImageButton(
                         onTap: () => _pickImage(1),
-                        path: widget.theory?.lessonTheory.theoryImageStep1,
                         currentFile: theoryImage1Url,
                         remove: () => _remove(1),
                       ),
@@ -158,7 +158,6 @@ class _EditableInfoWidgetState extends State<EditableInfoWidget> {
                       ),
                       AddImageButton(
                         onTap: () => _pickImage(2),
-                        path: widget.theory?.lessonTheory.theoryImageStep2,
                         currentFile: theoryImage2Url,
                         remove: () => _remove(2),
                       ),
@@ -168,7 +167,6 @@ class _EditableInfoWidgetState extends State<EditableInfoWidget> {
                       ),
                       AddImageButton(
                         onTap: () => _pickImage(3),
-                        path: widget.theory?.lessonTheory.theoryImageStep3,
                         currentFile: theoryImage3Url,
                         remove: () => _remove(3),
                       ),
@@ -178,7 +176,6 @@ class _EditableInfoWidgetState extends State<EditableInfoWidget> {
                       ),
                       AddImageButton(
                         onTap: () => _pickImage(4),
-                        path: widget.theory?.lessonTheory.theoryImageStep4,
                         currentFile: theoryImage4Url,
                         remove: () => _remove(4),
                       ),
@@ -214,7 +211,9 @@ class _EditableInfoWidgetState extends State<EditableInfoWidget> {
   }
 
   void _onSaveButtonPressed() {
+    if (widget.theory?.lessonTheory.id == null) return;
     widget.saveInfo(
+      theoryId: widget.theory!.lessonTheory.id!,
       title: titleController.text,
       step1: step1Controller.text,
       step2: step2Controller.text,
@@ -302,6 +301,18 @@ class _EditableInfoWidgetState extends State<EditableInfoWidget> {
         ),
       );
     }
+    if (widget.theory?.lessonTheory.theoryImageStep1.isNotEmpty ?? false) {
+      theoryImage1Url = widget.theory?.lessonTheory.theoryImageStep1;
+    }
+    if (widget.theory?.lessonTheory.theoryImageStep2.isNotEmpty ?? false) {
+      theoryImage2Url = widget.theory?.lessonTheory.theoryImageStep2;
+    }
+    if (widget.theory?.lessonTheory.theoryImageStep3.isNotEmpty ?? false) {
+      theoryImage3Url = widget.theory?.lessonTheory.theoryImageStep3;
+    }
+    if (widget.theory?.lessonTheory.theoryImageStep4.isNotEmpty ?? false) {
+      theoryImage4Url = widget.theory?.lessonTheory.theoryImageStep4;
+    }
   }
 
   void _disposeControllers() {
@@ -384,17 +395,22 @@ class _EditableInfoWidgetState extends State<EditableInfoWidget> {
   void _remove(int index) {
     setState(() {
       if (index == 1) {
+        theoryImage1File = null;
         theoryImage1Url = null;
       }
       if (index == 2) {
+        theoryImage2File = null;
         theoryImage2Url = null;
       }
       if (index == 3) {
+        theoryImage3File = null;
         theoryImage3Url = null;
       }
       if (index == 4) {
+        theoryImage4File = null;
         theoryImage4Url = null;
       }
     });
+    _pickImage(index);
   }
 }

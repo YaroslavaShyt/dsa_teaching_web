@@ -20,6 +20,7 @@ abstract interface class ITeachingRepository {
 
   Future<bool> updateLesson(
     ITopic topic,
+    int theoryId,
     ILesson lesson,
     ITheory theory,
     IGame game,

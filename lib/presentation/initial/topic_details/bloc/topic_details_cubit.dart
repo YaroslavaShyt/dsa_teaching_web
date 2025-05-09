@@ -145,6 +145,7 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
     required html.File? theoryImageStep3,
     required html.File? theoryImageStep4,
     bool isNewLesson = false,
+    int? theoryId,
   }) async {
     try {
       if (isNewLesson) {
@@ -168,6 +169,7 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
         return;
       }
       await _updateLesson(
+        theoryId: theoryId!,
         title: title,
         step1: step1,
         step2: step2,
@@ -239,6 +241,7 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
   }
 
   Future<void> _updateLesson({
+    required int theoryId,
     required String title,
     required String step1,
     required String step2,
@@ -257,6 +260,7 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
   }) async {
     final bool isUpdated = await _teachingRepository.updateLesson(
       _fetchTopic()!,
+      theoryId,
       Lesson(
         id: state.selectedLessonId,
         title: title,

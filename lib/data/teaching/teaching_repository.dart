@@ -92,6 +92,7 @@ class TeachingRepository implements ITeachingRepository {
   @override
   Future<bool> updateLesson(
     ITopic topic,
+    int theoryId,
     ILesson lesson,
     ITheory theory,
     IGame game,
@@ -102,6 +103,7 @@ class TeachingRepository implements ITeachingRepository {
   ) async {
     try {
       final formData = FormData.fromMap({
+        'theoryId': theoryId,
         _topicId: topic.id,
         ...lesson.toJson(),
         ...theory.toJson(),

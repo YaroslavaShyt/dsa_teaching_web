@@ -8,8 +8,10 @@ abstract interface class ITheory {
     required this.theoryImageStep2,
     required this.theoryImageStep3,
     required this.theoryImageStep4,
+    this.id,
   });
 
+  final int? id;
   final String theoryStep1;
   final String theoryStep2;
   final String theoryStep3;
