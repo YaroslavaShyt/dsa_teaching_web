@@ -23,29 +23,26 @@ class MainOutlinedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ColorScheme colorScheme = getColorScheme(context);
-    return TapAnimatedWidget(
-      onTap: onPressed,
-      child: OutlinedButton(
-        onPressed: onPressed,
-        style: ButtonStyle(
-          side: WidgetStateProperty.all(
-            BorderSide(
-              color: color ??
-                  (isActive
-                      ? colorScheme.primaryFixed
-                      : colorScheme.onSurface.withValues(alpha: 0.3)),
-              width: 4.0,
-            ),
+    return OutlinedButton(
+      onPressed: onPressed,
+      style: ButtonStyle(
+        side: WidgetStateProperty.all(
+          BorderSide(
+            color: color ??
+                (isActive
+                    ? colorScheme.primaryFixed
+                    : colorScheme.onSurface.withValues(alpha: 0.3)),
+            width: 4.0,
           ),
-          elevation: WidgetStateProperty.all(15.0),
-          shadowColor: WidgetStateProperty.all(colorScheme.shadow),
         ),
-        child: SizedBox(
-          width: width,
-          height: height,
-          child: Center(
-            child: child,
-          ),
+        elevation: WidgetStateProperty.all(15.0),
+        shadowColor: WidgetStateProperty.all(colorScheme.shadow),
+      ),
+      child: SizedBox(
+        width: width,
+        height: height,
+        child: Center(
+          child: child,
         ),
       ),
     );

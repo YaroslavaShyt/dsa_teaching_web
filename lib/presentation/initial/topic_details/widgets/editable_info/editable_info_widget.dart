@@ -41,7 +41,7 @@ class EditableInfoWidget extends StatefulWidget {
     required int timeLimit,
     required List<ITask> tasks,
     required bool isNewLesson,
-    required int theoryId,
+    required int? theoryId,
   }) saveInfo;
 
   @override
@@ -211,9 +211,8 @@ class _EditableInfoWidgetState extends State<EditableInfoWidget> {
   }
 
   void _onSaveButtonPressed() {
-    if (widget.theory?.lessonTheory.id == null) return;
     widget.saveInfo(
-      theoryId: widget.theory!.lessonTheory.id!,
+      theoryId: widget.theory?.lessonTheory.id,
       title: titleController.text,
       step1: step1Controller.text,
       step2: step2Controller.text,
