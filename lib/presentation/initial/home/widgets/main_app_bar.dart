@@ -30,12 +30,12 @@ class _MainAppBarState extends State<MainAppBar> {
       height: 60,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Padding(
             padding: const EdgeInsetsDirectional.only(start: 20),
             child: Row(
-              spacing: 100,
+              spacing: 10,
               children: [
                 Row(
                   spacing: 10,
@@ -44,21 +44,21 @@ class _MainAppBarState extends State<MainAppBar> {
                     Text(widget.userName),
                   ],
                 ),
-                MouseRegion(
-                  cursor: SystemMouseCursors.click,
-                  onEnter: (_) => setState(() => _isHovered = true),
-                  onExit: (_) => setState(() => _isHovered = false),
-                  child: GestureDetector(
-                    onTap: widget.onUsersTap,
-                    child: Text(
-                      'Усі користувачі',
-                      style: TextStyle(
-                        color: _isHovered ? colorScheme.primaryFixed : null,
-                      ),
-                    ),
-                  ),
-                ),
               ],
+            ),
+          ),
+          MouseRegion(
+            cursor: SystemMouseCursors.click,
+            onEnter: (_) => setState(() => _isHovered = true),
+            onExit: (_) => setState(() => _isHovered = false),
+            child: GestureDetector(
+              onTap: widget.onUsersTap,
+              child: Text(
+                'Усі користувачі',
+                style: TextStyle(
+                  color: _isHovered ? colorScheme.primaryFixed : null,
+                ),
+              ),
             ),
           ),
           Row(
@@ -81,6 +81,7 @@ class _MainAppBarState extends State<MainAppBar> {
               ),
             ],
           ),
+          Text(' v1.0.0'),
           Padding(
             padding: const EdgeInsetsDirectional.only(end: 20),
             child: IconButton(
