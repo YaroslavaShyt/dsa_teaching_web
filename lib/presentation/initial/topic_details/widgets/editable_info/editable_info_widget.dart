@@ -1,18 +1,21 @@
 import 'dart:async';
 import 'dart:html' as html;
+import 'dart:io';
 
 import 'package:dsa_teaching_web/core/utils/logger/logger.dart';
-import 'package:dsa_teaching_web/core/utils/theme/text_theme.dart';
 import 'package:dsa_teaching_web/data/game/task.dart';
 import 'package:dsa_teaching_web/domain/game/game_answers_type.dart';
 import 'package:dsa_teaching_web/domain/game/igame.dart';
 import 'package:dsa_teaching_web/domain/game/itask.dart';
 import 'package:dsa_teaching_web/domain/theory/ilesson_theory.dart';
-import 'package:dsa_teaching_web/presentation/initial/topic_details/widgets/add_image_button.dart';
-import 'package:dsa_teaching_web/presentation/initial/topic_details/widgets/editable_info/add_tasks_form.dart';
-import 'package:dsa_teaching_web/presentation/initial/topic_details/widgets/editable_info/save_button.dart';
+import 'package:dsa_teaching_web/presentation/initial/topic_details/widgets/editable_info/widgets/lesson_knowlege_check.dart';
+import 'package:dsa_teaching_web/presentation/initial/topic_details/widgets/editable_info/widgets/lesson_plan.dart';
+import 'package:dsa_teaching_web/presentation/initial/topic_details/widgets/editable_info/widgets/lesson_theory.dart';
+import 'package:dsa_teaching_web/presentation/initial/topic_details/widgets/editable_info/widgets/lesson_title.dart';
 import 'package:dsa_teaching_web/presentation/initial/widgets/main_container.dart';
 import 'package:flutter/material.dart';
+
+part 'save_data_typedef.dart';
 
 class EditableInfoWidget extends StatefulWidget {
   const EditableInfoWidget({
@@ -24,25 +27,7 @@ class EditableInfoWidget extends StatefulWidget {
 
   final ILessonTheory? theory;
   final IGame? game;
-  final Future<void> Function({
-    required String title,
-    required String step1,
-    required String step2,
-    required String step3,
-    required String step4,
-    required String theoryStep1,
-    required String theoryStep2,
-    required String theoryStep3,
-    required String theoryStep4,
-    required html.File? theoryImageStep1,
-    required html.File? theoryImageStep2,
-    required html.File? theoryImageStep3,
-    required html.File? theoryImageStep4,
-    required int timeLimit,
-    required List<ITask> tasks,
-    required bool isNewLesson,
-    required int? theoryId,
-  }) saveInfo;
+  final SaveDataFunction saveInfo;
 
   @override
   State<EditableInfoWidget> createState() => _EditableInfoWidgetState();
@@ -74,6 +59,11 @@ class _EditableInfoWidgetState extends State<EditableInfoWidget> {
   String? theoryImage3Url;
   String? theoryImage4Url;
 
+  File? theory1Gif;
+  File? theory2Gif;
+  File? theory3Gif;
+  File? theory4Gif;
+
   @override
   void initState() {
     super.initState();
@@ -88,122 +78,46 @@ class _EditableInfoWidgetState extends State<EditableInfoWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final TextTheme textTheme = getTextTheme(context);
-
     return Flexible(
       child: SizedBox(
         height: MediaQuery.sizeOf(context).height - 100,
         child: SingleChildScrollView(
-          child: Form(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                MainContainer(
-                  padding: const EdgeInsetsDirectional.all(10),
-                  content: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Назва лекції",
-                        style: textTheme.bodyMedium?.copyWith(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      TextFormField(controller: titleController),
-                      const SizedBox(height: 20),
-                      Text(
-                        "План",
-                        style: textTheme.bodyMedium?.copyWith(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      TextFormField(
-                        controller: step1Controller,
-                        decoration: InputDecoration(labelText: "Крок 1"),
-                      ),
-                      TextFormField(
-                        controller: step2Controller,
-                        decoration: InputDecoration(labelText: "Крок 2"),
-                      ),
-                      TextFormField(
-                        controller: step3Controller,
-                        decoration: InputDecoration(labelText: "Крок 3"),
-                      ),
-                      TextFormField(
-                        controller: step4Controller,
-                        decoration: InputDecoration(labelText: "Крок 4"),
-                      ),
-                      const SizedBox(height: 20),
-                      Text(
-                        "Теорія",
-                        style: textTheme.bodyMedium?.copyWith(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      TextFormField(
-                        controller: theory1Controller,
-                        maxLines: null,
-                      ),
-                      AddImageButton(
-                        onTap: () => _pickImage(1),
-                        currentFile: theoryImage1Url,
-                        remove: () => _remove(1),
-                      ),
-                      TextFormField(
-                        controller: theory2Controller,
-                        maxLines: null,
-                      ),
-                      AddImageButton(
-                        onTap: () => _pickImage(2),
-                        currentFile: theoryImage2Url,
-                        remove: () => _remove(2),
-                      ),
-                      TextFormField(
-                        controller: theory3Controller,
-                        maxLines: null,
-                      ),
-                      AddImageButton(
-                        onTap: () => _pickImage(3),
-                        currentFile: theoryImage3Url,
-                        remove: () => _remove(3),
-                      ),
-                      TextFormField(
-                        controller: theory4Controller,
-                        maxLines: null,
-                      ),
-                      AddImageButton(
-                        onTap: () => _pickImage(4),
-                        currentFile: theoryImage4Url,
-                        remove: () => _remove(4),
-                      ),
-                      const SizedBox(height: 20),
-                      Text(
-                        "Перевірка знань",
-                        style: textTheme.bodyMedium?.copyWith(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      const SizedBox(height: 30),
-                      TextFormField(
-                        controller: timeLimitController,
-                        decoration: InputDecoration(labelText: "Час (хв)"),
-                      ),
-                      const SizedBox(height: 30),
-                      AddTasksForm(
-                        gameControllers: gameControllers,
-                      ),
-                      SaveButton(
-                        onPressed: _onSaveButtonPressed,
-                      ),
-                    ],
-                  ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              MainContainer(
+                padding: const EdgeInsetsDirectional.all(10),
+                content: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    LessonTitle(titleController: titleController),
+                    LessonPlan(
+                      step1Controller: step1Controller,
+                      step2Controller: step2Controller,
+                      step3Controller: step3Controller,
+                      step4Controller: step4Controller,
+                    ),
+                    LessonTheory(
+                      onPickImage: _pickImage,
+                      onRemoveImage: _remove,
+                      theory1Controller: theory1Controller,
+                      theoryImage1Url: theoryImage1Url,
+                      theory2Controller: theory2Controller,
+                      theoryImage2Url: theoryImage2Url,
+                      theory3Controller: theory3Controller,
+                      theoryImage3Url: theoryImage3Url,
+                      theory4Controller: theory4Controller,
+                      theoryImage4Url: theoryImage4Url,
+                    ),
+                    LessonKnowledgeCheck(
+                      timeLimitController: timeLimitController,
+                      gameControllers: gameControllers,
+                      onSaveButtonPressed: _onSaveButtonPressed,
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
