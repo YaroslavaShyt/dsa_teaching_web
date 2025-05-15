@@ -1,3 +1,4 @@
+import 'package:dsa_teaching_web/data/teaching/web_file.dart';
 import 'package:dsa_teaching_web/domain/game/igame.dart';
 import 'package:dsa_teaching_web/domain/theory/ilesson_theory.dart';
 import 'package:dsa_teaching_web/domain/topic/itopic.dart';
@@ -15,6 +16,8 @@ class TopicDetailsState extends Equatable {
     this.selectedGame,
     this.selectedTheory,
     this.mode = Mode.initial,
+    this.imageFiles = const {},
+    this.imageUrls = const {},
   });
 
   TopicDetailsState copyWith({
@@ -24,6 +27,8 @@ class TopicDetailsState extends Equatable {
     ILessonTheory? selectedTheory,
     IGame? selectedGame,
     Mode? mode,
+    Map<int, WebFile>? imageFiles,
+    Map<int, String>? imageUrls,
   }) {
     return TopicDetailsState(
       topic: topic ?? this.topic,
@@ -32,6 +37,8 @@ class TopicDetailsState extends Equatable {
       selectedGame: selectedGame ?? this.selectedGame,
       selectedTheory: selectedTheory ?? this.selectedTheory,
       mode: mode ?? this.mode,
+      imageFiles: imageFiles ?? this.imageFiles,
+      imageUrls: imageUrls ?? this.imageUrls,
     );
   }
 
@@ -41,6 +48,8 @@ class TopicDetailsState extends Equatable {
   final ILessonTheory? selectedTheory;
   final IGame? selectedGame;
   final Mode mode;
+  final Map<int, WebFile> imageFiles;
+  final Map<int, String> imageUrls;
 
   @override
   List<Object?> get props => [
@@ -50,5 +59,7 @@ class TopicDetailsState extends Equatable {
         selectedTheory,
         selectedGame,
         mode,
+        imageFiles,
+        imageUrls,
       ];
 }

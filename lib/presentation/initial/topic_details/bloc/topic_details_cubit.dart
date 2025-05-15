@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'dart:html' as html;
+import 'dart:typed_data';
 
 import 'package:dsa_teaching_web/core/utils/logger/logger.dart';
 import 'package:dsa_teaching_web/core/utils/navigation/inavigation_util.dart';
@@ -7,6 +9,7 @@ import 'package:dsa_teaching_web/data/game/game.dart';
 import 'package:dsa_teaching_web/data/game/task.dart';
 import 'package:dsa_teaching_web/data/lesson/lesson.dart';
 import 'package:dsa_teaching_web/data/lesson/lesson_plan.dart';
+import 'package:dsa_teaching_web/data/teaching/web_file.dart';
 import 'package:dsa_teaching_web/data/theory/theory.dart';
 import 'package:dsa_teaching_web/domain/game/igame.dart';
 import 'package:dsa_teaching_web/domain/game/itask.dart';
@@ -66,6 +69,19 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
     } catch (error) {
       logger.e(error);
     }
+  }
+
+  void removePickedFile(int step) {
+    final newFiles = Map<int, WebFile>.from(state.imageFiles);
+    final newUrls = Map<int, String>.from(state.imageUrls);
+
+    newFiles.remove(step);
+    newUrls.remove(step);
+
+    emit(state.copyWith(
+      imageFiles: newFiles,
+      imageUrls: newUrls,
+    ));
   }
 
   void changeMode() {
@@ -140,10 +156,10 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
     required String theoryStep4,
     required int timeLimit,
     required List<ITask> tasks,
-    required html.File? theoryImageStep1,
-    required html.File? theoryImageStep2,
-    required html.File? theoryImageStep3,
-    required html.File? theoryImageStep4,
+    required WebFile? theoryImageStep1,
+    required WebFile? theoryImageStep2,
+    required WebFile? theoryImageStep3,
+    required WebFile? theoryImageStep4,
     bool isNewLesson = false,
     int? theoryId,
   }) async {
@@ -203,10 +219,10 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
     required String theoryStep4,
     required int timeLimit,
     required List<ITask> tasks,
-    html.File? theoryImage1File,
-    html.File? theoryImage2File,
-    html.File? theoryImage3File,
-    html.File? theoryImage4File,
+    WebFile? theoryImage1File,
+    WebFile? theoryImage2File,
+    WebFile? theoryImage3File,
+    WebFile? theoryImage4File,
   }) async {
     final bool isAdded = await _teachingRepository.addLesson(
       _fetchTopic()!,
@@ -253,10 +269,10 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
     required String theoryStep4,
     required int timeLimit,
     required List<ITask> tasks,
-    required html.File? theoryImageStep1,
-    required html.File? theoryImageStep2,
-    required html.File? theoryImageStep3,
-    required html.File? theoryImageStep4,
+    required WebFile? theoryImageStep1,
+    required WebFile? theoryImageStep2,
+    required WebFile? theoryImageStep3,
+    required WebFile? theoryImageStep4,
   }) async {
     final bool isUpdated = await _teachingRepository.updateLesson(
       _fetchTopic()!,
@@ -340,5 +356,52 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
     } catch (error) {
       logger.e(error);
     }
+  }
+
+  Future<void> pickFile(int step) async {
+    final input = html.FileUploadInputElement();
+    input.accept = 'image/*';
+    input.click();
+
+    input.onChange.listen((e) async {
+      final files = input.files;
+      if (files == null || files.isEmpty) return;
+
+      final html.File file = files.first;
+      final reader = html.FileReader();
+
+      reader.readAsArrayBuffer(file);
+      await reader.onLoad.first;
+
+      final bytes = reader.result as Uint8List;
+      final webFile = WebFile(file, bytes);
+
+      final dataUrl = await _fileToDataUrl(file, bytes);
+
+      final updatedImageFiles = {
+        ...state.imageFiles,
+        step: webFile,
+      };
+
+      final updatedImageUrls = {
+        ...state.imageUrls,
+        step: dataUrl,
+      };
+
+      emit(state.copyWith(
+        imageFiles: updatedImageFiles,
+        imageUrls: updatedImageUrls,
+      ));
+
+      print('Image file added for step $step: ${webFile.file.name}');
+      print('Current imageFiles: $updatedImageFiles');
+      print('Current imageUrls: $updatedImageUrls');
+    });
+  }
+
+  Future<String> _fileToDataUrl(html.File file, Uint8List bytes) async {
+    final base64Str = base64Encode(bytes);
+    final mimeType = file.type.isNotEmpty ? file.type : 'image/png';
+    return 'data:$mimeType;base64,$base64Str';
   }
 }

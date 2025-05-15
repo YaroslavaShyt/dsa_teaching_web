@@ -13,6 +13,7 @@ class LessonTitle extends StatelessWidget {
     final TextTheme textTheme = getTextTheme(context);
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           "Назва лекції",

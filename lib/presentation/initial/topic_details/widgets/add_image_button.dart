@@ -1,6 +1,7 @@
 import 'package:dsa_teaching_web/core/utils/theme/app_color_theme.dart';
 import 'package:dsa_teaching_web/presentation/initial/widgets/main_container.dart';
 import 'package:flutter/material.dart';
+import 'package:gif/gif.dart';
 
 class AddImageButton extends StatelessWidget {
   const AddImageButton({
@@ -13,6 +14,10 @@ class AddImageButton extends StatelessWidget {
   final VoidCallback onTap;
   final String? currentFile;
   final VoidCallback remove;
+
+  bool _isGif(String path) {
+    return path.toLowerCase().endsWith('.gif');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,14 +35,9 @@ class AddImageButton extends StatelessWidget {
               padding: const EdgeInsetsDirectional.all(10),
               content: Row(
                 spacing: 10,
-                children: [
-                  Text(
-                    "Додати зображення",
-                  ),
-                  Icon(
-                    Icons.image_rounded,
-                    color: Colors.white,
-                  ),
+                children: const [
+                  Text("Додати зображення"),
+                  Icon(Icons.image_rounded, color: Colors.white),
                 ],
               ),
             ),
@@ -45,53 +45,56 @@ class AddImageButton extends StatelessWidget {
         ),
       );
     }
-    if (currentFile != null) {
-      return Container(
-        margin: const EdgeInsetsDirectional.symmetric(vertical: 10),
-        height: 300,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          border: Border.all(
-            width: 2,
-            color: colorScheme.onSurface.withValues(alpha: 0.6),
-          ),
-          borderRadius: BorderRadius.circular(20),
+
+    return Container(
+      margin: const EdgeInsetsDirectional.symmetric(vertical: 10),
+      height: 300,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        border: Border.all(
+          width: 2,
+          color: colorScheme.onSurface.withOpacity(0.6),
         ),
-        child: ClipRect(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            spacing: 10,
-            children: [
-              Image.network(
-                currentFile!,
-                height: 300,
-                width: MediaQuery.sizeOf(context).width / 3,
-                frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-                  if (frame == null) {
-                    return Center(
-                      child: CircularProgressIndicator(
-                        color: colorScheme.onSurface.withValues(alpha: 0.6),
-                      ),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          _isGif(currentFile!)
+              ? Gif(
+                  autostart: Autostart.loop,
+                  image: NetworkImage(currentFile!),
+                  height: 300,
+                  width: MediaQuery.sizeOf(context).width / 3,
+                )
+              : Image.network(
+                  currentFile!,
+                  height: 300,
+                  width: MediaQuery.sizeOf(context).width / 3,
+                  frameBuilder:
+                      (context, child, frame, wasSynchronouslyLoaded) {
+                    if (frame == null) {
+                      return Center(
+                        child: CircularProgressIndicator(
+                          color: colorScheme.onSurface.withOpacity(0.6),
+                        ),
+                      );
+                    }
+                    return child;
+                  },
+                  errorBuilder: (context, error, stackTrace) {
+                    return Icon(
+                      Icons.error,
+                      color: colorScheme.onSurface.withOpacity(0.6),
                     );
-                  }
-                  return child;
-                },
-                errorBuilder: (context, error, stackTrace) {
-                  return Icon(
-                    Icons.error,
-                    color: colorScheme.onSurface.withValues(alpha: 0.6),
-                  );
-                },
-              ),
-              IconButton(
-                onPressed: remove,
-                icon: Icon(Icons.edit),
-              ),
-            ],
+                  },
+                ),
+          IconButton(
+            onPressed: remove,
+            icon: const Icon(Icons.edit),
           ),
-        ),
-      );
-    }
-    return SizedBox.shrink();
+        ],
+      ),
+    );
   }
 }

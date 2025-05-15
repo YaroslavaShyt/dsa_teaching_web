@@ -20,6 +20,7 @@ class LessonPlan extends StatelessWidget {
     final TextTheme textTheme = getTextTheme(context);
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(height: 20),
         Text(

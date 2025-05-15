@@ -1,5 +1,4 @@
-import 'dart:html' as html;
-
+import 'package:dsa_teaching_web/data/teaching/web_file.dart';
 import 'package:dsa_teaching_web/domain/game/igame.dart';
 import 'package:dsa_teaching_web/domain/lesson/ilesson.dart';
 import 'package:dsa_teaching_web/domain/topic/itopic.dart';
@@ -12,10 +11,10 @@ abstract interface class ITeachingRepository {
     ILesson lesson,
     ITheory theory,
     IGame game,
-    html.File? file1,
-    html.File? file2,
-    html.File? file3,
-    html.File? file4,
+    WebFile? file1,
+    WebFile? file2,
+    WebFile? file3,
+    WebFile? file4,
   );
 
   Future<bool> updateLesson(
@@ -24,10 +23,10 @@ abstract interface class ITeachingRepository {
     ILesson lesson,
     ITheory theory,
     IGame game,
-    html.File? file1,
-    html.File? file2,
-    html.File? file3,
-    html.File? file4,
+    WebFile? file1,
+    WebFile? file2,
+    WebFile? file3,
+    WebFile? file4,
   );
 
   Future<bool> deleteLesson(String lessonId);

@@ -1,19 +1,20 @@
 import 'dart:async';
-import 'dart:html' as html;
 import 'dart:io';
 
-import 'package:dsa_teaching_web/core/utils/logger/logger.dart';
 import 'package:dsa_teaching_web/data/game/task.dart';
+import 'package:dsa_teaching_web/data/teaching/web_file.dart';
 import 'package:dsa_teaching_web/domain/game/game_answers_type.dart';
 import 'package:dsa_teaching_web/domain/game/igame.dart';
 import 'package:dsa_teaching_web/domain/game/itask.dart';
 import 'package:dsa_teaching_web/domain/theory/ilesson_theory.dart';
+import 'package:dsa_teaching_web/presentation/initial/topic_details/bloc/topic_details_cubit.dart';
 import 'package:dsa_teaching_web/presentation/initial/topic_details/widgets/editable_info/widgets/lesson_knowlege_check.dart';
 import 'package:dsa_teaching_web/presentation/initial/topic_details/widgets/editable_info/widgets/lesson_plan.dart';
 import 'package:dsa_teaching_web/presentation/initial/topic_details/widgets/editable_info/widgets/lesson_theory.dart';
 import 'package:dsa_teaching_web/presentation/initial/topic_details/widgets/editable_info/widgets/lesson_title.dart';
 import 'package:dsa_teaching_web/presentation/initial/widgets/main_container.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'save_data_typedef.dart';
 
@@ -47,22 +48,8 @@ class _EditableInfoWidgetState extends State<EditableInfoWidget> {
 
   List<List<TextEditingController>> gameControllers = List.generate(
     4,
-    (int index) => List.generate(6, (int index) => TextEditingController()),
+    (int index) => List.generate(6, (_) => TextEditingController()),
   );
-
-  html.File? theoryImage1File;
-  html.File? theoryImage2File;
-  html.File? theoryImage3File;
-  html.File? theoryImage4File;
-  String? theoryImage1Url;
-  String? theoryImage2Url;
-  String? theoryImage3Url;
-  String? theoryImage4Url;
-
-  File? theory1Gif;
-  File? theory2Gif;
-  File? theory3Gif;
-  File? theory4Gif;
 
   @override
   void initState() {
@@ -78,12 +65,13 @@ class _EditableInfoWidgetState extends State<EditableInfoWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final state = context.watch<TopicDetailsCubit>().state;
+
     return Flexible(
       child: SizedBox(
         height: MediaQuery.sizeOf(context).height - 100,
         child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               MainContainer(
                 padding: const EdgeInsetsDirectional.all(10),
@@ -98,16 +86,16 @@ class _EditableInfoWidgetState extends State<EditableInfoWidget> {
                       step4Controller: step4Controller,
                     ),
                     LessonTheory(
-                      onPickImage: _pickImage,
-                      onRemoveImage: _remove,
+                      onPickImage: _onPickImage,
+                      onRemoveImage: _onRemoveImage,
                       theory1Controller: theory1Controller,
-                      theoryImage1Url: theoryImage1Url,
+                      theoryImage1Url: state.imageUrls[1],
                       theory2Controller: theory2Controller,
-                      theoryImage2Url: theoryImage2Url,
+                      theoryImage2Url: state.imageUrls[2],
                       theory3Controller: theory3Controller,
-                      theoryImage3Url: theoryImage3Url,
+                      theoryImage3Url: state.imageUrls[3],
                       theory4Controller: theory4Controller,
-                      theoryImage4Url: theoryImage4Url,
+                      theoryImage4Url: state.imageUrls[4],
                     ),
                     LessonKnowledgeCheck(
                       timeLimitController: timeLimitController,
@@ -124,7 +112,17 @@ class _EditableInfoWidgetState extends State<EditableInfoWidget> {
     );
   }
 
+  void _onPickImage(int step) {
+    context.read<TopicDetailsCubit>().pickFile(step);
+  }
+
+  void _onRemoveImage(int step) {
+    context.read<TopicDetailsCubit>().removePickedFile(step);
+  }
+
   void _onSaveButtonPressed() {
+    final state = context.read<TopicDetailsCubit>().state;
+
     widget.saveInfo(
       theoryId: widget.theory?.lessonTheory.id,
       title: titleController.text,
@@ -139,12 +137,11 @@ class _EditableInfoWidgetState extends State<EditableInfoWidget> {
       timeLimit: int.parse(timeLimitController.text) * 60,
       tasks: _fetchTasks(),
       isNewLesson: widget.theory == null,
-      theoryImageStep1: theoryImage1File,
-      theoryImageStep2: theoryImage2File,
-      theoryImageStep3: theoryImage3File,
-      theoryImageStep4: theoryImage4File,
+      theoryImageStep1: state.imageFiles[1],
+      theoryImageStep2: state.imageFiles[2],
+      theoryImageStep3: state.imageFiles[3],
+      theoryImageStep4: state.imageFiles[4],
     );
-    _initControllers();
   }
 
   List<ITask> _fetchTasks() {
@@ -185,7 +182,7 @@ class _EditableInfoWidgetState extends State<EditableInfoWidget> {
     theory4Controller =
         TextEditingController(text: widget.theory?.lessonTheory.theoryStep4);
     timeLimitController = TextEditingController(
-      text: widget.game != null ? "${widget.game!.timeLimit / 60}" : null,
+      text: widget.game != null ? "${widget.game!.timeLimit ~/ 60}" : '',
     );
 
     if (widget.theory != null && widget.game != null) {
@@ -196,35 +193,20 @@ class _EditableInfoWidgetState extends State<EditableInfoWidget> {
           (int index) {
             if (index == 0) {
               return TextEditingController(
-                text: widget.game!.tasks[indexG].question,
-              );
+                  text: widget.game!.tasks[indexG].question);
             }
             if (index == 5) {
               return TextEditingController(
-                text: widget.game!.tasks[indexG].correctAnswer,
-              );
+                  text: widget.game!.tasks[indexG].correctAnswer);
             }
             if (index >= 1 && index <= 4) {
               return TextEditingController(
-                text: widget.game!.tasks[indexG].answerOptions[index - 1],
-              );
+                  text: widget.game!.tasks[indexG].answerOptions[index - 1]);
             }
             return TextEditingController();
           },
         ),
       );
-    }
-    if (widget.theory?.lessonTheory.theoryImageStep1.isNotEmpty ?? false) {
-      theoryImage1Url = widget.theory?.lessonTheory.theoryImageStep1;
-    }
-    if (widget.theory?.lessonTheory.theoryImageStep2.isNotEmpty ?? false) {
-      theoryImage2Url = widget.theory?.lessonTheory.theoryImageStep2;
-    }
-    if (widget.theory?.lessonTheory.theoryImageStep3.isNotEmpty ?? false) {
-      theoryImage3Url = widget.theory?.lessonTheory.theoryImageStep3;
-    }
-    if (widget.theory?.lessonTheory.theoryImageStep4.isNotEmpty ?? false) {
-      theoryImage4Url = widget.theory?.lessonTheory.theoryImageStep4;
     }
   }
 
@@ -239,91 +221,10 @@ class _EditableInfoWidgetState extends State<EditableInfoWidget> {
     theory3Controller.dispose();
     theory4Controller.dispose();
     timeLimitController.dispose();
-    gameControllers.forEach((controllersList) {
-      controllersList.forEach((controller) => controller.dispose());
-    });
-  }
-
-  Future<void> _pickImage(int step) async {
-    html.FileUploadInputElement uploadInput = html.FileUploadInputElement();
-    uploadInput.accept = 'image/*';
-    uploadInput.click();
-
-    uploadInput.onChange.listen((e) async {
-      final files = uploadInput.files;
-      if (files!.isEmpty) return;
-
-      final file = files[0];
-
-      setState(() {
-        if (step == 1) {
-          theoryImage1File = file;
-          fileToDataUrl(file, 1);
-        } else if (step == 2) {
-          theoryImage2File = file;
-          fileToDataUrl(file, 2);
-        } else if (step == 3) {
-          theoryImage3File = file;
-          fileToDataUrl(file, 3);
-        } else if (step == 4) {
-          theoryImage4File = file;
-          fileToDataUrl(file, 4);
-        }
-      });
-    });
-  }
-
-  Future<void> fileToDataUrl(html.File file, int index) async {
-    try {
-      final reader = html.FileReader();
-      final completer = Completer<String>();
-
-      reader.onLoadEnd.listen((_) {
-        completer.complete(reader.result as String);
-      });
-
-      reader.readAsDataUrl(file);
-
-      String data = await completer.future;
-
-      setState(() {
-        if (index == 1) {
-          theoryImage1Url = data;
-        }
-        if (index == 2) {
-          theoryImage2Url = data;
-        }
-        if (index == 3) {
-          theoryImage3Url = data;
-        }
-        if (index == 4) {
-          theoryImage4Url = data;
-        }
-      });
-    } catch (error) {
-      logger.e(error);
+    for (var controllersList in gameControllers) {
+      for (var controller in controllersList) {
+        controller.dispose();
+      }
     }
-  }
-
-  void _remove(int index) {
-    setState(() {
-      if (index == 1) {
-        theoryImage1File = null;
-        theoryImage1Url = null;
-      }
-      if (index == 2) {
-        theoryImage2File = null;
-        theoryImage2Url = null;
-      }
-      if (index == 3) {
-        theoryImage3File = null;
-        theoryImage3Url = null;
-      }
-      if (index == 4) {
-        theoryImage4File = null;
-        theoryImage4Url = null;
-      }
-    });
-    _pickImage(index);
   }
 }

@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:dio/dio.dart';
 import 'package:dsa_teaching_web/core/utils/logger/logger.dart';
 import 'package:dsa_teaching_web/data/networking/endpoints.dart';
+import 'package:dsa_teaching_web/data/teaching/web_file.dart';
 import 'package:dsa_teaching_web/domain/game/igame.dart';
 import 'package:dsa_teaching_web/domain/lesson/ilesson.dart';
 import 'package:dsa_teaching_web/domain/networking/inetworking_client.dart';
@@ -27,10 +28,10 @@ class TeachingRepository implements ITeachingRepository {
     ILesson lesson,
     ITheory theory,
     IGame game,
-    html.File? file1,
-    html.File? file2,
-    html.File? file3,
-    html.File? file4,
+    WebFile? file1,
+    WebFile? file2,
+    WebFile? file3,
+    WebFile? file4,
   ) async {
     try {
       final formData = FormData.fromMap({
@@ -41,22 +42,22 @@ class TeachingRepository implements ITeachingRepository {
         if (file1 != null)
           'theoryImageStep1': MultipartFile.fromBytes(
             await _getFileBytes(file1),
-            filename: file1.name,
+            filename: file1.file.name,
           ),
         if (file2 != null)
           'theoryImageStep2': MultipartFile.fromBytes(
             await _getFileBytes(file2),
-            filename: file2.name,
+            filename: file2.file.name,
           ),
         if (file3 != null)
           'theoryImageStep3': MultipartFile.fromBytes(
             await _getFileBytes(file3),
-            filename: file3.name,
+            filename: file3.file.name,
           ),
         if (file4 != null)
           'theoryImageStep4': MultipartFile.fromBytes(
             await _getFileBytes(file4),
-            filename: file4.name,
+            filename: file4.file.name,
           ),
       });
       final Response? response = await _networkingClient.post(
@@ -96,10 +97,10 @@ class TeachingRepository implements ITeachingRepository {
     ILesson lesson,
     ITheory theory,
     IGame game,
-    html.File? file1,
-    html.File? file2,
-    html.File? file3,
-    html.File? file4,
+    WebFile? file1,
+    WebFile? file2,
+    WebFile? file3,
+    WebFile? file4,
   ) async {
     try {
       final formData = FormData.fromMap({
@@ -111,22 +112,22 @@ class TeachingRepository implements ITeachingRepository {
         if (file1 != null)
           'theoryImageStep1': MultipartFile.fromBytes(
             await _getFileBytes(file1),
-            filename: file1.name,
+            filename: file1.file.name,
           ),
         if (file2 != null)
           'theoryImageStep2': MultipartFile.fromBytes(
             await _getFileBytes(file2),
-            filename: file2.name,
+            filename: file2.file.name,
           ),
         if (file3 != null)
           'theoryImageStep3': MultipartFile.fromBytes(
             await _getFileBytes(file3),
-            filename: file3.name,
+            filename: file3.file.name,
           ),
         if (file4 != null)
           'theoryImageStep4': MultipartFile.fromBytes(
             await _getFileBytes(file4),
-            filename: file4.name,
+            filename: file4.file.name,
           ),
       });
 
@@ -200,7 +201,7 @@ class TeachingRepository implements ITeachingRepository {
     return false;
   }
 
-  Future<Uint8List> _getFileBytes(html.File file) async {
+  Future<Uint8List> _getFileBytes(WebFile file) async {
     final reader = html.FileReader();
     final completer = Completer<Uint8List>();
 
@@ -208,7 +209,7 @@ class TeachingRepository implements ITeachingRepository {
       completer.complete(reader.result as Uint8List);
     });
 
-    reader.readAsArrayBuffer(file);
+    reader.readAsArrayBuffer(file.file);
     return completer.future;
   }
 }

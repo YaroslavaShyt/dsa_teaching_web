@@ -33,6 +33,7 @@ class LessonTheory extends StatelessWidget {
     final TextTheme textTheme = getTextTheme(context);
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           "Теорія",
