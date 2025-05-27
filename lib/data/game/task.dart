@@ -7,6 +7,17 @@ const String _question = 'question';
 const String _answerOptions = 'answerOptions';
 const String _correctAnswer = 'correctAnswer';
 const String _gameAnswersType = 'gameAnswersTypeId';
+const String _taskLevel = 'taskLevel';
+
+enum TaskLevel {
+  easy("EASY"),
+  medium("MEDIUM"),
+  hard("HARD");
+
+  const TaskLevel(this.apiString);
+
+  final String apiString;
+}
 
 class Task implements ITask {
   Task({
@@ -15,6 +26,7 @@ class Task implements ITask {
     required this.answerOptions,
     required this.correctAnswer,
     required this.type,
+    required this.taskLevel,
     this.id,
   });
 
@@ -26,7 +38,17 @@ class Task implements ITask {
       answerOptions: List<String>.from(data[_answerOptions]),
       correctAnswer: data[_correctAnswer],
       type: GameAnswersType.apiToType(data[_gameAnswersType].toString()),
+      taskLevel: _apiToType(data[_taskLevel]),
     );
+  }
+
+  static TaskLevel _apiToType(String apiString) {
+    return switch (apiString) {
+      'EASY' => TaskLevel.easy,
+      'MEDIUM' => TaskLevel.medium,
+      'HARD' => TaskLevel.hard,
+      _ => TaskLevel.easy,
+    };
   }
 
   @override
@@ -48,6 +70,9 @@ class Task implements ITask {
   final GameAnswersType type;
 
   @override
+  final TaskLevel taskLevel;
+
+  @override
   Map<String, dynamic> toJson() {
     return {
       _taskId: id,
@@ -56,6 +81,7 @@ class Task implements ITask {
       _answerOptions: answerOptions,
       _correctAnswer: correctAnswer,
       _gameAnswersType: type == GameAnswersType.row ? 1 : 2,
+      _taskLevel: taskLevel.apiString,
     };
   }
 }

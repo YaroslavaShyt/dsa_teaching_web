@@ -1,3 +1,5 @@
+import 'package:dsa_teaching_web/data/game/task.dart';
+
 import 'game_answers_type.dart';
 
 abstract interface class ITask {
@@ -7,6 +9,7 @@ abstract interface class ITask {
     required this.answerOptions,
     required this.correctAnswer,
     required this.type,
+    required this.taskLevel,
     this.id,
   });
 
@@ -17,6 +20,7 @@ abstract interface class ITask {
   final List<String> answerOptions;
   String correctAnswer;
   final GameAnswersType type;
+  final TaskLevel taskLevel;
 
   Map<String, dynamic> toJson();
 }

@@ -1,7 +1,7 @@
 import 'package:dsa_teaching_web/core/utils/theme/text_theme.dart';
 import 'package:dsa_teaching_web/domain/game/igame.dart';
 import 'package:dsa_teaching_web/domain/theory/ilesson_theory.dart';
-import 'package:dsa_teaching_web/presentation/initial/topic_details/widgets/game_task.dart';
+import 'package:dsa_teaching_web/presentation/initial/topic_details/widgets/tab_bar.dart';
 import 'package:dsa_teaching_web/presentation/initial/topic_details/widgets/theory_image.dart';
 import 'package:dsa_teaching_web/presentation/initial/widgets/main_container.dart';
 import 'package:flutter/material.dart';
@@ -92,14 +92,10 @@ class InfoWidget extends StatelessWidget {
                         fontSize: 20,
                       ),
                     ),
-                    ...game.tasks.map(
-                      (task) {
-                        return GameTask(
-                          game: game,
-                          task: task,
-                        );
-                      },
-                    )
+                    SizedBox(
+                      height: 800,
+                      child: InfoTabBar(game: game),
+                    ),
                   ],
                 ),
               ),

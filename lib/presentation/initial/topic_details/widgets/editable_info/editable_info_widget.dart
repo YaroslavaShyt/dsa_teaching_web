@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:dsa_teaching_web/data/game/task.dart';
 import 'package:dsa_teaching_web/data/teaching/web_file.dart';
@@ -46,9 +45,21 @@ class _EditableInfoWidgetState extends State<EditableInfoWidget> {
   late TextEditingController theory4Controller;
   late TextEditingController timeLimitController;
 
-  List<List<TextEditingController>> gameControllers = List.generate(
+  List<List<TextEditingController>> gameControllersEasy = List.generate(
     4,
-    (int index) => List.generate(6, (_) => TextEditingController()),
+    (int index) =>
+        List.generate(6, (index) => TextEditingController(text: '$index e')),
+  );
+  List<List<TextEditingController>> gameControllersMedium = List.generate(
+    4,
+    (int index) =>
+        List.generate(6, (_) => TextEditingController(text: '$index m')),
+  );
+
+  List<List<TextEditingController>> gameControllersHard = List.generate(
+    4,
+    (int index) =>
+        List.generate(6, (_) => TextEditingController(text: '$index h')),
   );
 
   @override
@@ -99,7 +110,9 @@ class _EditableInfoWidgetState extends State<EditableInfoWidget> {
                     ),
                     LessonKnowledgeCheck(
                       timeLimitController: timeLimitController,
-                      gameControllers: gameControllers,
+                      gameControllersEasy: gameControllersEasy,
+                      gameControllersMedium: gameControllersMedium,
+                      gameControllersHard: gameControllersHard,
                       onSaveButtonPressed: _onSaveButtonPressed,
                     ),
                   ],
@@ -145,10 +158,11 @@ class _EditableInfoWidgetState extends State<EditableInfoWidget> {
   }
 
   List<ITask> _fetchTasks() {
-    return gameControllers.map(
+    final List<ITask> easyTasks = gameControllersEasy.map(
       (controllersList) {
         return Task(
-          questionNumber: gameControllers.indexOf(controllersList) + 1,
+          taskLevel: TaskLevel.easy,
+          questionNumber: gameControllersEasy.indexOf(controllersList) + 1,
           question: controllersList[0].text,
           answerOptions: [
             controllersList[1].text,
@@ -161,6 +175,41 @@ class _EditableInfoWidgetState extends State<EditableInfoWidget> {
         );
       },
     ).toList();
+    final List<ITask> mediumTasks = gameControllersMedium.map(
+      (controllersList) {
+        return Task(
+          taskLevel: TaskLevel.medium,
+          questionNumber: gameControllersMedium.indexOf(controllersList) + 1,
+          question: controllersList[0].text,
+          answerOptions: [
+            controllersList[1].text,
+            controllersList[2].text,
+            controllersList[3].text,
+            controllersList[4].text,
+          ],
+          correctAnswer: controllersList[5].text,
+          type: GameAnswersType.row,
+        );
+      },
+    ).toList();
+    final List<ITask> hardTasks = gameControllersHard.map(
+      (controllersList) {
+        return Task(
+          taskLevel: TaskLevel.hard,
+          questionNumber: gameControllersHard.indexOf(controllersList) + 1,
+          question: controllersList[0].text,
+          answerOptions: [
+            controllersList[1].text,
+            controllersList[2].text,
+            controllersList[3].text,
+            controllersList[4].text,
+          ],
+          correctAnswer: controllersList[5].text,
+          type: GameAnswersType.row,
+        );
+      },
+    ).toList();
+    return [...easyTasks, ...mediumTasks, ...hardTasks];
   }
 
   void _initControllers() {
@@ -186,22 +235,70 @@ class _EditableInfoWidgetState extends State<EditableInfoWidget> {
     );
 
     if (widget.theory != null && widget.game != null) {
-      gameControllers = List.generate(
+      gameControllersEasy = List.generate(
         4,
         (int indexG) => List.generate(
           6,
           (int index) {
             if (index == 0) {
               return TextEditingController(
-                  text: widget.game!.tasks[indexG].question);
+                  text: widget.game!.tasks[TaskLevel.easy]?[indexG].question);
             }
             if (index == 5) {
               return TextEditingController(
-                  text: widget.game!.tasks[indexG].correctAnswer);
+                  text: widget
+                      .game!.tasks[TaskLevel.easy]?[indexG].correctAnswer);
             }
             if (index >= 1 && index <= 4) {
               return TextEditingController(
-                  text: widget.game!.tasks[indexG].answerOptions[index - 1]);
+                  text: widget.game!.tasks[TaskLevel.easy]?[indexG]
+                      .answerOptions[index - 1]);
+            }
+            return TextEditingController();
+          },
+        ),
+      );
+      gameControllersMedium = List.generate(
+        4,
+        (int indexG) => List.generate(
+          6,
+          (int index) {
+            if (index == 0) {
+              return TextEditingController(
+                  text: widget.game!.tasks[TaskLevel.medium]?[indexG].question);
+            }
+            if (index == 5) {
+              return TextEditingController(
+                  text: widget
+                      .game!.tasks[TaskLevel.medium]?[indexG].correctAnswer);
+            }
+            if (index >= 1 && index <= 4) {
+              return TextEditingController(
+                  text: widget.game!.tasks[TaskLevel.medium]?[indexG]
+                      .answerOptions[index - 1]);
+            }
+            return TextEditingController();
+          },
+        ),
+      );
+      gameControllersHard = List.generate(
+        4,
+        (int indexG) => List.generate(
+          6,
+          (int index) {
+            if (index == 0) {
+              return TextEditingController(
+                  text: widget.game!.tasks[TaskLevel.hard]?[indexG].question);
+            }
+            if (index == 5) {
+              return TextEditingController(
+                  text: widget
+                      .game!.tasks[TaskLevel.hard]?[indexG].correctAnswer);
+            }
+            if (index >= 1 && index <= 4) {
+              return TextEditingController(
+                  text: widget.game!.tasks[TaskLevel.hard]?[indexG]
+                      .answerOptions[index - 1]);
             }
             return TextEditingController();
           },
@@ -221,7 +318,17 @@ class _EditableInfoWidgetState extends State<EditableInfoWidget> {
     theory3Controller.dispose();
     theory4Controller.dispose();
     timeLimitController.dispose();
-    for (var controllersList in gameControllers) {
+    for (var controllersList in gameControllersEasy) {
+      for (var controller in controllersList) {
+        controller.dispose();
+      }
+    }
+    for (var controllersList in gameControllersMedium) {
+      for (var controller in controllersList) {
+        controller.dispose();
+      }
+    }
+    for (var controllersList in gameControllersHard) {
       for (var controller in controllersList) {
         controller.dispose();
       }

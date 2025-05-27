@@ -27,7 +27,7 @@ class GameTask extends StatelessWidget {
           Padding(
             padding: const EdgeInsetsDirectional.only(bottom: 8),
             child: Text(
-              "${game.tasks.indexOf(task) + 1}. ${task.question}",
+              "${game.tasks.values.first.indexOf(task) + 1}. ${task.question}",
               softWrap: true,
               overflow: TextOverflow.visible,
             ),

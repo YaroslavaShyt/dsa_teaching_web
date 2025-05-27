@@ -1,3 +1,5 @@
+import 'package:dsa_teaching_web/data/game/task.dart';
+
 import 'itask.dart';
 
 abstract interface class IGame {
@@ -11,7 +13,7 @@ abstract interface class IGame {
   final int? id;
   final String title;
   final int timeLimit;
-  final List<ITask> tasks;
+  final Map<TaskLevel, List<ITask>> tasks;
 
   Map<String, dynamic> toJson();
 }

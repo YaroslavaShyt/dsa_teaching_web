@@ -245,7 +245,7 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
         theoryImageStep3: '',
         theoryImageStep4: '',
       ),
-      Game(title: title, timeLimit: timeLimit, tasks: tasks),
+      Game(title: title, timeLimit: timeLimit, tasks: {TaskLevel.easy: tasks}),
       theoryImage1File,
       theoryImage2File,
       theoryImage3File,
@@ -301,18 +301,21 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
         id: state.selectedGame!.id,
         title: title,
         timeLimit: timeLimit,
-        tasks: tasks
-            .map(
-              (task) => Task(
-                id: state.selectedGame!.tasks[tasks.indexOf(task)].id,
-                questionNumber: task.questionNumber,
-                question: task.question,
-                answerOptions: task.answerOptions,
-                correctAnswer: task.correctAnswer,
-                type: task.type,
-              ),
-            )
-            .toList(),
+        tasks: {
+          TaskLevel.easy: tasks
+              .map(
+                (task) => Task(
+                  id: state.selectedGame!.tasks[tasks.indexOf(task)]?.first.id,
+                  questionNumber: task.questionNumber,
+                  question: task.question,
+                  answerOptions: task.answerOptions,
+                  correctAnswer: task.correctAnswer,
+                  type: task.type,
+                  taskLevel: TaskLevel.easy,
+                ),
+              )
+              .toList()
+        },
       ),
       theoryImageStep1,
       theoryImageStep2,
