@@ -339,7 +339,7 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
                   answerOptions: task.answerOptions,
                   correctAnswer: task.correctAnswer,
                   type: task.type,
-                  taskLevel: TaskLevel.medium,
+                  taskLevel: TaskLevel.hard,
                 ),
               )
               .toList(),
@@ -356,7 +356,7 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
                   answerOptions: task.answerOptions,
                   correctAnswer: task.correctAnswer,
                   type: task.type,
-                  taskLevel: TaskLevel.hard,
+                  taskLevel: TaskLevel.medium,
                 ),
               )
               .toList(),
