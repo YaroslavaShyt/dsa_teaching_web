@@ -130,15 +130,15 @@ class TeachingRepository implements ITeachingRepository {
             filename: file4.file.name,
           ),
       });
+      return true;
+      // final Response? response = await _networkingClient.put(
+      //   Endpoints.updateLessonEndpoint(lesson.id!.toString()),
+      //   body: formData,
+      // );
 
-      final Response? response = await _networkingClient.put(
-        Endpoints.updateLessonEndpoint(lesson.id!.toString()),
-        body: formData,
-      );
-
-      if (response?.statusCode == 201 || response?.statusCode == 200) {
-        return true;
-      }
+      // if (response?.statusCode == 201 || response?.statusCode == 200) {
+      //   return true;
+      // }
     } catch (error) {
       logger.e(error);
     }

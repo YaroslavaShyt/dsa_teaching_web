@@ -310,6 +310,10 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
         timeLimit: timeLimit,
         tasks: {
           TaskLevel.easy: tasks
+              .where((task) =>
+                  task.taskLevel == TaskLevel.easy &&
+                  task.question.trim().isNotEmpty &&
+                  task.correctAnswer.trim().isNotEmpty)
               .map(
                 (task) => Task(
                   id: state.selectedGame!.tasks[tasks.indexOf(task)]?.first.id,
@@ -321,7 +325,41 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
                   taskLevel: TaskLevel.easy,
                 ),
               )
-              .toList()
+              .toList(),
+          TaskLevel.hard: tasks
+              .where((task) =>
+                  task.taskLevel == TaskLevel.medium &&
+                  task.question.trim().isNotEmpty &&
+                  task.correctAnswer.trim().isNotEmpty)
+              .map(
+                (task) => Task(
+                  id: state.selectedGame!.tasks[tasks.indexOf(task)]?.first.id,
+                  questionNumber: task.questionNumber,
+                  question: task.question,
+                  answerOptions: task.answerOptions,
+                  correctAnswer: task.correctAnswer,
+                  type: task.type,
+                  taskLevel: TaskLevel.medium,
+                ),
+              )
+              .toList(),
+          TaskLevel.medium: tasks
+              .where((task) =>
+                  task.taskLevel == TaskLevel.hard &&
+                  task.question.trim().isNotEmpty &&
+                  task.correctAnswer.trim().isNotEmpty)
+              .map(
+                (task) => Task(
+                  id: state.selectedGame!.tasks[tasks.indexOf(task)]?.first.id,
+                  questionNumber: task.questionNumber,
+                  question: task.question,
+                  answerOptions: task.answerOptions,
+                  correctAnswer: task.correctAnswer,
+                  type: task.type,
+                  taskLevel: TaskLevel.hard,
+                ),
+              )
+              .toList(),
         },
       ),
       theoryImageStep1,
