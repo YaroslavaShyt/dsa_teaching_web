@@ -245,7 +245,14 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
         theoryImageStep3: '',
         theoryImageStep4: '',
       ),
-      Game(title: title, timeLimit: timeLimit, tasks: {TaskLevel.easy: tasks}),
+      Game(title: title, timeLimit: timeLimit, tasks: {
+        TaskLevel.easy:
+            tasks.where((task) => task.taskLevel == TaskLevel.easy).toList(),
+        TaskLevel.medium:
+            tasks.where((task) => task.taskLevel == TaskLevel.medium).toList(),
+        TaskLevel.hard:
+            tasks.where((task) => task.taskLevel == TaskLevel.hard).toList(),
+      }),
       theoryImage1File,
       theoryImage2File,
       theoryImage3File,

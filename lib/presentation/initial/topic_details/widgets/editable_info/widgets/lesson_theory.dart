@@ -63,9 +63,9 @@ class LessonTheory extends StatelessWidget {
           maxLines: null,
         ),
         AddImageButton(
-          onTap: () => onPickImage(1),
+          onTap: () => onPickImage(index),
           currentFile: file,
-          remove: () => onRemoveImage(1),
+          remove: () => onRemoveImage(index),
         ),
       ],
     );
