@@ -328,7 +328,7 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
               .toList(),
           TaskLevel.hard: tasks
               .where((task) =>
-                  task.taskLevel == TaskLevel.medium &&
+                  task.taskLevel == TaskLevel.hard &&
                   task.question.trim().isNotEmpty &&
                   task.correctAnswer.trim().isNotEmpty)
               .map(
@@ -345,7 +345,7 @@ class TopicDetailsCubit extends Cubit<TopicDetailsState> {
               .toList(),
           TaskLevel.medium: tasks
               .where((task) =>
-                  task.taskLevel == TaskLevel.hard &&
+                  task.taskLevel == TaskLevel.medium &&
                   task.question.trim().isNotEmpty &&
                   task.correctAnswer.trim().isNotEmpty)
               .map(
